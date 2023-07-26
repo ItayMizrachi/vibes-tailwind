@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Footer from "../components/Footer";
 import Header from "../components/Header";
 import About from "../pages/About";
 import ChatBot from "../pages/ChatBot";
@@ -56,7 +55,7 @@ const Router = () => {
         <Route path="/admin/:dir/*" element={<AuthAdminComp />} />
       </Routes> */}
 
-      <Footer />
+      {/* <Footer /> */}
     </BrowserRouter>
   );
 };
