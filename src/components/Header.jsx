@@ -14,7 +14,7 @@ import Upload from "./Upload";
 
 const Header = () => {
   return (
-    <div className="sticky top-0 z-50 bg-white border-b shadow-s ">
+    <header className="sticky top-0 z-50 bg-white border-b shadow-s ">
       <div className="flex justify-between max-w-6xl mx-5 lg:mx-auto">
         {/* left */}
         <div className="relative hidden w-24 h-24 cursor-pointer lg:inline-grid">
@@ -85,7 +85,7 @@ const Header = () => {
           {/* <button >Sign In</button> */}
         </div>
       </div>
-    </div>
+    </header>
   );
 };
 

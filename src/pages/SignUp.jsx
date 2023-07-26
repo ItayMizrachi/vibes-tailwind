@@ -55,7 +55,7 @@ const SignUp = () => {
 
           <button
             type="submit"
-            className="w-full py-3 my-1 mt-2 font-semibold text-center text-white bg-blue-500 rounded bg-green hover:bg-green-dark focus:outline-none"
+            className="w-full py-3 my-1 mt-2 font-semibold text-center text-white bg-blue-500 rounded hover:bg-blue-600 bg-green hover:bg-green-dark focus:outline-none"
           >
             Create Account
           </button>
