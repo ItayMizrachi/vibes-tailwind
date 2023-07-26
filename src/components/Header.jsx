@@ -10,6 +10,7 @@ import {
 import { HomeIcon } from "@heroicons/react/solid";
 import React from "react";
 import { Link } from "react-router-dom";
+import Upload from "./Upload";
 
 const Header = () => {
   return (
@@ -65,7 +66,7 @@ const Header = () => {
                 3
               </div>
             </div>
-            <PlusCircleIcon className="navBtn" />
+            <PlusCircleIcon onClick={<Upload flag={true} />} className="navBtn" />
             <Link to="groups">
               <UserGroupIcon className="navBtn" />
             </Link>

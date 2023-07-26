@@ -5,6 +5,7 @@ import About from "../pages/About";
 import ChatBot from "../pages/ChatBot";
 import Groups from "../pages/Groups";
 import Home from "../pages/Home";
+import Page404 from "../pages/Page404";
 import Profile from "../pages/Profile";
 import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
@@ -18,6 +19,7 @@ const Router = () => {
 
       <Routes>
         <Route index element={<Home />} />
+        <Route path="/*" element={<Page404 />} />
         <Route path="about" element={<About />} />
         <Route path="signin" element={<SignIn />} />
         <Route path="signup" element={<SignUp />} />

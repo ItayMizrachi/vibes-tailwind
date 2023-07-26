@@ -63,7 +63,7 @@ const Profile = () => {
           </div>
         </div>
         <div className="md:col-span-3">
-          <span className="mr-20 text-2xl text-gray-700">Itay Mizrachi</span>
+          <span className="mr-20 text-2xl text-gray-700">itay_mizrachi</span>
           {/* <div className="inline text-sm font-semibold text-blue-400 cursor-pointer">
         Edit Profile
       </div> */}
@@ -81,7 +81,7 @@ const Profile = () => {
           <div className="mt-2 md:mt-4">
             <div className="pt-2">
               <span className="text-lg font-semibold text-gray-700">
-                itay_mizrachi fullstack developer
+                Itay Mizrachi - fullstack developer
               </span>
             </div>
             <div className="pt-2">
@@ -124,7 +124,7 @@ const Profile = () => {
               />
             </div>
             <div className="absolute top-0 flex items-center justify-center w-full h-full text-white -translate-x-1/2 opacity-0 group-hover:opacity-100 left-1/2 bg-black-rgba">
-              <div className="space-x-1">
+              <div className="mr-3 space-x-1">
                 <HeartIcon className="inline h-6" />
                 <span className="font-semibold">57</span>
               </div>
