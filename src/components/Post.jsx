@@ -46,10 +46,10 @@ const Post = ({ _id, user_name, img_url, desc, profilePic }) => {
 
   const doApiPost = async (_bodyData) => {
     try {
-      setRefresh(false);
+      setRefresh(true);
       const url = URL + "/comments/" + _id;
       await doApiMethod(url, "POST", _bodyData);
-      setRefresh(true);
+      setRefresh(false);
       reset();
     } catch (error) {
       console.log(error);
