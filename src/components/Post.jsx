@@ -6,6 +6,7 @@ import {
   HeartIcon,
   PaperAirplaneIcon,
 } from "@heroicons/react/outline";
+import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
@@ -103,20 +104,21 @@ const Post = ({ _id, user_name, img_url, desc, profilePic }) => {
           {commentsInfo.map((comment) => (
             <div key={comment._id} className="flex items-center mb-3 space-x-2">
               <Link to={comment.user.user_name}>
-              <img
-                className="rounded-full h-7"
-                src={comment.user.profilePic}
-                alt="profile pic"
-              />
+                <img
+                  className="rounded-full h-7"
+                  src={comment.user.profilePic}
+                  alt="profile pic"
+                />
               </Link>
               <p className="flex-1 text-sm">
-                <Link to={comment.user.user_name} className="font-bold">{comment.user.user_name} </Link>
+                <Link to={comment.user.user_name} className="font-bold">
+                  {comment.user.user_name}{" "}
+                </Link>
                 {comment.text}
               </p>
-              <p className="pr-5 text-xs">5 days ago {comment.date_created}</p>
-              {/* <Moment fromNow className="pr-5 text-xs">
-                {comment.date_created.toDate()}
-              </Moment> */}
+              <p className="pr-5 text-xs">
+                {moment(comment.date_created).fromNow()}
+              </p>
             </div>
           ))}
         </div>
