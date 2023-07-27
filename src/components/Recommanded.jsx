@@ -6,7 +6,7 @@ const Recommanded = () => {
     
     useEffect(() => {
         const suggestions = [...Array(5)].map((_, i) => ({
-            userId: faker.datatype.uuid(),
+            userId: faker.string.uuid(),
             username: faker.internet.userName(),
             email: faker.internet.email(),
             avatar: faker.image.avatar(),
