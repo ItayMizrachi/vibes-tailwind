@@ -15,14 +15,14 @@ import { MyContext } from "../context/myContext";
 import { TOKEN_KEY } from "../services/apiService";
 
 const Header = () => {
-  const { userSignOut, userData , userDataFetched} = useContext(MyContext);
+  const { userSignOut, userData, userDataFetched } = useContext(MyContext);
   const nav = useNavigate();
 
   const onLogOut = () => {
     if (window.confirm("Are you sure you want to log out")) {
       localStorage.removeItem(TOKEN_KEY);
       userSignOut();
-      nav("/")
+      nav("/");
       toast.info("You logged out, see you soon...");
     }
   };
@@ -32,7 +32,7 @@ const Header = () => {
       <div className="flex justify-between max-w-6xl mx-5 lg:mx-auto">
         {/* left */}
         <div className="relative hidden w-24 h-24 cursor-pointer lg:inline-grid">
-            <Link to="/">
+          <Link to="/">
             <img
               src="/images/vibes-logo.png"
               className="object-contain w-full h-full"
@@ -82,7 +82,7 @@ const Header = () => {
                 </div>
               </div>
               <Link to="addpost">
-              <PlusCircleIcon className="navBtn" />
+                <PlusCircleIcon className="navBtn" />
               </Link>
               <Link to="groups">
                 <UserGroupIcon className="navBtn" />
@@ -92,11 +92,13 @@ const Header = () => {
               </Link>
               <LogoutIcon onClick={onLogOut} className="navBtn" />
               <Link to={userData.user_name}>
-                <img
-                  src={userData?.profilePic}
-                  alt="profile pic"
-                  className="w-10 h-10 rounded-full cursor-pointer"
-                />
+                <div className="w-10 h-10">
+                  <img
+                    src={userData?.profilePic}
+                    alt="profile pic"
+                    className="object-cover w-full h-full rounded-full cursor-pointer"
+                  />
+                </div>
               </Link>
             </>
           ) : (
@@ -104,7 +106,7 @@ const Header = () => {
               <Link to="signin" className="text-sm font-semibold text-blue-400">
                 sign in
               </Link>
-                <p className="font-semibold text-gray-400"> | </p>
+              <p className="font-semibold text-gray-400"> | </p>
               <Link to="signup" className="text-sm font-semibold text-blue-400">
                 sign up
               </Link>
