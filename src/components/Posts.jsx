@@ -65,6 +65,7 @@ const posts = [
       {postsInfo.map((post) => (
         <Post
             key={post._id}
+            _id={post._id}
             user_name={post.user?.user_name}
             profilePic={post.user?.profilePic}
             img_url={post.img_url}
