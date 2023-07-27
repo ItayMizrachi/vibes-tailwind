@@ -28,7 +28,7 @@ const Stories = () => {
      )} */}
       
       {suggestions.map((profile) => (
-        <Story key={profile.userId } img={profile.avatar} username={profile.username} />
+        <Story key={profile.userId} img={profile.avatar} username={profile.username} />
       ))}
     </div>
   );

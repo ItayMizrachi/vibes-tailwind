@@ -42,23 +42,6 @@ const SignIn = () => {
       toast.error("User or password is wrong!");
     }
   };
-  
-
-  // const doApiPost = async (_bodyData) => {
-  //   try {
-  //     const url = URL + "/users/login";
-  //     const data = await doApiMethod(url, "POST", _bodyData);
-  //     console.log(data);
-  //     if (data.token) {
-  //       toast.success("Welcome, you logged in.");
-  //       localStorage.setItem(TOKEN_KEY, data.token);
-  //       nav("/");
-  //     }
-  //   } catch (err) {
-  //     console.log(err);
-  //     toast.error("User or password is worng!");
-  //   }
-  // };
 
   return (
     <div className="mt-5 bg-grey-lighter lg:mt-20">
