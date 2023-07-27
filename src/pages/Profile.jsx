@@ -111,8 +111,8 @@ const Profile = () => {
       {/* Gallery */}
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
         {postsInfo.map((post) => (
-          <div className="relative cursor-pointer group">
-            <div className="overflow-hidden" key={post._id}>
+          <div key={post._id} className="relative cursor-pointer group">
+            <div className="overflow-hidden">
               <img
                 className="object-cover w-full h-96"
                 src={post.img_url}
