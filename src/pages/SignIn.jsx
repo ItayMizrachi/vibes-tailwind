@@ -35,6 +35,7 @@ const SignIn = () => {
   
         toast.success("Welcome, you logged in.");
         nav("/");
+        window.location.reload();
       }
     } catch (err) {
       console.log(err);

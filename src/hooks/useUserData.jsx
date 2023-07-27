@@ -4,19 +4,24 @@ import { TOKEN_KEY, URL, doApiGet } from "../services/apiService";
 export const useUserData = () => {
   const [userData, setUserData] = useState({});
   const [userDataFetched, setUserDataFetched] = useState(false);
+  const [loading ,setLoading] = useState(false);
 
   const doApiUser = async () => {
+    setLoading(true)
     const url = URL + "/users/userInfo";
     const data = await doApiGet(url);
     setUserData(data);
     setUserDataFetched(true); // Set userDataFetched to true after data is received
+    setLoading(false)
   };
+
+
 
   useEffect(() => {
     if (localStorage[TOKEN_KEY]) {
       doApiUser();
     }
-  }, []);
+  }, [localStorage[TOKEN_KEY]]);
 
   const userSignOut = () => {
     setUserData({});
