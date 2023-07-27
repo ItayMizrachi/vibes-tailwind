@@ -11,6 +11,7 @@ import Page404 from "../pages/Page404";
 import Profile from "../pages/Profile";
 import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
+import Cloudinary from "../components/cloudinary";
 
 const Router = () => {
 
@@ -30,9 +31,10 @@ const Router = () => {
         <Route path="chatbot" element={<ChatBot />} />
         <Route path="groups" element={<Groups />} />
         <Route path="addpost" element={<Uploader />} />
+        <Route path="cloudinary" element={<Cloudinary />} />
       </Routes>
 
-      
+
       {/* <Routes>
         <Route path="/admin/*" element={<HeaderAdmin />} />
         <Route path="/*" element={<Header />} />
