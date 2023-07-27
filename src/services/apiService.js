@@ -1,7 +1,7 @@
 import axios from "axios";
 
 //export const URL = "https://vibes.cyclic.app";
-export const URL = "http://localhost:3000";
+export const URL = "http://localhost:3005";
 export const TOKEN_KEY = "posts_token";
 
 

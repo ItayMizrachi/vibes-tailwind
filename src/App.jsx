@@ -1,17 +1,27 @@
-import './App.css';
+import React from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "./App.css";
+import { MyContext } from "./context/myContext";
+import { useUserData } from "./hooks/useUserData";
 import Router from "./routes/Router";
-function App() {
-  
+
+const App = () => {
+  const { userData, doApiUser, userSignOut, userDataFetched } = useUserData();
 
   return (
-    // <MyContext.Provider>
-    <>
-      <Router/>
-    </>
-     
-     )
-    }
-    
-    export default App
-    
-    {/* </MyContext.Provider> */}
+    <MyContext.Provider
+      value={{
+        userData,
+        userDataFetched,
+        doApiUser,
+        userSignOut,
+      }}
+    >
+      <Router />
+      <ToastContainer theme="colored" />
+    </MyContext.Provider>
+  );
+};
+
+export default App;

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 const Recommanded = () => {
     const [suggestions, setSuggestions] = useState([]);
+    
     useEffect(() => {
         const suggestions = [...Array(5)].map((_, i) => ({
             userId: faker.datatype.uuid(),

@@ -1,14 +1,16 @@
 import {
-    BookmarkIcon,
-    ChatIcon,
-    DotsHorizontalIcon,
-    EmojiHappyIcon,
-    HeartIcon,
-    PaperAirplaneIcon,
+  BookmarkIcon,
+  ChatIcon,
+  DotsHorizontalIcon,
+  EmojiHappyIcon,
+  HeartIcon,
+  PaperAirplaneIcon,
 } from "@heroicons/react/outline";
 import React from "react";
+import { Link } from "react-router-dom";
+import { TOKEN_KEY } from "../services/apiService";
 
-const Post = ({ id, username, img_url, desc }) => {
+const Post = ({ _id,  user_name, img_url, desc, profilePic }) => {
   const comments = [
     {
       comment: "This is a comment",
@@ -67,18 +69,19 @@ const Post = ({ id, username, img_url, desc }) => {
       {/* Header */}
       <div className="flex items-center p-5">
         <img
-          src={img_url}
+          src={profilePic}
           alt=""
           className="object-contain w-12 h-12 p-1 mr-3 rounded-full"
         />
-        <p className="flex-1 font-bold">{username}</p>
+
+        <Link to={user_name} className="flex-1 font-bold">{user_name}</Link>
         <DotsHorizontalIcon className="h-5 cursor-pointer" />
       </div>
       {/* img */}
       <img src={img_url} alt="" className="object-cover w-full" />
 
       {/* Buttons */}
-
+      {localStorage[TOKEN_KEY]  &&    (
       <div className="flex justify-between px-4 pt-4">
         <div className="flex space-x-4">
           <HeartIcon className="btn" />
@@ -87,15 +90,15 @@ const Post = ({ id, username, img_url, desc }) => {
           <PaperAirplaneIcon className="btn" />
         </div>
         <BookmarkIcon className="btn" />
-      </div>
+      </div> )}
 
       {/* Caption */}
       <div>
-        <p className="p-5 truncate">
+        <div className="p-5 truncate">
           <p className="mb-1 font-bold">2 likes</p>
-          <span className="mr-1 font-bold">{username} </span>
+          <span className="mr-1 font-bold">{user_name} </span>
           {desc}
-        </p>
+        </div>
       </div>
 
       {/* Comments */}
@@ -122,7 +125,7 @@ const Post = ({ id, username, img_url, desc }) => {
       )}
 
       {/* input box */}
-
+      {localStorage[TOKEN_KEY]  &&    (
       <form className="flex items-center p-4">
         <EmojiHappyIcon className="h-7" />
         <input
@@ -133,8 +136,8 @@ const Post = ({ id, username, img_url, desc }) => {
         <button type="submit" className="font-semibold text-blue-400">
           Post
         </button>
-      </form>
-    </div>
+      </form> )}
+    </div> 
   );
 };
 

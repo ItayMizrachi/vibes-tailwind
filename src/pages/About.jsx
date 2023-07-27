@@ -2,7 +2,7 @@ import React from "react";
 
 export default function About() {
   return (
-    <div className="min-h-screen ">
+    <div className="min-h-[760px]">
       <div className="container px-4 py-12 mx-auto">
         <div className="flex justify-center">
           <div className="p-6 bg-white border rounded-lg shadow-lg lg:w-8/12 ">

@@ -1,39 +1,53 @@
 import {
-    ChatIcon,
-    HeartIcon,
-    InformationCircleIcon,
-    MenuIcon,
-    PlusCircleIcon,
-    SearchIcon,
-    UserGroupIcon,
+  ChatIcon,
+  HeartIcon,
+  InformationCircleIcon,
+  MenuIcon,
+  PlusCircleIcon,
+  SearchIcon,
+  UserGroupIcon,
 } from "@heroicons/react/outline";
-import { HomeIcon } from "@heroicons/react/solid";
-import React from "react";
-import { Link } from "react-router-dom";
-import Upload from "./Upload";
+import { HomeIcon, LogoutIcon } from "@heroicons/react/solid";
+import React, { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { MyContext } from "../context/myContext";
+import { TOKEN_KEY } from "../services/apiService";
 
 const Header = () => {
+  const { userSignOut, userData , userDataFetched} = useContext(MyContext);
+  const nav = useNavigate();
+
+  const onLogOut = () => {
+    if (window.confirm("Are you sure you want to log out")) {
+      localStorage.removeItem(TOKEN_KEY);
+      userSignOut();
+      nav("/")
+      toast.info("You logged out, see you soon...");
+    }
+  };
+
   return (
-    <header className="sticky top-0 z-50 bg-white border-b shadow-s ">
+    <header className="sticky top-0 z-50 px-6 bg-white border-b shadow-s">
       <div className="flex justify-between max-w-6xl mx-5 lg:mx-auto">
         {/* left */}
         <div className="relative hidden w-24 h-24 cursor-pointer lg:inline-grid">
-          <Link to="/">
+            <Link to="/">
             <img
-              src="https://links.papareact.com/ocw"
+              src="/images/vibes-logo.png"
               className="object-contain w-full h-full"
               alt="logo"
             />
           </Link>
         </div>
         <div className="relative flex-shrink-0 w-10 cursor-pointer lg:hidden">
-        <Link to="/">
-          <img
-            src="https://links.papareact.com/jjm"
-            className="object-contain w-full h-full"
-            alt="responsive logo"
-          />
-            </Link>
+          <Link to="/">
+            <img
+              src="/images/vibes-logo-responsive.png"
+              className="object-contain w-full h-full"
+              alt="responsive logo"
+            />
+          </Link>
         </div>
 
         {/* middle - Search input field */}
@@ -59,28 +73,43 @@ const Header = () => {
           </Link>
           <MenuIcon className="w-10 h-6 cursor-pointer md:hidden" />
 
-          <>
-            <div className="relative navBtn">
-              <HeartIcon className="navBtn" />
-              <div className="absolute flex items-center justify-center w-5 h-5 text-xs text-white bg-red-500 rounded-full -top-1 -right-2 animate-pulse">
-                3
+          {localStorage[TOKEN_KEY] && userData ? (
+            <>
+              <div className="relative navBtn">
+                <HeartIcon className="navBtn" />
+                <div className="absolute flex items-center justify-center w-5 h-5 text-xs text-white bg-red-500 rounded-full -top-1 -right-2 animate-pulse">
+                  3
+                </div>
               </div>
-            </div>
-            <PlusCircleIcon onClick={<Upload flag={true} />} className="navBtn" />
-            <Link to="groups">
-              <UserGroupIcon className="navBtn" />
-            </Link>
-            <Link to="chatbot">
-              <ChatIcon className="navBtn" />
-            </Link>
-            <Link to="profile">
-            <img
-              src="https://lh3.googleusercontent.com/a/AAcHTtdUdNId-v7xh7-AtaO54IGVNiwl7eZWkd9Mja2eL8eA4w=s96-c"
-              alt="profile pic"
-              className="w-10 h-10 rounded-full cursor-pointer"
-            />
-            </Link>
-          </>
+              <Link to="addpost">
+              <PlusCircleIcon className="navBtn" />
+              </Link>
+              <Link to="groups">
+                <UserGroupIcon className="navBtn" />
+              </Link>
+              <Link to="chatbot">
+                <ChatIcon className="navBtn" />
+              </Link>
+              <LogoutIcon onClick={onLogOut} className="navBtn" />
+              <Link to={userData.user_name}>
+                <img
+                  src={userData?.profilePic}
+                  alt="profile pic"
+                  className="w-10 h-10 rounded-full cursor-pointer"
+                />
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link to="signin" className="text-sm font-semibold text-blue-400">
+                sign in
+              </Link>
+                <p className="font-semibold text-gray-400"> | </p>
+              <Link to="signup" className="text-sm font-semibold text-blue-400">
+                sign up
+              </Link>
+            </>
+          )}
 
           {/* <button >Sign In</button> */}
         </div>

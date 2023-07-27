@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import Uploader from "../components/Uploader";
 import About from "../pages/About";
 import ChatBot from "../pages/ChatBot";
 import Groups from "../pages/Groups";
@@ -12,6 +13,7 @@ import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
 
 const Router = () => {
+
   return (
     <BrowserRouter>
       <Routes>
@@ -24,9 +26,10 @@ const Router = () => {
         <Route path="about" element={<About />} />
         <Route path="signin" element={<SignIn />} />
         <Route path="signup" element={<SignUp />} />
-        <Route path="profile" element={<Profile />} />
+        <Route path="/:user_name" element={<Profile />} />
         <Route path="chatbot" element={<ChatBot />} />
         <Route path="groups" element={<Groups />} />
+        <Route path="addpost" element={<Uploader />} />
       </Routes>
 
       

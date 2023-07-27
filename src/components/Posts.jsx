@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { URL, doApiGet } from '../services/apiService';
 import Post from './Post';
 
 const posts = [
@@ -41,15 +42,33 @@ const posts = [
   ];
 
   const Posts = () => {
+    const [postsInfo, setPostsInfo] = useState([]);
+
+    useEffect(() => {
+      doApi();
+    }, []);
+  
+    const doApi = async () => {
+      try {
+        const url = URL + "/userPosts/allposts";
+        const data = await doApiGet(url);
+        setPostsInfo(data);
+        console.log(data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+  
 
   return (
-    <div> {posts.map((post) => (
+    <div> 
+      {postsInfo.map((post) => (
         <Post
-            key={post.id}
-            username={post.username}
+            key={post._id}
+            user_name={post.user?.user_name}
+            profilePic={post.user?.profilePic}
             img_url={post.img_url}
-            img={post.image}
-            desc={post.desc}
+            desc={post.description}
         />
     ))}</div>
   )
