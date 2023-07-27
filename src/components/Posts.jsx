@@ -53,7 +53,7 @@ const posts = [
         const url = URL + "/userPosts/allposts";
         const data = await doApiGet(url);
         setPostsInfo(data);
-        console.log(data);
+      //  console.log(data);
       } catch (err) {
         console.log(err);
       }

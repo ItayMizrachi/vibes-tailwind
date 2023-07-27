@@ -1,3 +1,4 @@
+
 import {
   BookmarkIcon,
   ChatIcon,
@@ -6,6 +7,7 @@ import {
   HeartIcon,
   PaperAirplaneIcon,
 } from "@heroicons/react/outline";
+import Picker from "emoji-picker-react";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -15,7 +17,13 @@ import { TOKEN_KEY, URL, doApiGet, doApiMethod } from "../services/apiService";
 const Post = ({ _id, user_name, img_url, desc, profilePic }) => {
   const [commentsInfo, setCommentsInfo] = useState([]);
   const [refresh, setRefresh] = useState(false);
+  const [inputStr, setInputStr] = useState('');
+  const [showPicker, setShowPicker] = useState(false);
   const [isLoading, setIsLoading] = useState(false); // Add state for loading
+  const onEmojiClick = (event , emojiObject) => {
+    setInputStr(prevInput => prevInput + emojiObject.emoji);
+    setShowPicker(false);
+  }
 
   useEffect(() => {
     doApi();
@@ -26,7 +34,7 @@ const Post = ({ _id, user_name, img_url, desc, profilePic }) => {
       const url = URL + "/comments/" + _id;
       const data = await doApiGet(url);
       setCommentsInfo(data);
-    //  console.log(data);
+      console.log(data);
     } catch (err) {
       console.log(err);
     }
@@ -40,7 +48,7 @@ const Post = ({ _id, user_name, img_url, desc, profilePic }) => {
   } = useForm();
 
   const onSubForm = (_bodyData) => {
-   // console.log(_bodyData);
+    console.log(_bodyData);
     setIsLoading(true); // Start loading when form is submitted
     doApiPost(_bodyData);
   };
@@ -56,7 +64,6 @@ const Post = ({ _id, user_name, img_url, desc, profilePic }) => {
       console.log(error);
     }
   };
-
   return (
     <div className="bg-white border rounded-sm my-7">
       {/* Header */}
@@ -130,12 +137,15 @@ const Post = ({ _id, user_name, img_url, desc, profilePic }) => {
           onSubmit={handleSubmit(onSubForm)}
           className="flex items-center p-4"
         >
-          <EmojiHappyIcon className="h-7" />
+          <EmojiHappyIcon onClick={() => setShowPicker(val => !val)} className="h-7" />
+          {showPicker && <Picker onEmojiClick={onEmojiClick} pickerStyle={{width: '100%'}}  /> }
           <input
             {...register("text", { required: true, minLength: 1 })}
             type="text"
             placeholder="add a comment.."
             className="flex-1 border-none outline-none focus:ring-0 "
+            value={inputStr}
+            onChange={e => setInputStr(e.target.value)}
           />
           <button type="submit" className="font-semibold text-blue-400">
             Post
@@ -147,3 +157,4 @@ const Post = ({ _id, user_name, img_url, desc, profilePic }) => {
 };
 
 export default Post;
+

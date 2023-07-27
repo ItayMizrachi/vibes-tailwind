@@ -8,7 +8,7 @@ import {
   UserGroupIcon,
 } from "@heroicons/react/outline";
 import { HomeIcon, LogoutIcon } from "@heroicons/react/solid";
-import React, { useContext } from "react";
+import React, { useContext, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { MyContext } from "../context/myContext";
@@ -17,6 +17,23 @@ import { TOKEN_KEY } from "../services/apiService";
 const Header = () => {
   const { userSignOut, userData, userDataFetched } = useContext(MyContext);
   const nav = useNavigate();
+  const inputRef = useRef();
+  
+  // useEffect(() => {
+  //   onSearchClick();
+  // },[inputRef])
+
+  const onKeyboardClick = (e) => {
+    if (e.key === "Enter") {
+      onSearchClick();
+    }
+  };
+
+  const onSearchClick = () => {
+    let input_val = inputRef.current.value;
+    nav(`/${input_val}`);
+  };
+
 
   const onLogOut = () => {
     if (window.confirm("Are you sure you want to log out")) {
@@ -60,6 +77,8 @@ const Header = () => {
               className="block w-full pl-10 border-gray-300 rounded-md focus:ring-black focus:border-black sm:text-sm bg-gray-50"
               type="text"
               placeholder="Search.."
+              onKeyDown={onKeyboardClick}
+              ref={inputRef}
             />
           </div>
         </div>

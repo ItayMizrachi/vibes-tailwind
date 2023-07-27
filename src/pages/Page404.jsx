@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Page404 = () => {
   return (
@@ -17,9 +18,11 @@ const Page404 = () => {
                   Sorry about that! Please visit our hompage to get where you
                   need to go.
                 </p>
+                <Link to="/" >
                 <button class="sm:w-full p-3  bg-blue-500 rounded-lg lg:w-auto my-2 border md py-4 px-8 text-center  text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50">
                   Take me there!
                 </button>
+                </Link>
               </div>
             </div>
           </div>
