@@ -2,15 +2,15 @@ import {
   BookmarkIcon,
   ChatIcon,
   DotsHorizontalIcon,
-  EmojiHappyIcon,
   HeartIcon,
   PaperAirplaneIcon,
 } from "@heroicons/react/outline";
-import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { TOKEN_KEY, URL, doApiGet, doApiMethod } from "../services/apiService";
+import AddComment from "./AddComment";
+import Comments from "./Comments";
 
 const Post = ({ _id, user_name, img_url, desc, profilePic }) => {
   const [commentsInfo, setCommentsInfo] = useState([]);
@@ -26,7 +26,7 @@ const Post = ({ _id, user_name, img_url, desc, profilePic }) => {
       const url = URL + "/comments/" + _id;
       const data = await doApiGet(url);
       setCommentsInfo(data);
-    //  console.log(data);
+      //  console.log(data);
     } catch (err) {
       console.log(err);
     }
@@ -40,7 +40,7 @@ const Post = ({ _id, user_name, img_url, desc, profilePic }) => {
   } = useForm();
 
   const onSubForm = (_bodyData) => {
-   // console.log(_bodyData);
+    // console.log(_bodyData);
     setIsLoading(true); // Start loading when form is submitted
     doApiPost(_bodyData);
   };
@@ -93,55 +93,20 @@ const Post = ({ _id, user_name, img_url, desc, profilePic }) => {
         <div className="p-5 truncate">
           <p className="mb-1 font-bold">2 likes</p>
           <Link to={user_name} className="mr-1 font-bold">
-            {user_name}{" "}
+            {user_name}
           </Link>
           {desc}
         </div>
       </div>
       {/* Comments */}
-      {commentsInfo.length > 0 && (
-        <div className="h-20 ml-10 overflow-y-scroll scrollbar-thumb-black scrollbar-thin">
-          {commentsInfo.map((comment) => (
-            <div key={comment._id} className="flex items-center mb-3 space-x-2">
-              <Link to={comment.user.user_name}>
-                <img
-                  className="rounded-full h-7"
-                  src={comment.user.profilePic}
-                  alt="profile pic"
-                />
-              </Link>
-              <p className="flex-1 text-sm">
-                <Link to={comment.user.user_name} className="font-bold">
-                  {comment.user.user_name}{" "}
-                </Link>
-                {comment.text}
-              </p>
-              <p className="pr-5 text-xs">
-                {moment(comment.date_created).fromNow()}
-              </p>
-            </div>
-          ))}
-        </div>
-      )}
+      <Comments commentsInfo={commentsInfo} />
 
       {/* input box */}
-      {localStorage[TOKEN_KEY] && (
-        <form
-          onSubmit={handleSubmit(onSubForm)}
-          className="flex items-center p-4"
-        >
-          <EmojiHappyIcon className="h-7" />
-          <input
-            {...register("text", { required: true, minLength: 1 })}
-            type="text"
-            placeholder="add a comment.."
-            className="flex-1 border-none outline-none focus:ring-0 "
-          />
-          <button type="submit" className="font-semibold text-blue-400">
-            Post
-          </button>
-        </form>
-      )}
+      <AddComment
+        handleSubmit={handleSubmit}
+        register={register}
+        onSubForm={onSubForm}
+      />
     </div>
   );
 };

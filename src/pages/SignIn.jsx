@@ -19,30 +19,31 @@ const SignIn = () => {
     doApiPost(_bodyData);
   };
 
-  const doApiPost = async (_bodyData) => {
-    try {
-      const url = URL + "/users/login";
-      const data = await doApiMethod(url, "POST", _bodyData);
-  
-      if (data.token) {
-        // Extract the token's payload to get the expiration date
-        const tokenPayload = JSON.parse(atob(data.token.split('.')[1]));
-        const expirationDate = new Date(tokenPayload.exp * 1000);
-  
-        // Store the token and its expiration date in the local storage
-        localStorage.setItem(TOKEN_KEY, data.token);
-        localStorage.setItem('tokenExpiration', expirationDate.getTime());
-  
-        toast.success("Welcome, you logged in.");
-        nav("/");
-        window.location.reload();
-      }
-    } catch (err) {
-      console.log(err);
-      toast.error("User or password is wrong!");
-    }
-  };
+ const doApiPost = async (_bodyData) => {
+  try {
+    const url = URL + "/users/login";
+    const data = await doApiMethod(url, "POST", _bodyData);
 
+    if (data.token) {
+      // Extract the token's payload to get the expiration date
+      const tokenPayload = JSON.parse(atob(data.token.split('.')[1]));
+      const expirationDate = new Date(tokenPayload.exp * 1000);
+
+      // Store the token and its expiration date in the local storage
+      localStorage.setItem(TOKEN_KEY, data.token);
+      localStorage.setItem('tokenExpiration', expirationDate.getTime());
+
+      toast.success("Welcome, you logged in.");
+      nav("/");
+      window.location.reload();
+    }
+  } catch (err) {
+    console.log(err);
+    toast.error("User or password is wrong!");
+  }
+};
+
+  
   return (
     <div className="mt-5 bg-grey-lighter lg:mt-20">
       <div className="container flex flex-col items-center justify-center flex-1 max-w-sm px-2 mx-auto">
@@ -78,7 +79,7 @@ const SignIn = () => {
                 type="password"
                 placeholder="password"
                 required
-              />
+                />
             </div>
               {errors.password && (
                 <div className="text-red-700 ">
@@ -89,7 +90,7 @@ const SignIn = () => {
             <button
               type="submit"
               className="w-full py-3 my-1 mt-2 font-semibold text-center text-white bg-blue-500 rounded hover:bg-blue-600"
-            >
+              >
               Login
             </button>
           </form>
@@ -107,5 +108,6 @@ const SignIn = () => {
 };
 
 export default SignIn;
+
 
 
