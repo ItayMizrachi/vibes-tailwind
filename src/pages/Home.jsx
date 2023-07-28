@@ -12,11 +12,11 @@ const Home = () => {
     md:max-w-3xl xl:grid-cols-3 xl:max-w-6xl `}
     >
       <section className="col-span-2">
-        <Stories />
+        {localStorage[TOKEN_KEY] && <Stories />}
         <Posts />
       </section>
 
-      {localStorage[TOKEN_KEY]  &&    (
+      {localStorage[TOKEN_KEY] && (
         <section className="hidden xl:inline-grid md:col-span-1">
           <div className="fixed top-20">
             <SideProfile />

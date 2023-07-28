@@ -66,7 +66,6 @@ const Post = ({ _id, user_name, img_url, desc, profilePic }) => {
           alt=""
           className="object-contain w-12 h-12 p-1 mr-3 rounded-full"
         />
-
         <Link to={user_name} className="flex-1 font-bold">
           {user_name}
         </Link>
@@ -80,7 +79,6 @@ const Post = ({ _id, user_name, img_url, desc, profilePic }) => {
         <div className="flex justify-between px-4 pt-4">
           <div className="flex space-x-4">
             <HeartIcon className="btn" />
-
             <ChatIcon className="btn" />
             <PaperAirplaneIcon className="btn" />
           </div>
@@ -98,6 +96,7 @@ const Post = ({ _id, user_name, img_url, desc, profilePic }) => {
           {desc}
         </div>
       </div>
+      
       {/* Comments */}
       <Comments commentsInfo={commentsInfo} />
 
