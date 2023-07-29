@@ -7,7 +7,6 @@ import { toast } from "react-toastify";
 
 const Cloudinary = () => {
 
-
     const uploadRef = useRef();
 
     const onSub = (e) => {
@@ -26,7 +25,6 @@ const Cloudinary = () => {
 
             const url = URL + "/upload/cloud";
             try {
-
                 const resp = await axios({
                     method: "POST",
                     url: url,
