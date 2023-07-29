@@ -12,12 +12,25 @@ import Profile from "../pages/Profile";
 import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
 import Cloudinary from "../components/cloudinary";
+import LoginAdmin from "../admin/LoginAdmin";
+import AuthAdminComp from "../admin/AuthAdminComp";
+import EditUser from "../admin/EditUser";
+import GroupsList from "../admin/GroupsList";
+import HeaderAdmin from "../admin/HeaderAdmin";
+import PostsAdmin from "../admin/PostsAdmin";
+import UsersList from "../admin/UsersList";
+
+
+
+
+
 
 const Router = () => {
 
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/admin/*" element={<HeaderAdmin />} />
         <Route path="/*" element={<Header />} />
       </Routes>
 
@@ -32,25 +45,8 @@ const Router = () => {
         <Route path="groups" element={<Groups />} />
         <Route path="addpost" element={<Uploader />} />
         <Route path="cloudinary" element={<Cloudinary />} />
-      </Routes>
 
 
-      {/* <Routes>
-        <Route path="/admin/*" element={<HeaderAdmin />} />
-        <Route path="/*" element={<Header />} />
-      </Routes> */}
-
-      {/* <Routes>
-        <Route path="home" element={<Home />} />
-        <Route path="profile/:id" element={<Profile />} />
-        <Route path="search/:user_name" element={<OtherUserProfile />} />
-
-        <Route path="login" element={<SignIn />} />
-        <Route index element={<SignUp />} />
-        <Route path="/createGroup" element={<CreateGroup />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/createpost" element={<CreatePost />} />
-        <Route path="*" element={<Page404 />} />
 
         <Route path="/admin" element={<LoginAdmin />} />
         <Route path="/admin/users" element={<UsersList />} />
@@ -59,11 +55,12 @@ const Router = () => {
         <Route path="/admin/posts" element={<PostsAdmin />} />
         <Route path="/*" element={<Page404 />} />
       </Routes>
+
       <Routes>
         <Route path="/admin/:dir/*" element={<AuthAdminComp />} />
-      </Routes> */}
+      </Routes>
 
-      <Footer />
+
     </BrowserRouter>
   );
 };
