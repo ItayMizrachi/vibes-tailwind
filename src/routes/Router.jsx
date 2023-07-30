@@ -1,16 +1,15 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Uploader from "../components/Uploader";
 import About from "../pages/About";
-import ChatBot from "../pages/ChatBot";
 import Groups from "../pages/Groups";
 import Home from "../pages/Home";
 import Page404 from "../pages/Page404";
 import Profile from "../pages/Profile";
 import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
+import VibesChatBot from "../pages/VibesChatBot";
 
 const Router = () => {
 
@@ -27,7 +26,7 @@ const Router = () => {
         <Route path="signin" element={<SignIn />} />
         <Route path="signup" element={<SignUp />} />
         <Route path="/:user_name" element={<Profile />} />
-        <Route path="chatbot" element={<ChatBot />} />
+        <Route path="chatbot" element={<VibesChatBot />} />
         <Route path="groups" element={<Groups />} />
         <Route path="addpost" element={<Uploader />} />
       </Routes>
@@ -61,7 +60,7 @@ const Router = () => {
         <Route path="/admin/:dir/*" element={<AuthAdminComp />} />
       </Routes> */}
 
-      <Footer />
+      {/* <Footer /> */}
     </BrowserRouter>
   );
 };
