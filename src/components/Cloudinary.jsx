@@ -34,20 +34,20 @@ const Cloudinary = () => {
                     }
                 })
                 console.log(resp.data);
-                // const urlPic = URL + "/users/profilePic";
+                const urlPic = URL + "/users/profilePic";
 
-                // const respUser = await axios({
-                //     method: "PATCH",
-                //     url: urlPic,
-                //     data: {
-                //         profilePic: resp.data.data.secure_url
-                //     },
-                //     headers: {
-                //         "x-api-key": localStorage[TOKEN_KEY]
-                //     }
+                const respUser = await axios({
+                    method: "PATCH",
+                    url: urlPic,
+                    data: {
+                        profilePic: resp.data.data.secure_url
+                    },
+                    headers: {
+                        "x-api-key": localStorage[TOKEN_KEY]
+                    }
 
-                // })
-                // console.log(respUser.data)
+                })
+                console.log(respUser.data)
 
                 toast.success("nice picture!.");
 

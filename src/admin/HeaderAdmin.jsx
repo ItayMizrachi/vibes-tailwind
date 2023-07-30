@@ -28,8 +28,8 @@ export default function HeaderAdmin() {
                             {localStorage[TOKEN_KEY] && (
                                 <>
                                     <li><Link to="/admin/users">Users</Link></li>
-                                    <li><Link to="/admin/categories">Categories</Link></li>
-                                    <li><Link to="/admin/videos">Videos</Link></li>
+                                    <li><Link to="/admin/groups">Groups</Link></li>
+                                    <li><Link to="/admin/posts">Posts</Link></li>
                                 </>
                             )}
                         </ul>

@@ -14,6 +14,7 @@ export default function GroupsList() {
     }, [query])
 
     const doApi = async () => {
+        const page = query.get("page") || 1;
         const url = URL + "/groups/groupsList?page=" + page;
         try {
             const data = await doApiGet(url);
