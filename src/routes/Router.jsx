@@ -2,17 +2,19 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "../components/Header";
 import Uploader from "../components/Uploader";
+import NewChatPage from "../components/chatbot/NewChatPage";
 import About from "../pages/About";
+import Chatbot from "../pages/ChatBot";
 import Groups from "../pages/Groups";
 import Home from "../pages/Home";
 import Page404 from "../pages/Page404";
 import Profile from "../pages/Profile";
 import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
-import VibesChatBot from "../pages/VibesChatBot";
+import VibesNewChat from "../pages/VibesNewChat";
 
 const Router = () => {
-
+  
   return (
     <BrowserRouter>
       <Routes>
@@ -26,12 +28,13 @@ const Router = () => {
         <Route path="signin" element={<SignIn />} />
         <Route path="signup" element={<SignUp />} />
         <Route path="/:user_name" element={<Profile />} />
-        <Route path="chatbot" element={<VibesChatBot />} />
+        <Route path="chatbot2" element={<VibesNewChat />} />
+        <Route path="chatbot" element={<Chatbot />} />
+        <Route path="newchat" element={<NewChatPage />} />
         <Route path="groups" element={<Groups />} />
         <Route path="addpost" element={<Uploader />} />
       </Routes>
 
-      
       {/* <Routes>
         <Route path="/admin/*" element={<HeaderAdmin />} />
         <Route path="/*" element={<Header />} />

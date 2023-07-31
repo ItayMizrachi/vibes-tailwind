@@ -96,7 +96,7 @@ const Post = ({ _id, user_name, img_url, desc, profilePic }) => {
           {desc}
         </div>
       </div>
-      
+
       {/* Comments */}
       <Comments commentsInfo={commentsInfo} />
 
