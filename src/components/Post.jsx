@@ -26,7 +26,7 @@ const Post = ({ _id, user_name, img_url, desc, profilePic }) => {
       const url = URL + "/comments/" + _id;
       const data = await doApiGet(url);
       setCommentsInfo(data);
-    //  console.log(data);
+      //  console.log(data);
     } catch (err) {
       console.log(err);
     }
@@ -40,7 +40,7 @@ const Post = ({ _id, user_name, img_url, desc, profilePic }) => {
   } = useForm();
 
   const onSubForm = (_bodyData) => {
-   // console.log(_bodyData);
+    // console.log(_bodyData);
     setIsLoading(true); // Start loading when form is submitted
     doApiPost(_bodyData);
   };
@@ -63,7 +63,7 @@ const Post = ({ _id, user_name, img_url, desc, profilePic }) => {
       <div className="flex items-center p-5">
         <img
           src={profilePic}
-          alt=""
+          alt="image"
           className="object-contain w-12 h-12 p-1 mr-3 rounded-full"
         />
 
