@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { URL, doApiMethod } from '../services/apiService';
 
 const Uploader = () => {
+
   const nav = useNavigate();
   const [isLoading, setIsLoading] = useState(false); // Add state for loading
 
@@ -14,13 +15,16 @@ const Uploader = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubForm = (_bodyData) => {
+  const onSubForm = async (_bodyData) => {
     console.log(_bodyData);
     setIsLoading(true); // Start loading when form is submitted
     doApiPost(_bodyData);
   };
 
   const doApiPost = async (_bodyData) => {
+
+
+
     try {
       const url = URL + "/userPosts";
       const data = await doApiMethod(url, "POST", _bodyData);
@@ -28,6 +32,7 @@ const Uploader = () => {
       if (data._id) {
         toast.success("Post added");
       }
+
     } catch (error) {
       console.log(error);
       toast.error("There's a problem");
@@ -35,6 +40,11 @@ const Uploader = () => {
       setIsLoading(false); // Stop loading after redirecting
     }
   };
+
+
+
+
+
 
 
   return (
@@ -63,7 +73,6 @@ const Uploader = () => {
                 {...register("img_url", { required: true, minLength: 2 })}
                 className="w-full p-2 mt-1 border rounded-md focus:ring-blue-500 focus:border-blue-500"
                 type="text"
-                placeholder="img url"
               />
               {errors.img_url && (
                 <div className="mt-1 text-red-500">* Enter a valid image</div>

@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import axios from "axios";
-import { URL, TOKEN_KEY } from "../services/apiService";
+import { URL, TOKEN_KEY, doApiCloud } from "../services/apiService";
 import { toast } from "react-toastify";
 
 
@@ -14,36 +14,16 @@ const Cloudinary = () => {
     }
     const doApiCloudUpload = () => {
         const myFile = uploadRef.current.files[0];
-        console.log(myFile);
         const reader = new FileReader();
         reader.readAsDataURL(myFile)
         reader.onloadend = async () => {
             const url = URL + "/upload/cloud";
             try {
-                const resp = await axios({
-                    method: "POST",
-                    url: url,
-                    data: { image: reader.result },
-                    headers: {
-                        "x-api-key": localStorage[TOKEN_KEY]
-                    }
-                })
+                const resp = await doApiCloud(url, reader.result);
                 console.log(resp.data);
-                console.log(FileReader)
-                const url2 = resp.data.data.secure_url;
+
+                const url2 = resp.data.secure_url;
                 console.log(url2);
-                // const urlPic = URL + "/users/profilePic";
-                // const respUser = await axios({
-                //     method: "PATCH",
-                //     url: urlPic,
-                //     data: {
-                //         profilePic: resp.data.data.secure_url
-                //     },
-                //     headers: {
-                //         "x-api-key": localStorage[TOKEN_KEY]
-                //     }
-                // })
-                // console.log(respUser.data)
                 toast.success("nice picture!.");
             }
             catch (err) { console.log(err); }

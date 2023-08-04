@@ -37,3 +37,20 @@ export const doApiMethod = async (_url, _method, _body) => {
     }
 
 }
+
+export const doApiCloud = async (_url, reader_result) => {
+    try {
+        const resp = await axios({
+            url: _url,
+            method: "POST",
+            data: { image: reader_result },
+            headers: {
+                "x-api-key": localStorage[TOKEN_KEY]
+            }
+        })
+        return resp.data;
+    }
+    catch (err) {
+        throw err;
+    }
+}
