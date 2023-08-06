@@ -11,11 +11,14 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { TOKEN_KEY, URL, doApiGet, doApiMethod } from "../services/apiService";
+import { toast } from "react-toastify";
 
-const Post = ({ _id, user_name, img_url, desc, profilePic }) => {
+const Post = ({ likes, likesLength, _id, user_name, img_url, desc, profilePic }) => {
   const [commentsInfo, setCommentsInfo] = useState([]);
   const [refresh, setRefresh] = useState(false);
   const [isLoading, setIsLoading] = useState(false); // Add state for loading
+  const [likesCount, setLikesCount] = useState(likesLength);
+
 
   useEffect(() => {
     doApi();
@@ -57,6 +60,23 @@ const Post = ({ _id, user_name, img_url, desc, profilePic }) => {
     }
   };
 
+  const likePost = async () => {
+    try {
+      const url = URL + "/userPosts/like/" + _id;
+      const urlSinglePost = URL + "/userPosts/single/" + _id;
+      await doApiMethod(url, "PUT");
+
+      const resp = await doApiGet(urlSinglePost);
+      console.log(resp)
+      setLikesCount(resp.likes.length)
+      toast.success("Post liked/Unliked");
+
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
+
   return (
     <div className="bg-white border rounded-sm my-7">
       {/* Header */}
@@ -79,7 +99,7 @@ const Post = ({ _id, user_name, img_url, desc, profilePic }) => {
       {localStorage[TOKEN_KEY] && (
         <div className="flex justify-between px-4 pt-4">
           <div className="flex space-x-4">
-            <HeartIcon className="btn" />
+            <button onClick={likePost}><HeartIcon className="btn" /></button>
 
             <ChatIcon className="btn" />
             <PaperAirplaneIcon className="btn" />
@@ -91,7 +111,7 @@ const Post = ({ _id, user_name, img_url, desc, profilePic }) => {
       {/* Caption */}
       <div>
         <div className="p-5 truncate">
-          <p className="mb-1 font-bold">2 likes</p>
+          <p className="mb-1 font-bold">{likesCount} likes</p>
           <Link to={user_name} className="mr-1 font-bold">
             {user_name}{" "}
           </Link>
