@@ -1,5 +1,4 @@
 import React, { useRef } from 'react';
-import axios from "axios";
 import { URL, TOKEN_KEY, doApiCloud } from "../services/apiService";
 import { toast } from "react-toastify";
 

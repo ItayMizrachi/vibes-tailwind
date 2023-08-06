@@ -11,7 +11,7 @@ import Page404 from "../pages/Page404";
 import Profile from "../pages/Profile";
 import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
-import Cloudinary from "../components/cloudinary";
+import Cloudinary from "../components/Cloudinary";
 import LoginAdmin from "../admin/LoginAdmin";
 import AuthAdminComp from "../admin/AuthAdminComp";
 import EditUser from "../admin/EditUser";

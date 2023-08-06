@@ -54,3 +54,15 @@ export const doApiCloud = async (_url, reader_result) => {
         throw err;
     }
 }
+
+export const imgToString = async (_file) => {
+    return new Promise((resolve, reject) => {
+
+        const reader = new FileReader();
+        reader.readAsDataURL(_file);
+
+        reader.addEventListener("loadend", async () => {
+            resolve(reader.result)
+        })
+    })
+}
