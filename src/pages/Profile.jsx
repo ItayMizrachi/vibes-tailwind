@@ -1,18 +1,23 @@
 import { ChatIcon, HeartIcon } from "@heroicons/react/solid";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { URL, doApiGet } from "../services/apiService";
+import { URL, doApiGet, doApiMethod } from "../services/apiService";
+import { toast } from "react-toastify";
+import { useUserData } from "../hooks/useUserData";
+
 
 const Profile = () => {
   const [postsInfo, setPostsInfo] = useState([]);
   const [userInfo, setUserInfo] = useState([]);
   const { user_name } = useParams(); // Get the user_name from the URL parameter
+  const { userData } = useUserData();
+  const [flag, setFlag] = useState(false);
 
   useEffect(() => {
     if (user_name) {
       doApi(user_name);
     }
-  }, [user_name]);
+  }, [user_name, flag]);
 
   const doApi = async (user_name) => {
     try {
@@ -29,7 +34,7 @@ const Profile = () => {
     if (user_name) {
       doApiUserInfo(user_name);
     }
-  }, [user_name]);
+  }, [user_name, flag]);
 
   const doApiUserInfo = async (user_name) => {
     try {
@@ -41,6 +46,27 @@ const Profile = () => {
       console.log(err);
     }
   };
+
+  const followUser = async () => {
+    try {
+      if (userInfo._id !== userData._id) {
+        const url = URL + "/users/follow/" + userInfo._id;
+        await doApiMethod(url, "PUT");
+        toast.success("User has been followed/Unfollowed");
+        setFlag(!flag);
+        console.log(flag)
+      }
+
+    } catch (error) {
+      console.log(error);
+      console.log("im here");
+    }
+
+
+
+  }
+
+  console.log(userData._id + "    " + userInfo._id)
 
   return (
     <div className="w-full p-10 mx-0 lg:max-w-6xl md:mx-5 xl:mx-auto">
@@ -61,6 +87,10 @@ const Profile = () => {
               <span className="mr-20 text-2xl text-gray-700">
                 {userInfo.user_name}
               </span>
+              <button className="p-2 bg-slate-300 rounded hover:bg-blue-700" onClick={followUser}>
+                {userInfo.followers.find(follower_id => { return follower_id === userData._id }) ? "Unfollow" : "Follow"
+                }
+              </button>
               {/* <div className="inline text-sm font-semibold text-blue-400 cursor-pointer">
         Edit Profile
       </div> */}
@@ -84,11 +114,13 @@ const Profile = () => {
               <div className="mt-2 md:mt-4">
                 <div className="pt-2">
                   <span className="text-lg font-semibold text-gray-700">
-                    {userInfo.name}
+                    <strong>Name: </strong> {userInfo.name}
                   </span>
                 </div>
                 <div className="pt-2">
                   <p className="text-base text-blue-700">{userInfo.desc}</p>
+                </div>
+                <div>
                 </div>
               </div>
             </div>

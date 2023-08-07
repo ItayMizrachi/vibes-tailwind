@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 import { TOKEN_KEY, URL, doApiGet, doApiMethod } from "../services/apiService";
 import { toast } from "react-toastify";
 
+
 const Post = ({ likes, likesLength, _id, user_name, img_url, desc, profilePic }) => {
   const [commentsInfo, setCommentsInfo] = useState([]);
   const [refresh, setRefresh] = useState(false);
@@ -105,7 +106,10 @@ const Post = ({ likes, likesLength, _id, user_name, img_url, desc, profilePic })
             <PaperAirplaneIcon className="btn" />
           </div>
           <BookmarkIcon className="btn" />
+
         </div>
+
+
       )}
 
       {/* Caption */}

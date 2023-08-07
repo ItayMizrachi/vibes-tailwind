@@ -8,6 +8,7 @@ export const useUserData = () => {
   const doApiUser = async () => {
     const url = URL + "/users/userInfo";
     const data = await doApiGet(url);
+    console.log({ data })
     setUserData(data);
     setUserDataFetched(true); // Set userDataFetched to true after data is received
   };
