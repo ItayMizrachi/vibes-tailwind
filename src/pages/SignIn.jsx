@@ -6,7 +6,6 @@ import { toast } from "react-toastify";
 import { TOKEN_KEY, URL, doApiMethod } from "../services/apiService";
 
 const SignIn = () => {
- 
   const nav = useNavigate();
   const {
     register,
@@ -15,35 +14,33 @@ const SignIn = () => {
   } = useForm();
 
   const onSubForm = (_bodyData) => {
-    console.log(_bodyData);
     doApiPost(_bodyData);
   };
 
- const doApiPost = async (_bodyData) => {
-  try {
-    const url = URL + "/users/login";
-    const data = await doApiMethod(url, "POST", _bodyData);
+  const doApiPost = async (_bodyData) => {
+    try {
+      const url = URL + "/users/login";
+      const data = await doApiMethod(url, "POST", _bodyData);
 
-    if (data.token) {
-      // Extract the token's payload to get the expiration date
-      const tokenPayload = JSON.parse(atob(data.token.split('.')[1]));
-      const expirationDate = new Date(tokenPayload.exp * 1000);
+      if (data.token) {
+        // Extract the token's payload to get the expiration date
+        const tokenPayload = JSON.parse(atob(data.token.split(".")[1]));
+        const expirationDate = new Date(tokenPayload.exp * 1000);
 
-      // Store the token and its expiration date in the local storage
-      localStorage.setItem(TOKEN_KEY, data.token);
-      localStorage.setItem('tokenExpiration', expirationDate.getTime());
+        // Store the token and its expiration date in the local storage
+        localStorage.setItem(TOKEN_KEY, data.token);
+        localStorage.setItem("tokenExpiration", expirationDate.getTime());
 
-      toast.success("Welcome, you logged in.");
-      nav("/");
-      window.location.reload();
+        toast.success("Welcome, you logged in.");
+        nav("/");
+        window.location.reload();
+      }
+    } catch (err) {
+      console.log(err);
+      toast.error("User or password is wrong!");
     }
-  } catch (err) {
-    console.log(err);
-    toast.error("User or password is wrong!");
-  }
-};
+  };
 
-  
   return (
     <div className="mt-5 bg-grey-lighter lg:mt-20">
       <div className="container flex flex-col items-center justify-center flex-1 max-w-sm px-2 mx-auto">
@@ -63,11 +60,11 @@ const SignIn = () => {
                 required
               />{" "}
             </div>
-              {errors.user_name && (
-                <div className="text-red-700 ">
-                  * Enter valid username(min 3 chars)
-                </div>
-              )}
+            {errors.user_name && (
+              <div className="text-red-700 ">
+                * Enter valid username(min 3 chars)
+              </div>
+            )}
 
             <div className="relative p-1 mt-2 rounded-md ">
               <div className="absolute inset-y-0 flex items-center pl-3 pointer-events-none">
@@ -79,18 +76,18 @@ const SignIn = () => {
                 type="password"
                 placeholder="password"
                 required
-                />
+              />
             </div>
-              {errors.password && (
-                <div className="text-red-700 ">
-                  * Enter valid password (min 6 chars)
-                </div>
-              )}
+            {errors.password && (
+              <div className="text-red-700 ">
+                * Enter valid password (min 6 chars)
+              </div>
+            )}
 
             <button
               type="submit"
               className="w-full py-3 my-1 mt-2 font-semibold text-center text-white bg-blue-500 rounded hover:bg-blue-600"
-              >
+            >
               Login
             </button>
           </form>
@@ -108,6 +105,3 @@ const SignIn = () => {
 };
 
 export default SignIn;
-
-
-

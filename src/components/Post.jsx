@@ -2,8 +2,7 @@ import {
   BookmarkIcon,
   ChatIcon,
   DotsHorizontalIcon,
-  HeartIcon,
-  PaperAirplaneIcon,
+  HeartIcon
 } from "@heroicons/react/outline";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -80,7 +79,7 @@ const Post = ({ _id, user_name, img_url, desc, profilePic }) => {
           <div className="flex space-x-4">
             <HeartIcon className="btn" />
             <ChatIcon className="btn" />
-            <PaperAirplaneIcon className="btn" />
+            {/* <PaperAirplaneIcon className="btn" /> */}
           </div>
           <BookmarkIcon className="btn" />
         </div>

@@ -2,10 +2,8 @@ import {
   ChatIcon,
   HeartIcon,
   InformationCircleIcon,
-  MenuIcon,
   PlusCircleIcon,
-  SearchIcon,
-  UserGroupIcon,
+  SearchIcon
 } from "@heroicons/react/outline";
 import { HomeIcon, LogoutIcon } from "@heroicons/react/solid";
 import React, { useContext, useRef } from "react";
@@ -18,7 +16,7 @@ const Header = () => {
   const { userSignOut, userData, userDataFetched } = useContext(MyContext);
   const nav = useNavigate();
   const inputRef = useRef();
-  
+
   // useEffect(() => {
   //   onSearchClick();
   // },[inputRef])
@@ -33,7 +31,6 @@ const Header = () => {
     let input_val = inputRef.current.value;
     nav(`/${input_val}`);
   };
-
 
   const onLogOut = () => {
     if (window.confirm("Are you sure you want to log out")) {
@@ -90,7 +87,8 @@ const Header = () => {
           <Link to="about">
             <InformationCircleIcon className="navBtn" />
           </Link>
-          <MenuIcon className="w-10 h-6 cursor-pointer md:hidden" />
+
+          {/* <MenuIcon className="w-10 h-6 cursor-pointer md:hidden" /> */}
 
           {localStorage[TOKEN_KEY] && userData ? (
             <>
@@ -103,13 +101,13 @@ const Header = () => {
               <Link to="addpost">
                 <PlusCircleIcon className="navBtn" />
               </Link>
-              <Link to="groups">
+              {/* <Link to="groups">
                 <UserGroupIcon className="navBtn" />
-              </Link>
+              </Link> */}
               <Link to="chatbot">
                 <ChatIcon className="navBtn" />
               </Link>
-              <LogoutIcon onClick={onLogOut} className="navBtn" />
+              <LogoutIcon onClick={onLogOut} className="lowNavBtn" />
               <Link to={userData.user_name}>
                 <div className="w-10 h-10">
                   <img
@@ -122,11 +120,11 @@ const Header = () => {
             </>
           ) : (
             <>
-              <Link to="signin" className="text-sm font-semibold text-blue-400">
+              <Link to="signin" className="text-sm hidden md:inline-flex font-semibold text-blue-400 ">
                 sign in
               </Link>
-              <p className="font-semibold text-gray-400"> | </p>
-              <Link to="signup" className="text-sm font-semibold text-blue-400">
+              <p className="font-semibold text-gray-400 hidden md:inline-flex"> | </p>
+              <Link to="signup" className="text-sm hidden md:inline-flex font-semibold text-blue-400">
                 sign up
               </Link>
             </>
