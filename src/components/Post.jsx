@@ -70,7 +70,7 @@ const Post = ({ likes, likesLength, _id, user_name, img_url, desc, profilePic })
       const resp = await doApiGet(urlSinglePost);
       console.log(resp)
       setLikesCount(resp.likes.length)
-      toast.success("Post liked/Unliked");
+
 
     } catch (error) {
       console.log(error)
