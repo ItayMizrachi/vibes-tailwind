@@ -1,7 +1,7 @@
 import axios from "axios";
 
 //export const URL = "https://vibes.cyclic.app";
-export const URL = "http://localhost:3005";
+export const URL = "http://localhost:3001";
 export const TOKEN_KEY = "posts_token";
 
 
@@ -35,5 +35,51 @@ export const doApiMethod = async (_url, _method, _body) => {
     catch (err) {
         throw err;
     }
+}
 
+export const doApiMethod2 = async (_url, _method, _body = {}) => {
+    try {
+        const response = await axios({
+            url: _url,
+            method: _method,
+            data: _body,
+            headers: {
+                "x-api-key": localStorage[TOKEN_KEY]
+            }
+        })
+        return response.data;
+    }
+    catch (error) {
+        throw error;
+    }
+}
+
+
+export const doApiCloud = async (_url, reader_result) => {
+    try {
+        const resp = await axios({
+            url: _url,
+            method: "POST",
+            data: { image: reader_result },
+            headers: {
+                "x-api-key": localStorage[TOKEN_KEY]
+            }
+        })
+        return resp.data;
+    }
+    catch (err) {
+        throw err;
+    }
+}
+
+export const imgToString = async (_file) => {
+    return new Promise((resolve, reject) => {
+
+        const reader = new FileReader();
+        reader.readAsDataURL(_file);
+
+        reader.addEventListener("loadend", async () => {
+            resolve(reader.result)
+        })
+    })
 }

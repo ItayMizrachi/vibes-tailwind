@@ -1,24 +1,67 @@
 import {
-  BookmarkIcon,
   ChatIcon,
   DotsHorizontalIcon,
-  HeartIcon
+  HeartIcon,
+  TrashIcon,
 } from "@heroicons/react/outline";
-import React, { useEffect, useState } from "react";
+import { HeartIcon as FullHeart } from "@heroicons/react/solid";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { MyContext } from "../context/myContext";
 import { TOKEN_KEY, URL, doApiGet, doApiMethod } from "../services/apiService";
 import AddComment from "./AddComment";
 import Comments from "./Comments";
 
-const Post = ({ _id, user_name, img_url, desc, profilePic }) => {
+const Post = ({
+  likes,
+  likesLength,
+  _id,
+  post,
+  user_name,
+  img_url,
+  desc,
+  profilePic,
+}) => {
   const [commentsInfo, setCommentsInfo] = useState([]);
   const [refresh, setRefresh] = useState(false);
   const [isLoading, setIsLoading] = useState(false); // Add state for loading
+  const [likesCount, setLikesCount] = useState(likesLength);
+  const { userData } = useContext(MyContext);
 
   useEffect(() => {
     doApi();
   }, [refresh]);
+
+  const deleteItem = async (_delId) => {
+    try {
+      if (window.confirm("Delete item?")) {
+        const url = API_URL + "/categories/" + _delId;
+        const data = await doApiMethod(url, "DELETE");
+        if (data.deletedCount) {
+          doApi();
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deletePost = async () => {
+    try {
+      if (window.confirm("Are you sure you want to delete post?")) {
+        console.log(post._id + "sds")
+        console.log(_id)
+        const url = URL + "/userPosts/" + _id; // Adjust the URL according to your API
+        const data = await doApiMethod(url, "DELETE");
+        if (data.deletedCount) {
+          doApi();
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const doApi = async () => {
     try {
@@ -56,6 +99,19 @@ const Post = ({ _id, user_name, img_url, desc, profilePic }) => {
     }
   };
 
+  const likePost = async () => {
+    try {
+      const url = URL + "/userPosts/like/" + _id;
+      const urlSinglePost = URL + "/userPosts/single/" + _id;
+      await doApiMethod(url, "PUT");
+      const resp = await doApiGet(urlSinglePost);
+      console.log(resp);
+      setLikesCount(resp.likes.length);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="bg-white border rounded-sm my-7">
       {/* Header */}
@@ -77,18 +133,21 @@ const Post = ({ _id, user_name, img_url, desc, profilePic }) => {
       {localStorage[TOKEN_KEY] && (
         <div className="flex justify-between px-4 pt-4">
           <div className="flex space-x-4">
-            <HeartIcon className="btn" />
+            {likes.includes(userData.user_name) ? (
+              <FullHeart onClick={likePost} className="btn text-red-500" />
+            ) : (
+              <HeartIcon onClick={likePost} className="btn" />
+            )}
             <ChatIcon className="btn" />
-            {/* <PaperAirplaneIcon className="btn" /> */}
           </div>
-          <BookmarkIcon className="btn" />
+          <TrashIcon onClick={deletePost} className="btn" />
         </div>
       )}
 
       {/* Caption */}
       <div>
         <div className="p-5 truncate">
-          <p className="mb-1 font-bold">2 likes</p>
+          <p className="mb-1 font-bold">{likesCount} likes</p>
           <Link to={user_name} className="mr-1 font-bold">
             {user_name}
           </Link>

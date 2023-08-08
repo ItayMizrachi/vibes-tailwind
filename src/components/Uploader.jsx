@@ -1,33 +1,54 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useForm } from "react-hook-form";
 import { useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
-import { URL, doApiMethod } from '../services/apiService';
+import { URL, doApiMethod, imgToString } from '../services/apiService';
 
-const Uploader = () => {
-  const nav = useNavigate();
+export default function Uploader() {
   const [isLoading, setIsLoading] = useState(false); // Add state for loading
+  const nav = useNavigate();
+  const uploadRef = useRef();
+  const { register, handleSubmit, formState: { errors }, } = useForm();
+  let url2;
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-
-  const onSubForm = (_bodyData) => {
+  const onSubForm = async (_bodyData) => {
     console.log(_bodyData);
     setIsLoading(true); // Start loading when form is submitted
+    await doApiCloudUpload();
     doApiPost(_bodyData);
+
   };
+
+
+  const doApiCloudUpload = async () => {
+    try {
+      const myFile = uploadRef.current.files[0];
+      const imgData = await imgToString(myFile);
+      const url = URL + "/upload/cloud";
+      const resp = await doApiMethod(url, "POST", { image: imgData })
+      console.log(resp.data);
+      url2 = resp.data.secure_url;
+      console.log(url2);
+      toast.success("nice picture!.");
+    }
+    catch (err) { console.log(err); }
+  }
+
+
+
 
   const doApiPost = async (_bodyData) => {
     try {
       const url = URL + "/userPosts";
+      _bodyData.img_url = url2;
+      console.log(url2);
+      console.log(_bodyData)
       const data = await doApiMethod(url, "POST", _bodyData);
       nav("/");
       if (data._id) {
         toast.success("Post added");
       }
+
     } catch (error) {
       console.log(error);
       toast.error("There's a problem");
@@ -35,6 +56,12 @@ const Uploader = () => {
       setIsLoading(false); // Stop loading after redirecting
     }
   };
+
+
+
+
+
+
 
   return (
     <div className="flex justify-center mt-5 lg:my-20">
@@ -58,21 +85,12 @@ const Uploader = () => {
 
             <div className="mb-4">
               <label className="block">Image</label>
-              <input
-                {...register("img_url", { required: true, minLength: 2 })}
-                className="w-full p-2 mt-1 border rounded-md focus:ring-blue-500 focus:border-blue-500"
-                type="text"
-                placeholder="img url"
-              />
-              {errors.img_url && (
-                <div className="mt-1 text-red-500">* Enter a valid image</div>
-              )}
+              <input ref={uploadRef} type="file" className='w-full p-2 mt-1 border rounded-md focus:ring-blue-500 focus:border-blue-500' />
             </div>
 
             <button
               type="submit"
-              className={`w-full py-3 mt-4 font-semibold text-white bg-blue-500 rounded hover:bg-blue-600 ${
-                isLoading ? 'opacity-50 cursor-not-allowed' : ''}`
+              className={`w-full py-3 mt-4 font-semibold text-white bg-blue-500 rounded hover:bg-blue-600 ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`
               }
               disabled={isLoading}
             >
@@ -82,7 +100,10 @@ const Uploader = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Uploader;
+
+
+
+
