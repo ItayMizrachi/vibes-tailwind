@@ -1,10 +1,8 @@
 import { ChatIcon, HeartIcon } from "@heroicons/react/solid";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
 import { useUserData } from "../hooks/useUserData";
 import { URL, doApiGet, doApiMethod } from "../services/apiService";
-
 
 const Profile = () => {
   const [postsInfo, setPostsInfo] = useState([]);
@@ -52,21 +50,16 @@ const Profile = () => {
       if (userInfo._id !== userData._id) {
         const url = URL + "/users/follow/" + userInfo._id;
         await doApiMethod(url, "PUT");
-        toast.success("User has been followed/Unfollowed");
         setFlag(!flag);
-        console.log(flag)
+        console.log(flag);
       }
-
     } catch (error) {
       console.log(error);
       console.log("im here");
     }
+  };
 
-
-
-  }
-
-  console.log(userData._id + "    " + userInfo._id)
+  console.log(userData._id + "    " + userInfo._id);
 
   return (
     <div className="w-full p-10 mx-0 lg:max-w-6xl md:mx-5 xl:mx-auto">
@@ -87,23 +80,25 @@ const Profile = () => {
               <span className="mr-20 text-2xl text-gray-700">
                 {userInfo.user_name}
               </span>
-              {
-
-                (userData._id !== userInfo._id) &&
-
-                <button className="p-2 bg-slate-300 rounded hover:bg-blue-700" onClick={followUser}>
-                  {userInfo.followers.find(follower_id => { return follower_id === userData._id }) ? "Unfollow" : "Follow"
-                  }
+              {userData._id !== userInfo._id && (
+                <button
+                  className="p-2 my-2 text-white font-semibold bg-blue-500 rounded hover:bg-blue-600"
+                  onClick={followUser}
+                >
+                  {userInfo.followers.find((follower_id) => {
+                    return follower_id === userData._id;
+                  })
+                    ? "Unfollow"
+                    : "Follow"}
                 </button>
-
-
-              }
+              )}
               {/* <div className="inline text-sm font-semibold text-blue-400 cursor-pointer">
         Edit Profile
       </div> */}
               <div className="flex mt-2 md:mt-4">
                 <div className="mr-6">
-                  <span className="font-semibold">{postsInfo.length} </span>posts
+                  <span className="font-semibold">{postsInfo.length} </span>
+                  posts
                 </div>
                 <div className="mr-6">
                   <span className="font-semibold">
@@ -121,14 +116,13 @@ const Profile = () => {
               <div className="mt-2 md:mt-4">
                 <div className="pt-2">
                   <span className="text-lg font-semibold text-gray-700">
-                    <strong>Name: </strong> {userInfo.name}
+                    {userInfo.name}
                   </span>
                 </div>
                 <div className="pt-2">
                   <p className="text-base text-blue-700">{userInfo.desc}</p>
                 </div>
-                <div>
-                </div>
+                <div></div>
               </div>
             </div>
           </div>
@@ -149,8 +143,6 @@ const Profile = () => {
               Gallery
             </button>
           </div>
-
-
 
           {/* Gallery */}
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
@@ -179,17 +171,16 @@ const Profile = () => {
         </>
       ) : (
         <div className="flex flex-col items-center justify-center my-20">
-          <h1 className="mb-2 text-3xl font-semibold text-center">User not found</h1>
+          <h1 className="mb-2 text-3xl font-semibold text-center">
+            User not found
+          </h1>
           <Link to="/">
             <button className="sm:w-full p-3 bg-blue-500 rounded-lg lg:w-auto my-2 border py-4 px-8 text-center text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50">
               Take me home!
             </button>
           </Link>
         </div>
-
-
       )}
-
     </div>
   );
 };

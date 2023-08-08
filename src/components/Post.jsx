@@ -9,6 +9,7 @@ import { HeartIcon as FullHeart } from "@heroicons/react/solid";
 import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import { MyContext } from "../context/myContext";
 import { TOKEN_KEY, URL, doApiGet, doApiMethod } from "../services/apiService";
 import AddComment from "./AddComment";
@@ -38,6 +39,7 @@ const Post = ({
       if (window.confirm("Are you sure you want to delete post?")) {
         const url = URL + "/userPosts/" + _id;
         await doApiMethod(url, "DELETE");
+        toast.info(`Post deleted`);
       }
     } catch (error) {
       console.log(error);
@@ -98,11 +100,13 @@ const Post = ({
     <div className="bg-white border rounded-sm my-7">
       {/* Header */}
       <div className="flex items-center p-5">
-        <img
-          src={profilePic}
-          alt=""
-          className="object-contain w-12 h-12 p-1 mr-3 rounded-full"
-        />
+        <Link to={user_name}>
+          <img
+            src={profilePic}
+            alt=""
+            className="object-contain w-12 h-12 p-1 mr-3 rounded-full"
+          />
+        </Link>
         <Link to={user_name} className="flex-1 font-bold">
           {user_name}
         </Link>
@@ -124,7 +128,10 @@ const Post = ({
           </div>
 
           {user_name === userData.user_name ? (
-            <TrashIcon onClick={deletePost} className="btn" />
+            <TrashIcon
+              onClick={deletePost}
+              className="btn hover:text-red-500"
+            />
           ) : (
             <BookmarkIcon className="btn" />
           )}
