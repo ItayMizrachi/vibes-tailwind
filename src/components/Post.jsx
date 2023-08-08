@@ -1,4 +1,5 @@
 import {
+  BookmarkIcon,
   ChatIcon,
   DotsHorizontalIcon,
   HeartIcon,
@@ -33,24 +34,9 @@ const Post = ({
     doApi();
   }, [refresh]);
 
-  const deleteItem = async (_delId) => {
-    try {
-      if (window.confirm("Delete item?")) {
-        const url = API_URL + "/categories/" + _delId;
-        const data = await doApiMethod(url, "DELETE");
-        if (data.deletedCount) {
-          doApi();
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const deletePost = async () => {
     try {
       if (window.confirm("Are you sure you want to delete post?")) {
-        console.log(post._id + "sds")
         console.log(_id)
         const url = URL + "/userPosts/" + _id; // Adjust the URL according to your API
         const data = await doApiMethod(url, "DELETE");
@@ -140,7 +126,12 @@ const Post = ({
             )}
             <ChatIcon className="btn" />
           </div>
-          <TrashIcon onClick={deletePost} className="btn" />
+     
+          {user_name === userData.user_name ? (
+                 <TrashIcon onClick={deletePost} className="btn" />
+            ) : (
+              <BookmarkIcon className="btn" />
+            )}
         </div>
       )}
 

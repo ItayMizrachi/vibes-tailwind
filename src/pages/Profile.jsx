@@ -159,11 +159,11 @@ const Profile = () => {
                 <div className="absolute top-0 flex items-center justify-center w-full h-full text-white -translate-x-1/2 opacity-0 group-hover:opacity-100 left-1/2 bg-black-rgba">
                   <div className="mr-3 space-x-1">
                     <HeartIcon className="inline h-6" />
-                    <span className="font-semibold">57</span>
+                    <span className="font-semibold">{post.likes.length}</span>
                   </div>
                   <div className="space-x-1">
                     <ChatIcon className="inline h-6" />
-                    <span className="font-semibold">57</span>
+                    <span className="font-semibold">5</span>
                   </div>
                 </div>
               </div>
