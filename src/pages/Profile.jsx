@@ -87,10 +87,17 @@ const Profile = () => {
               <span className="mr-20 text-2xl text-gray-700">
                 {userInfo.user_name}
               </span>
-              <button className="p-2 bg-slate-300 rounded hover:bg-blue-700" onClick={followUser}>
-                {userInfo.followers.find(follower_id => { return follower_id === userData._id }) ? "Unfollow" : "Follow"
-                }
-              </button>
+              {
+
+                (userData._id !== userInfo._id) &&
+
+                <button className="p-2 bg-slate-300 rounded hover:bg-blue-700" onClick={followUser}>
+                  {userInfo.followers.find(follower_id => { return follower_id === userData._id }) ? "Unfollow" : "Follow"
+                  }
+                </button>
+
+
+              }
               {/* <div className="inline text-sm font-semibold text-blue-400 cursor-pointer">
         Edit Profile
       </div> */}
