@@ -18,7 +18,6 @@ const Post = ({
   likes,
   likesLength,
   _id,
-  post,
   user_name,
   img_url,
   desc,
@@ -37,12 +36,8 @@ const Post = ({
   const deletePost = async () => {
     try {
       if (window.confirm("Are you sure you want to delete post?")) {
-        console.log(_id);
-        const url = URL + "/userPosts/" + _id; // Adjust the URL according to your API
-        const data = await doApiMethod(url, "DELETE");
-        // if (data.deletedCount) {
-        //   doApi();
-        // }
+        const url = URL + "/userPosts/" + _id;
+        await doApiMethod(url, "DELETE");
       }
     } catch (error) {
       console.log(error);
@@ -93,6 +88,7 @@ const Post = ({
       const resp = await doApiGet(urlSinglePost);
       console.log(resp);
       setLikesCount(resp.likes.length);
+      setFlag(!flag);
     } catch (error) {
       console.log(error);
     }

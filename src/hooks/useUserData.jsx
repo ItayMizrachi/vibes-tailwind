@@ -23,7 +23,7 @@ export const useUserData = () => {
     if (tokenExpiration) {
       const currentTime = new Date().getTime();
       const expirationTime = new Date(tokenExpiration).getTime();
-
+      console.log(currentTime + '  ' + expirationTime)
       if (currentTime > expirationTime) {
         userSignOut();
       }
@@ -36,7 +36,7 @@ export const useUserData = () => {
     setUserData({});
     setUserDataFetched(false); // Reset userDataFetched when user signs out
   };
-  
+
   // We are returning the userData and userDataFetched state variables as well
   return { userData, userDataFetched, doApiUser, userSignOut };
 };

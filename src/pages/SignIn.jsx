@@ -3,7 +3,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { TOKEN_KEY, URL, doApiMethod } from "../services/apiService";
+import { TOKEN_KEY, URL, doApiMethod, EXP_DATE_KEY } from "../services/apiService";
 
 const SignIn = () => {
   const nav = useNavigate();
@@ -29,6 +29,7 @@ const SignIn = () => {
 
         // Store the token and its expiration date in the local storage
         localStorage.setItem(TOKEN_KEY, data.token);
+        localStorage.setItem(EXP_DATE_KEY, data.expDate);
         localStorage.setItem("tokenExpiration", expirationDate.getTime());
 
         toast.success("Welcome, you logged in.");
