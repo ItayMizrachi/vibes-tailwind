@@ -37,12 +37,12 @@ const Post = ({
   const deletePost = async () => {
     try {
       if (window.confirm("Are you sure you want to delete post?")) {
-        console.log(_id)
+        console.log(_id);
         const url = URL + "/userPosts/" + _id; // Adjust the URL according to your API
         const data = await doApiMethod(url, "DELETE");
-        if (data.deletedCount) {
-          doApi();
-        }
+        // if (data.deletedCount) {
+        //   doApi();
+        // }
       }
     } catch (error) {
       console.log(error);
@@ -126,12 +126,12 @@ const Post = ({
             )}
             <ChatIcon className="btn" />
           </div>
-     
+
           {user_name === userData.user_name ? (
-                 <TrashIcon onClick={deletePost} className="btn" />
-            ) : (
-              <BookmarkIcon className="btn" />
-            )}
+            <TrashIcon onClick={deletePost} className="btn" />
+          ) : (
+            <BookmarkIcon className="btn" />
+          )}
         </div>
       )}
 
