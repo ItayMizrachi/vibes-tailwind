@@ -30,19 +30,19 @@ const Post = ({
   const [likesCount, setLikesCount] = useState(likesLength);
   const { userData } = useContext(MyContext);
 
+
   useEffect(() => {
     doApi();
   }, [refresh]);
 
   const deletePost = async () => {
     try {
+      setRefresh(true)
       if (window.confirm("Are you sure you want to delete post?")) {
         console.log(_id)
-        const url = URL + "/userPosts/" + _id; // Adjust the URL according to your API
+        const url = URL + "/userPosts/" + _id;
         const data = await doApiMethod(url, "DELETE");
-        if (data.deletedCount) {
-          doApi();
-        }
+        setRefresh(false);
       }
     } catch (error) {
       console.log(error);
@@ -93,6 +93,7 @@ const Post = ({
       const resp = await doApiGet(urlSinglePost);
       console.log(resp);
       setLikesCount(resp.likes.length);
+      setFlag(!flag);
     } catch (error) {
       console.log(error);
     }
@@ -126,12 +127,12 @@ const Post = ({
             )}
             <ChatIcon className="btn" />
           </div>
-     
+
           {user_name === userData.user_name ? (
-                 <TrashIcon onClick={deletePost} className="btn" />
-            ) : (
-              <BookmarkIcon className="btn" />
-            )}
+            <TrashIcon onClick={deletePost} className="btn" />
+          ) : (
+            <BookmarkIcon className="btn" />
+          )}
         </div>
       )}
 
