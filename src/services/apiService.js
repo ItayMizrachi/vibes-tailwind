@@ -1,9 +1,9 @@
 import axios from "axios";
 
 //export const URL = "https://vibes.cyclic.app";
-export const URL = "http://localhost:3001";
+export const URL = "http://localhost:3002";
 export const TOKEN_KEY = "posts_token";
-
+export const EXP_DATE_KEY = "user_date";
 
 export const doApiGet = async (_url) => {
     try {
@@ -82,4 +82,13 @@ export const imgToString = async (_file) => {
             resolve(reader.result)
         })
     })
+}
+
+export const checkValidToken = () => {
+    const token = localStorage[TOKEN_KEY];
+    const expDate = localStorage[EXP_DATE_KEY];
+    return token && Date.now() < expDate;
+
+
+
 }

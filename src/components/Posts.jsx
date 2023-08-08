@@ -7,7 +7,7 @@ const Posts = () => {
 
   useEffect(() => {
     doApi();
-  }, []);
+  }, [postsInfo]);
 
   const doApi = async () => {
     try {

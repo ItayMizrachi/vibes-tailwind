@@ -11,7 +11,7 @@ import BottomHeader from "../components/BottomHeader";
 import Header from "../components/Header";
 import Uploader from "../components/Uploader";
 import About from "../pages/About";
-import Chatbot from "../pages/ChatBot";
+import Chatbot from "../pages/Chatbot";
 import Home from "../pages/Home";
 import Page404 from "../pages/Page404";
 import Profile from "../pages/Profile";
@@ -45,7 +45,7 @@ const Router = () => {
         <Route path="/*" element={<Page404 />} />
       </Routes>
 
-    
+
       <Routes>
         <Route path="/admin/:dir/*" element={<AuthAdminComp />} />
       </Routes>

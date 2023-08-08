@@ -18,7 +18,6 @@ const Post = ({
   likes,
   likesLength,
   _id,
-  post,
   user_name,
   img_url,
   desc,
@@ -37,17 +36,18 @@ const Post = ({
 
   const deletePost = async () => {
     try {
-      setRefresh(true)
+
       if (window.confirm("Are you sure you want to delete post?")) {
         console.log(_id)
         const url = URL + "/userPosts/" + _id;
-        const data = await doApiMethod(url, "DELETE");
-        setRefresh(false);
+        await doApiMethod(url, "DELETE");
       }
+
     } catch (error) {
       console.log(error);
     }
   };
+
 
   const doApi = async () => {
     try {
