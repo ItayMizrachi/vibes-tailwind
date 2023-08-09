@@ -16,7 +16,7 @@ import AddComment from "./AddComment";
 import Comments from "./Comments";
 
 const Post = ({
-  post,
+  deletePost,
   likes,
   likesLength,
   _id,
@@ -35,7 +35,7 @@ const Post = ({
     doApiComments();
   }, [refresh]);
 
-  const deletePost = async () => {
+  const deletePost2 = async () => {
     try {
       if (window.confirm("Are you sure you want to delete post?")) {
         const url = URL + "/userPosts/" + _id;
@@ -143,7 +143,7 @@ const Post = ({
 
           {user_name === userData.user_name ? (
             <TrashIcon
-              onClick={deletePost}
+              onClick={() => deletePost(_id)}
               className="btn hover:text-red-500"
             />
           ) : (

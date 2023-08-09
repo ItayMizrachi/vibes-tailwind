@@ -6,10 +6,11 @@ import { URL, doApiGet, doApiMethod } from "../services/apiService";
 
 const Profile = () => {
   const [postsInfo, setPostsInfo] = useState([]);
-  const [userInfo, setUserInfo] = useState([]);
+  const [userInfo, setUserInfo] = useState({});
   const { user_name } = useParams(); // Get the user_name from the URL parameter
   const { userData } = useUserData();
   const [flag, setFlag] = useState(false);
+  const [userNotFound, setUserNotFound] = useState(false);
 
   useEffect(() => {
     if (user_name) {
@@ -42,6 +43,7 @@ const Profile = () => {
       console.log(data);
     } catch (err) {
       console.log(err);
+      setUserNotFound(true);
     }
   };
 
@@ -64,7 +66,7 @@ const Profile = () => {
   return (
     <div className="w-full p-10 mx-0 lg:max-w-6xl md:mx-5 xl:mx-auto">
       {/* Profile Info */}
-      {userInfo.user_name ? (
+      {userInfo?.user_name ? (
         <>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
             <div className="justify-center avatar md:col-span-1">
@@ -170,16 +172,18 @@ const Profile = () => {
           </div>
         </>
       ) : (
-        <div className="flex flex-col items-center justify-center my-20">
-          <h1 className="mb-2 text-3xl font-semibold text-center">
-            User not found
-          </h1>
-          <Link to="/">
-            <button className="sm:w-full p-3 bg-blue-500 rounded-lg lg:w-auto my-2 border py-4 px-8 text-center text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50">
-              Take me home!
-            </button>
-          </Link>
-        </div>
+        userNotFound && (
+          <div className="flex flex-col items-center justify-center my-20">
+            <h1 className="mb-2 text-3xl font-semibold text-center">
+              User not found
+            </h1>
+            <Link to="/">
+              <button className="sm:w-full p-3 bg-blue-500 rounded-lg lg:w-auto my-2 border py-4 px-8 text-center text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50">
+                Take me home!
+              </button>
+            </Link>
+          </div>
+        )
       )}
     </div>
   );

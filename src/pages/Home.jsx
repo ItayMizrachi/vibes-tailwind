@@ -1,5 +1,5 @@
 import React from "react";
-import Posts2 from "../components/Posts2";
+import Posts from "../components/Posts";
 import Recommanded from "../components/Recommanded";
 import SideProfile from "../components/SideProfile";
 import Stories from "../components/Stories";
@@ -13,7 +13,7 @@ const Home = () => {
     >
       <section className="col-span-2">
         {localStorage[TOKEN_KEY] && <Stories />}
-        <Posts2/>
+        <Posts/>
       </section>
 
       {localStorage[TOKEN_KEY] && (

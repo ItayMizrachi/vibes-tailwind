@@ -1,10 +1,12 @@
 import { useLazyLoading } from "mg-js";
 import React, { useEffect, useState } from "react";
-import { URL, doApiGet } from "../services/apiService";
+import { toast } from "react-toastify";
+import { URL, doApiGet, doApiMethod } from "../services/apiService";
 import Post from "./Post";
 
 const Posts2 = () => {
-  const [posts, setPosts] = useState([]);
+  const [postsInfo, setPostsInfo] = useState([]);
+
   const [Intersector, data, setData] = useLazyLoading(
     { initPage: 0, distance: "50px", targetPercent: 0.5 },
     async (page) => {
@@ -18,17 +20,31 @@ const Posts2 = () => {
     }
   );
 
+  const deletePost = async (_id) => {
+    try {
+      if (window.confirm("Are you sure you want to delete post?")) {
+        const url = URL + "/userPosts/" + _id;
+        await doApiMethod(url, "DELETE");
+        setPostsInfo((prevData) => prevData.filter((p) => p._id !== _id));
+        toast.info(`Post deleted`);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    setPosts(data);
+    setPostsInfo(data);
   }, [data]);
 
   return (
     <div>
-      {posts.map((post) => (
+      {postsInfo.map((post) => (
         <Post
+          deletePost={deletePost}
           likes={post.likes}
           likesLength={post.likes.length}
-          key={post._id}
+          key={post._id + Math.random()}
           _id={post._id}
           user_name={post.user?.user_name}
           profilePic={post.user?.profilePic}
