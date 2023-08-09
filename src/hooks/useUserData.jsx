@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { TOKEN_KEY, URL, doApiGet } from "../services/apiService";
 
 export const useUserData = () => {
   const [userData, setUserData] = useState({});
-  const [userDataFetched, setUserDataFetched] = useState(false);
 
   const doApiUser = async () => {
     const url = URL + "/users/userInfo";
     const data = await doApiGet(url);
     setUserData(data);
-    setUserDataFetched(true); // Set userDataFetched to true after data is received
   };
 
   useEffect(() => {
@@ -17,34 +16,54 @@ export const useUserData = () => {
       doApiUser();
     }
   }, []);
+  
+  // useEffect(() => {
+  //   const tokenExpiration = localStorage.tokenExpiration;
+  //   if (tokenExpiration) {
+  //     const currentTime = new Date().getTime();
+  //     const expirationTime = parseInt(tokenExpiration); // Parse as an integer
+  //     console.log(currentTime + " current time");
+  //     console.log(expirationTime + " expiration time");
+  //     if (currentTime > expirationTime) {
+  //       userSignOut();
+  //     }
+  //   }
+  // }, []);
 
   useEffect(() => {
-    const tokenExpiration = localStorage.tokenExpiration;
-    if (tokenExpiration) {
-      const currentTime = new Date().getTime();
-      const expirationTime = new Date(tokenExpiration).getTime();
-      console.log(currentTime + " current time")
-      console.log(tokenExpiration + " expiration time")
-      console.log(currentTime + '  ' + tokenExpiration)
-      if (currentTime > tokenExpiration) {
-        userSignOut();
+    const checkTokenExpiry = () => {
+      const tokenExpiration = localStorage.tokenExpiration;
+      if (tokenExpiration) {
+        const currentTime = new Date().getTime();
+        const expirationTime = parseInt(tokenExpiration);
+        console.log(currentTime + " current time");
+        console.log(expirationTime + " expiration");
+        if (currentTime > expirationTime) {
+          userSignOut();
+        }
       }
-    }
+  
+      // Schedule the next check after a certain interval (e.g., every minute)
+      setTimeout(checkTokenExpiry, 60000); // Check every minute
+    };
+  
+    // Start the initial check
+    checkTokenExpiry();
   }, []);
+  
+  
 
   const userSignOut = () => {
+    if (window.confirm("Are you sure you want to log out")) {
+      localStorage.removeItem(TOKEN_KEY);
+      toast.info("You logged out, see you soon...");
+    }
     localStorage.removeItem(TOKEN_KEY); // Remove the token from localStorage
     localStorage.removeItem("tokenExpiration"); // Remove the token expiration time
     setUserData({});
-    setUserDataFetched(false); // Reset userDataFetched when user signs out
+    window.location.href = "/signin";
   };
 
-  // We are returning the userData and userDataFetched state variables as well
-  return { userData, userDataFetched, doApiUser, userSignOut };
+  return { userData, doApiUser, userSignOut };
 };
 
-
-  // const userSignOut = () => {
-  //   setUserData({});
-  //   setUserDataFetched(false); // Reset userDataFetched when user signs out
-  // };

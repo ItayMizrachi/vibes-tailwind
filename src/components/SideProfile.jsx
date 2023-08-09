@@ -1,20 +1,10 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
 import { MyContext } from "../context/myContext";
-import { TOKEN_KEY } from "../services/apiService";
 
 const SideProfile = () => {
   const { userSignOut, userData } = useContext(MyContext);
   
-  const onLogOut = () => {
-    if (window.confirm("Are you sure you want to log out")) {
-      localStorage.removeItem(TOKEN_KEY);
-      userSignOut();
-      toast.info("You logged out, see you soon...");
-    }
-  };
-
   return (
     <div className="flex items-center justify-between ml-10 mt-14">
       <Link to={userData.user_name}>
@@ -33,7 +23,7 @@ const SideProfile = () => {
       </div>
 
       <button
-        onClick={onLogOut}
+        onClick={userSignOut}
         className="text-sm font-semibold text-blue-400"
       >
         Sign Out
