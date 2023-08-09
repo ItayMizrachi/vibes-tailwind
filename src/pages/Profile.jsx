@@ -102,13 +102,13 @@ const Profile = () => {
                 </div>
                 <div className="mr-6">
                   <span className="font-semibold">
-                    {userInfo.followers?.length}{" "}
+                    {userInfo.followers?.length}
                   </span>
                   followers
                 </div>
                 <div className="mr-6">
                   <span className="font-semibold">
-                    {userInfo.followings?.length}{" "}
+                    {userInfo.followings?.length}
                   </span>
                   following
                 </div>

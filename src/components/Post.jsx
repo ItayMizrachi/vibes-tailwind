@@ -16,6 +16,7 @@ import AddComment from "./AddComment";
 import Comments from "./Comments";
 
 const Post = ({
+  post,
   likes,
   likesLength,
   _id,
@@ -31,7 +32,7 @@ const Post = ({
   const { userData } = useContext(MyContext);
 
   useEffect(() => {
-    doApi();
+    doApiComments();
   }, [refresh]);
 
   const deletePost = async () => {
@@ -46,7 +47,21 @@ const Post = ({
     }
   };
 
-  const doApi = async () => {
+  // const [Intersector, commentsInfo, setCommentsInfo] = useLazyLoading(
+  //   { initPage: 0, distance: "50px", targetPercent: 0.5 },
+  //   async (page) => {
+  //     try {
+  //       const url = URL + `/comments/${_id}?page=${page}` ;
+  //       const d = await doApiGet(url);
+  //       setCommentsInfo(d);
+  //       console.log(d)
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
+  // );
+
+  const doApiComments = async () => {
     try {
       const url = URL + "/comments/" + _id;
       const data = await doApiGet(url);
@@ -88,9 +103,8 @@ const Post = ({
       const urlSinglePost = URL + "/userPosts/single/" + _id;
       await doApiMethod(url, "PUT");
       const resp = await doApiGet(urlSinglePost);
-      console.log(resp);
+      // console.log(resp);
       setLikesCount(resp.likes.length);
-      setFlag(!flag);
     } catch (error) {
       console.log(error);
     }
@@ -119,7 +133,7 @@ const Post = ({
       {localStorage[TOKEN_KEY] && (
         <div className="flex justify-between px-4 pt-4">
           <div className="flex space-x-4">
-            {likes.includes(userData.user_name) ? (
+            {likes?.includes(userData.user_name) ? (
               <FullHeart onClick={likePost} className="btn text-red-500" />
             ) : (
               <HeartIcon onClick={likePost} className="btn" />

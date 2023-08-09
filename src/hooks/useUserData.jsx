@@ -23,8 +23,10 @@ export const useUserData = () => {
     if (tokenExpiration) {
       const currentTime = new Date().getTime();
       const expirationTime = new Date(tokenExpiration).getTime();
-      console.log(currentTime + '  ' + expirationTime)
-      if (currentTime > expirationTime) {
+      console.log(currentTime + " current time")
+      console.log(tokenExpiration + " expiration time")
+      console.log(currentTime + '  ' + tokenExpiration)
+      if (currentTime > tokenExpiration) {
         userSignOut();
       }
     }
