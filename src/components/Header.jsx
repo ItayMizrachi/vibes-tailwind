@@ -8,7 +8,6 @@ import {
 import { HomeIcon, LogoutIcon } from "@heroicons/react/solid";
 import React, { useContext, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import { MyContext } from "../context/myContext";
 import { TOKEN_KEY } from "../services/apiService";
 
@@ -30,15 +29,6 @@ const Header = () => {
   const onSearchClick = () => {
     let input_val = inputRef.current.value;
     nav(`/${input_val}`);
-  };
-
-  const onLogOut = () => {
-    if (window.confirm("Are you sure you want to log out")) {
-      localStorage.removeItem(TOKEN_KEY);
-      userSignOut();
-      nav("/");
-      toast.info("You logged out, see you soon...");
-    }
   };
 
   return (
@@ -107,7 +97,7 @@ const Header = () => {
               <Link to="chatbot">
                 <ChatIcon className="navBtn" />
               </Link>
-              <LogoutIcon onClick={onLogOut} className="lowNavBtn" />
+              <LogoutIcon onClick={userSignOut} className="lowNavBtn" />
               <Link to={userData.user_name}>
                 <div className="w-10 h-10">
                   <img

@@ -1,11 +1,11 @@
 import moment from "moment";
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
-const Comments = ({commentsInfo}) => {
+const Comments = ({ commentsInfo }) => {
   return (
     <div>
-           {commentsInfo.length > 0 && (
+      {commentsInfo.length > 0 && (
         <div className="h-20 ml-10 overflow-y-scroll scrollbar-thumb-black scrollbar-thin">
           {commentsInfo.map((comment) => (
             <div key={comment._id} className="flex items-center mb-3 space-x-2">
@@ -30,7 +30,7 @@ const Comments = ({commentsInfo}) => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default Comments
+export default Comments;
