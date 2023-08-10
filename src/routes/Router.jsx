@@ -18,6 +18,7 @@ import Profile from "../pages/Profile";
 import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
 
+
 const Router = () => {
   return (
     <BrowserRouter>
