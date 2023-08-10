@@ -14,11 +14,11 @@ const Profile = () => {
 
   useEffect(() => {
     if (user_name) {
-      doApi(user_name);
+      doApiUserPosts(user_name);
     }
   }, [user_name, flag]);
 
-  const doApi = async (user_name) => {
+  const doApiUserPosts = async (user_name) => {
     try {
       const url = URL + "/userPosts/userInfo/" + user_name;
       const data = await doApiGet(url);
@@ -26,6 +26,7 @@ const Profile = () => {
       console.log(data);
     } catch (err) {
       console.log(err);
+      setUserNotFound(true);
     }
   };
 
@@ -53,18 +54,17 @@ const Profile = () => {
         const url = URL + "/users/follow/" + userInfo._id;
         await doApiMethod(url, "PUT");
         setFlag(!flag);
-        console.log(flag);
+        //   console.log(flag);
       }
     } catch (error) {
       console.log(error);
-      console.log("im here");
     }
   };
 
-  console.log(userData._id + "    " + userInfo._id);
+  //console.log(userData._id + "    " + userInfo._id);
 
   return (
-    <div className="w-full p-10 mx-0 lg:max-w-6xl md:mx-5 xl:mx-auto">
+    <div className=" p-4 sm:p-10 mx-0 lg:max-w-6xl md:mx-5 xl:mx-auto">
       {/* Profile Info */}
       {userInfo?.user_name ? (
         <>
@@ -99,18 +99,20 @@ const Profile = () => {
       </div> */}
               <div className="flex mt-2 md:mt-4">
                 <div className="mr-6">
-                  <span className="font-semibold">{postsInfo.length} </span>
+                  <span className="font-semibold">
+                    {postsInfo.length + " "}
+                  </span>
                   posts
                 </div>
                 <div className="mr-6">
                   <span className="font-semibold">
-                    {userInfo.followers?.length}
+                    {userInfo.followers?.length + " "}
                   </span>
                   followers
                 </div>
                 <div className="mr-6">
                   <span className="font-semibold">
-                    {userInfo.followings?.length}
+                    {userInfo.followings?.length + " "}
                   </span>
                   following
                 </div>
@@ -130,18 +132,18 @@ const Profile = () => {
           </div>
 
           {/* Buttons */}
-          <hr className="mt-6 border-gray-500" />
+          <hr className="mt-6 border" />
           <div className="flex justify-center gap-10">
-            <button className="flex gap-2 py-4 text-sm font-semibold text-gray-400 border-gray-800 focus:border-t focus:text-gray-600">
+            <button className="flex gap-2 py-4 text-sm font-semibold text-gray-400 border-gray-300 focus:border-t focus:text-gray-600">
               Posts
             </button>
-            <button className="flex gap-2 py-4 text-sm font-semibold text-gray-400 border-gray-800 focus:border-t focus:text-gray-600">
+            <button className="flex gap-2 py-4 text-sm font-semibold text-gray-400 border-gray-300 focus:border-t focus:text-gray-600">
               Liked
             </button>
-            <button className="flex gap-2 py-4 text-sm font-semibold text-gray-400 border-gray-800 focus:border-t focus:text-gray-600">
+            <button className="flex gap-2 py-4 text-sm font-semibold text-gray-400 border-gray-300 focus:border-t focus:text-gray-600">
               Saved
             </button>
-            <button className="flex gap-2 py-4 text-sm font-semibold text-gray-400 border-gray-800 focus:border-t focus:text-gray-600">
+            <button className="flex gap-2 py-4 text-sm font-semibold text-gray-400 border-gray-300 focus:border-t focus:text-gray-600">
               Gallery
             </button>
           </div>

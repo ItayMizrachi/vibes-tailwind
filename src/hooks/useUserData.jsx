@@ -40,6 +40,7 @@ export const useUserData = () => {
         console.log(expirationTime + " expiration");
         if (currentTime > expirationTime) {
           userSignOut();
+          alert("You have been logged out, please login again")
         }
       }
   
