@@ -10,6 +10,7 @@ import React, { useContext, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { MyContext } from "../context/myContext";
 import { TOKEN_KEY } from "../services/apiService";
+import Search from "./Search";
 
 const Header = () => {
   const { userSignOut, userData } = useContext(MyContext);
@@ -60,13 +61,7 @@ const Header = () => {
             <div className="absolute inset-y-0 flex items-center pl-3 pointer-events-none">
               <SearchIcon className="w-5 h-5 text-gray-500" />
             </div>
-            <input
-              className="block w-full pl-10 border-gray-300 rounded-md focus:ring-black focus:border-black sm:text-sm bg-gray-50"
-              type="text"
-              placeholder="Search.."
-              onKeyDown={onKeyboardClick}
-              ref={inputRef}
-            />
+            <Search />
           </div>
         </div>
         {/* right */}

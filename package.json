@@ -25,6 +25,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.45.2",
     "react-router-dom": "^6.14.2",
+    "react-search-autocomplete": "^8.5.2",
     "react-toastify": "^9.1.3",
     "tailwind-forms": "^1.0.6",
     "tailwind-hamburgers": "^1.3.5",
