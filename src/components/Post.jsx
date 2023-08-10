@@ -16,7 +16,6 @@ import Comments from "./Comments";
 
 const Post = ({
   deletePost,
-  likePost,
   likes,
   likesLength,
   _id,
@@ -30,8 +29,7 @@ const Post = ({
   const [isLoading, setIsLoading] = useState(false); // Add state for loading
   const [likesCount, setLikesCount] = useState(likesLength);
   const { userData } = useContext(MyContext);
-
- 
+  const [isLiked, setIsLiked] = useState(false);
 
   // const [Intersector, commentsInfo, setCommentsInfo] = useLazyLoading(
   //   { initPage: 0, distance: "50px", targetPercent: 0.5 },
@@ -49,12 +47,10 @@ const Post = ({
 
   const doApiComments = async () => {
     try {
-      console.log(1)
       const url = URL + "/comments/" + _id;
       const data = await doApiGet(url);
       setCommentsInfo(data);
       //  console.log(data);
-      console.log(2)
     } catch (err) {
       console.log(err);
     }
@@ -85,21 +81,24 @@ const Post = ({
     }
   };
 
-  // const likePost = async () => {
-  //   try {
-  //     const url = URL + "/userPosts/like/" + _id;
-  //     const urlSinglePost = URL + "/userPosts/single/" + _id;
-  //     await doApiMethod(url, "PUT");
-  //     const resp = await doApiGet(urlSinglePost);
-  //     // console.log(resp);
-  //     setLikesCount(resp.likes.length);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const likePost = async () => {
+    try {
+      const url = URL + "/userPosts/like/" + _id;
+      const urlSinglePost = URL + "/userPosts/single/" + _id;
+      await doApiMethod(url, "PUT");
+      const resp = await doApiGet(urlSinglePost);
+      // console.log(resp);
+      setLikesCount(resp.likes.length);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     doApiComments();
+    if (likes?.includes(userData.user_name)) {
+      setIsLiked(true);
+    }
   }, [refresh]);
 
   return (
@@ -125,16 +124,10 @@ const Post = ({
       {localStorage[TOKEN_KEY] && (
         <div className="flex justify-between px-4 pt-4">
           <div className="flex space-x-4">
-            {likes?.includes(userData.user_name) ? (
-              <FullHeart
-                onClick={() => likePost(_id, setLikesCount)}
-                className="btn text-red-500"
-              />
+            {isLiked ? (
+              <FullHeart onClick={likePost} className="btn text-red-500" />
             ) : (
-              <HeartIcon
-                onClick={() => likePost(_id, setLikesCount)}
-                className="btn"
-              />
+              <HeartIcon onClick={likePost} className="btn" />
             )}
             <ChatIcon className="btn" />
           </div>

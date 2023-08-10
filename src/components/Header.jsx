@@ -3,7 +3,7 @@ import {
   HeartIcon,
   InformationCircleIcon,
   PlusCircleIcon,
-  SearchIcon
+  SearchIcon,
 } from "@heroicons/react/outline";
 import { HomeIcon, LogoutIcon } from "@heroicons/react/solid";
 import React, { useContext, useRef } from "react";
@@ -12,7 +12,7 @@ import { MyContext } from "../context/myContext";
 import { TOKEN_KEY } from "../services/apiService";
 
 const Header = () => {
-  const { userSignOut, userData, userDataFetched } = useContext(MyContext);
+  const { userSignOut, userData } = useContext(MyContext);
   const nav = useNavigate();
   const inputRef = useRef();
 
@@ -110,11 +110,20 @@ const Header = () => {
             </>
           ) : (
             <>
-              <Link to="signin" className="text-sm hidden md:inline-flex font-semibold text-blue-400 ">
+              <Link
+                to="signin"
+                className="text-sm hidden md:inline-flex font-semibold text-blue-400 "
+              >
                 sign in
               </Link>
-              <p className="font-semibold text-gray-400 hidden md:inline-flex"> | </p>
-              <Link to="signup" className="text-sm hidden md:inline-flex font-semibold text-blue-400">
+              <p className="font-semibold text-gray-400 hidden md:inline-flex">
+                {" "}
+                |{" "}
+              </p>
+              <Link
+                to="signup"
+                className="text-sm hidden md:inline-flex font-semibold text-blue-400"
+              >
                 sign up
               </Link>
             </>
