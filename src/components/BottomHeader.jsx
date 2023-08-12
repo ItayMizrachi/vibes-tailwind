@@ -1,8 +1,8 @@
 import {
-    ChatIcon,
-    HeartIcon,
-    InformationCircleIcon,
-    PlusCircleIcon,
+  ChatIcon,
+  HeartIcon,
+  InformationCircleIcon,
+  PlusCircleIcon,
 } from "@heroicons/react/outline";
 import { HomeIcon } from "@heroicons/react/solid";
 import React, { useContext, useRef } from "react";
