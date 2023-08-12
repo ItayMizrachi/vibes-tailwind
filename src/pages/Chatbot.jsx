@@ -54,7 +54,7 @@ const Chatbot = () => {
         { headers: options.headers }
       );
       const data = response.data;
-      console.log(data);
+      // console.log(data);
       setMessage(data.choices[0].message);
       setLoading(false);
     } catch (error) {
@@ -64,7 +64,7 @@ const Chatbot = () => {
   };
 
   useEffect(() => {
-    console.log(currentTitle, value, message);
+    // console.log(currentTitle, value, message);
     if (!currentTitle && value && message) {
       setCurrentTitle(value);
     }

@@ -30,7 +30,7 @@ const Profile = () => {
       const url = URL + "/userPosts/userInfo/" + user_name;
       const data = await doApiGet(url);
       setPostsInfo(data);
-      console.log(data);
+      // console.log(data);
     } catch (err) {
       console.log(err);
       setUserNotFound(true);
@@ -42,7 +42,7 @@ const Profile = () => {
       const url = URL + "/users/userInfo/" + user_name;
       const data = await doApiGet(url);
       setUserInfo(data);
-      console.log(data);
+      // console.log(data);
     } catch (err) {
       console.log(err);
       setUserNotFound(true);
