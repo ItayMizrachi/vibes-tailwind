@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import { URL, doApiGet } from "../services/apiService";
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
 const Search = () => {
   const [userNames, setUserNames] = useState([]);

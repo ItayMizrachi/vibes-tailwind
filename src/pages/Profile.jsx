@@ -1,22 +1,29 @@
-import { ChatIcon, HeartIcon } from "@heroicons/react/solid";
-import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { useUserData } from "../hooks/useUserData";
-import { URL, doApiGet, doApiMethod } from "../services/apiService";
+import React, { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import Gallery from "../components/Gallery";
+import Post from "../components/Post";
+import UserNotFound from "../components/UserNotFound";
+import { MyContext } from "../context/myContext";
+import { URL, doApiGet } from "../services/apiService";
 
 const Profile = () => {
   const [postsInfo, setPostsInfo] = useState([]);
   const [userInfo, setUserInfo] = useState({});
   const { user_name } = useParams(); // Get the user_name from the URL parameter
-  const { userData } = useUserData();
-  const [flag, setFlag] = useState(false);
+  const [showGallery, setShowGallery] = useState(true);
+  const [showUserPosts, setShowUserPosts] = useState(false);
   const [userNotFound, setUserNotFound] = useState(false);
+  const { userData, followUser, followFlag } = useContext(MyContext);
 
-  useEffect(() => {
-    if (user_name) {
-      doApiUserPosts(user_name);
+  const show = (type) => {
+    if (type === "userPosts") {
+      setShowGallery(false);
+      setShowUserPosts(true);
+    } else if (type === "gallery") {
+      setShowGallery(true);
+      setShowUserPosts(false);
     }
-  }, [user_name, flag]);
+  };
 
   const doApiUserPosts = async (user_name) => {
     try {
@@ -30,12 +37,6 @@ const Profile = () => {
     }
   };
 
-  useEffect(() => {
-    if (user_name) {
-      doApiUserInfo(user_name);
-    }
-  }, [user_name, flag]);
-
   const doApiUserInfo = async (user_name) => {
     try {
       const url = URL + "/users/userInfo/" + user_name;
@@ -48,20 +49,12 @@ const Profile = () => {
     }
   };
 
-  const followUser = async () => {
-    try {
-      if (userInfo._id !== userData._id) {
-        const url = URL + "/users/follow/" + userInfo._id;
-        await doApiMethod(url, "PUT");
-        setFlag(!flag);
-        //   console.log(flag);
-      }
-    } catch (error) {
-      console.log(error);
+  useEffect(() => {
+    if (user_name) {
+      doApiUserPosts(user_name);
+      doApiUserInfo(user_name);
     }
-  };
-
-  //console.log(userData._id + "    " + userInfo._id);
+  }, [user_name, followFlag]);
 
   return (
     <div className=" p-4 sm:p-10 mx-0 lg:max-w-6xl md:mx-5 xl:mx-auto">
@@ -85,7 +78,7 @@ const Profile = () => {
               {userData._id !== userInfo._id && (
                 <button
                   className="p-2 my-2 text-white font-semibold bg-blue-500 rounded hover:bg-blue-600"
-                  onClick={followUser}
+                  onClick={() => followUser(userInfo._id)}
                 >
                   {userInfo.followers.find((follower_id) => {
                     return follower_id === userData._id;
@@ -95,8 +88,8 @@ const Profile = () => {
                 </button>
               )}
               {/* <div className="inline text-sm font-semibold text-blue-400 cursor-pointer">
-        Edit Profile
-      </div> */}
+                Edit Profile
+              </div> */}
               <div className="flex mt-2 md:mt-4">
                 <div className="mr-6">
                   <span className="font-semibold">
@@ -134,7 +127,10 @@ const Profile = () => {
           {/* Buttons */}
           <hr className="mt-6 border" />
           <div className="flex justify-center gap-10">
-            <button className="flex gap-2 py-4 text-sm font-semibold text-gray-400 border-gray-300 focus:border-t focus:text-gray-600">
+            <button
+              onClick={() => show("userPosts")}
+              className="flex gap-2 py-4 text-sm font-semibold text-gray-400 border-gray-300 focus:border-t focus:text-gray-600"
+            >
               Posts
             </button>
             <button className="flex gap-2 py-4 text-sm font-semibold text-gray-400 border-gray-300 focus:border-t focus:text-gray-600">
@@ -143,49 +139,35 @@ const Profile = () => {
             <button className="flex gap-2 py-4 text-sm font-semibold text-gray-400 border-gray-300 focus:border-t focus:text-gray-600">
               Saved
             </button>
-            <button className="flex gap-2 py-4 text-sm font-semibold text-gray-400 border-gray-300 focus:border-t focus:text-gray-600">
+            <button
+              onClick={() => show("gallery")}
+              className="flex gap-2 py-4 text-sm font-semibold text-gray-400 border-gray-300 focus:border-t focus:text-gray-600"
+            >
               Gallery
             </button>
           </div>
 
           {/* Gallery */}
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
-            {postsInfo.map((post) => (
-              <div key={post._id} className="relative cursor-pointer group">
-                <div className="overflow-hidden">
-                  <img
-                    className="object-cover w-full h-96"
-                    src={post.img_url}
-                    alt="post"
-                  />
-                </div>
-                <div className="absolute top-0 flex items-center justify-center w-full h-full text-white -translate-x-1/2 opacity-0 group-hover:opacity-100 left-1/2 bg-black-rgba">
-                  <div className="mr-3 space-x-1">
-                    <HeartIcon className="inline h-6" />
-                    <span className="font-semibold">{post.likes.length}</span>
-                  </div>
-                  <div className="space-x-1">
-                    <ChatIcon className="inline h-6" />
-                    <span className="font-semibold">5</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+          {showGallery && <Gallery postsInfo={postsInfo} />}
+          {showUserPosts && (
+            <>
+              {postsInfo.map((post) => (
+                <Post
+                  likes={post.likes}
+                  likesLength={post.likes.length}
+                  key={post._id + Math.random()}
+                  _id={post._id}
+                  user_name={post.user?.user_name}
+                  profilePic={post.user?.profilePic}
+                  img_url={post.img_url}
+                  desc={post.description}
+                />
+              ))}
+            </>
+          )}
         </>
       ) : (
-        userNotFound && (
-          <div className="flex flex-col items-center justify-center my-20">
-            <h1 className="mb-2 text-3xl font-semibold text-center">
-              User not found
-            </h1>
-            <Link to="/">
-              <button className="sm:w-full p-3 bg-blue-500 rounded-lg lg:w-auto my-2 border py-4 px-8 text-center text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50">
-                Take me home!
-              </button>
-            </Link>
-          </div>
-        )
+        userNotFound && <UserNotFound />
       )}
     </div>
   );

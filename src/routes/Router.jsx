@@ -17,6 +17,7 @@ import Page404 from "../pages/Page404";
 import Profile from "../pages/Profile";
 import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
+import Test from "../pages/Test";
 
 const Router = () => {
   return (
@@ -35,6 +36,7 @@ const Router = () => {
         <Route path="/:user_name" element={<Profile />} />
         <Route path="chatbot" element={<Chatbot />} />
         <Route path="addpost" element={<Uploader />} />
+        <Route path="test" element={<Test />} />
         {/* <Route path="groups" element={<Groups />} /> */}
 
         <Route path="/admin" element={<LoginAdmin />} />

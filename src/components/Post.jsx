@@ -15,7 +15,6 @@ import AddComment from "./AddComment";
 import Comments from "./Comments";
 
 const Post = ({
-  deletePost,
   likes,
   likesLength,
   _id,
@@ -28,22 +27,22 @@ const Post = ({
   const [refresh, setRefresh] = useState(false);
   const [isLoading, setIsLoading] = useState(false); // Add state for loading
   const [likesCount, setLikesCount] = useState(likesLength);
-  const { userData } = useContext(MyContext);
   const [isLiked, setIsLiked] = useState(false);
+  const { deletePost, userData } = useContext(MyContext);
 
-  // const [Intersector, commentsInfo, setCommentsInfo] = useLazyLoading(
-  //   { initPage: 0, distance: "50px", targetPercent: 0.5 },
-  //   async (page) => {
-  //     try {
-  //       const url = URL + `/comments/${_id}?page=${page}` ;
-  //       const d = await doApiGet(url);
-  //       setCommentsInfo(d);
-  //       console.log(d)
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   }
-  // );
+  const likePost2 = async (_id) => {
+    try {
+      const url = URL + "/userPosts/like/" + _id;
+      const urlSinglePost = URL + "/userPosts/single/" + _id;
+      await doApiMethod(url, "PUT");
+      const resp = await doApiGet(urlSinglePost);
+      // console.log(resp);
+      setLikesCount(resp.likes.length);
+      setIsLiked(!isLiked);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const doApiComments = async () => {
     try {
@@ -56,20 +55,7 @@ const Post = ({
     }
   };
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm();
-
-  const onSubForm = (_bodyData) => {
-    // console.log(_bodyData);
-    setIsLoading(true); // Start loading when form is submitted
-    doApiPost(_bodyData);
-  };
-
-  const doApiPost = async (_bodyData) => {
+  const doApiPostComment = async (_bodyData) => {
     try {
       setRefresh(true);
       const url = URL + "/comments/" + _id;
@@ -81,25 +67,25 @@ const Post = ({
     }
   };
 
-  const likePost = async () => {
-    try {
-      const url = URL + "/userPosts/like/" + _id;
-      const urlSinglePost = URL + "/userPosts/single/" + _id;
-      await doApiMethod(url, "PUT");
-      const resp = await doApiGet(urlSinglePost);
-      // console.log(resp);
-      setLikesCount(resp.likes.length);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
     doApiComments();
     if (likes?.includes(userData.user_name)) {
       setIsLiked(true);
     }
   }, [refresh]);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm();
+
+  const onSubForm = (_bodyData) => {
+    // console.log(_bodyData);
+    setIsLoading(true); // Start loading when form is submitted
+    doApiPostComment(_bodyData);
+  };
 
   return (
     <div className="bg-white border rounded-sm my-7">
@@ -125,10 +111,14 @@ const Post = ({
         <div className="flex justify-between px-4 pt-4">
           <div className="flex space-x-4">
             {isLiked ? (
-              <FullHeart onClick={likePost} className="btn text-red-500" />
+              <FullHeart
+                onClick={() => likePost2(_id)}
+                className="btn text-red-500"
+              />
             ) : (
-              <HeartIcon onClick={likePost} className="btn" />
+              <HeartIcon onClick={() => likePost2(_id)} className="btn" />
             )}
+
             <ChatIcon className="btn" />
           </div>
 

@@ -1,24 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { URL, doApiGet } from "../services/apiService";
+import React, { useContext } from "react";
+import { MyContext } from "../context/myContext";
 import Post from "./Post";
 
 const Posts = () => {
-  const [postsInfo, setPostsInfo] = useState([]);
-
-  useEffect(() => {
-    doApi();
-  }, [postsInfo]);
-
-  const doApi = async () => {
-    try {
-      const url = URL + "/userPosts/allposts";
-      const data = await doApiGet(url);
-      setPostsInfo(data);
-      //  console.log(data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const { postsInfo } = useContext(MyContext);
 
   return (
     <div>
@@ -26,15 +11,15 @@ const Posts = () => {
         <Post
           likes={post.likes}
           likesLength={post.likes.length}
-          key={post._id}
+          key={post._id + Math.random()}
           _id={post._id}
           user_name={post.user?.user_name}
           profilePic={post.user?.profilePic}
           img_url={post.img_url}
           desc={post.description}
-          post={post}
         />
       ))}
+      {/* <Intersector /> */}
     </div>
   );
 };
