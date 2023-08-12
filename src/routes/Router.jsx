@@ -23,37 +23,44 @@ const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/admin*" element={<HeaderAdmin />} />
-        <Route path="/*" element={<Header />} />
+        <Route
+          path="/*"
+          element={
+            <>
+              <Header />
+              <Routes>
+                <Route index element={<Home />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/signin" element={<SignIn />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="/:user_name" element={<Profile />} />
+                <Route path="/chatbot" element={<Chatbot />} />
+                <Route path="/addpost" element={<Uploader />} />
+                <Route path="/test" element={<Test />} />
+                <Route path="/*" element={<Page404 />} />
+              </Routes>
+              <BottomHeader />
+            </>
+          }
+        />
+        <Route
+          path="/admin/*"
+          element={
+            <>
+              <HeaderAdmin />
+              <Routes>
+                <Route index element={<LoginAdmin />} />
+                <Route path="/admin/users" element={<UsersList />} />
+                <Route path="/admin/groups" element={<GroupsList />} />
+                <Route path="/admin/users/edit/:id" element={<EditUser />} />
+                <Route path="/admin/posts" element={<PostsAdmin />} />
+                <Route path="/admin/:dir/*" element={<AuthAdminComp />} />
+                <Route path="/*" element={<Page404 />} />
+              </Routes>
+            </>
+          }
+        />
       </Routes>
-
-      <Routes>
-        <Route index element={<Home />} />
-        <Route path="/*" element={<Page404 />} />
-        <Route path="about" element={<About />} />
-        <Route path="signin" element={<SignIn />} />
-        <Route path="signup" element={<SignUp />} />
-        <Route path="/:user_name" element={<Profile />} />
-        <Route path="chatbot" element={<Chatbot />} />
-        <Route path="addpost" element={<Uploader />} />
-        <Route path="test" element={<Test />} />
-        {/* <Route path="groups" element={<Groups />} /> */}
-
-        <Route path="/admin" element={<LoginAdmin />} />
-        <Route path="/admin/users" element={<UsersList />} />
-        <Route path="/admin/groups" element={<GroupsList />} />
-        <Route path="/admin/users/edit/:id" element={<EditUser />} />
-        <Route path="/admin/posts" element={<PostsAdmin />} />
-        <Route path="/*" element={<Page404 />} />
-      </Routes>
-
-
-      <Routes>
-        <Route path="/admin/:dir/*" element={<AuthAdminComp />} />
-      </Routes>
-
-      {/* <Footer /> */}
-      <BottomHeader />
     </BrowserRouter>
   );
 };
