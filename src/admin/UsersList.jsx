@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { URL, doApiGet, doApiMethod } from "../services/apiService";
 import PagesBtns from "./PagesBtns";
+import { Card, Typography } from "@material-tailwind/react";
 
 const UsersList = () => {
   const nav = useNavigate();
@@ -55,69 +56,73 @@ const UsersList = () => {
   return (
     <div className="container">
       <h1>Users List</h1>
-      <PagesBtns apiUrl={URL + "/users/count"} linkTo={"/admin/users?page="} />
-      <table className="my-3">
-        <thead>
-          <tr>
-            <td>#</td>
-            <td>user_name</td>
-            <td>name</td>
-            <td>email</td>
-            <td>_id</td>
-            <td>role</td>
-            <td>delete</td>
-          </tr>
-        </thead>
-        <tbody>
-          {ar.map((item, i) => {
-            const page = query.get("page") || 1;
-            return (
-              <tr key={i + 1}>
-                <td>{(page - 1) * 5 + i + 1}</td>
-                <td>{item.user_name}</td>
-                <td>{item.name}</td>
-                <td>{item.email}</td>
-                <td>{item._id}</td>
-                <td>
-                  <button
-                    style={{
-                      background: item.role == "admin" ? "orange" : "green",
-                    }}
-                    onClick={() => {
-                      changeRole(item);
-                    }}
-                    className="btn"
-                  >
-                    {item.role}
-                  </button>
-                </td>
-                <td>
-                  <button
-                    onClick={() => {
-                      deleteUser(item._id);
-                    }}
-                    className="btn"
-                  >
-                    DEL
-                  </button>
-                </td>
-                <td>
-                  <button
-                    onClick={() => {
-                      if (item._id != "64c27124871892c1bd068dc6") {
-                        nav("/admin/users/edit/" + item._id);
-                      }
-                    }}
-                    className="btn"
-                  >
-                    Edit
-                  </button>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <PagesBtns
+        apiUrl={URL + "/users/count"}
+        linkTo={"/admin/users?page="} />
+      <Card className="h-full w-full overflow-scroll">
+        <table className="w-full min-w-max table-auto text-left">
+          <thead>
+            <tr>
+              <td>#</td>
+              <td>user_name</td>
+              <td>name</td>
+              <td>email</td>
+              <td>_id</td>
+              <td>role</td>
+              <td>delete</td>
+            </tr>
+          </thead>
+          <tbody>
+            {ar.map((item, i) => {
+              const page = query.get("page") || 1;
+              return (
+                <tr key={i + 1}>
+                  <td>{(page - 1) * 5 + i + 1}</td>
+                  <td>{item.user_name}</td>
+                  <td>{item.name}</td>
+                  <td>{item.email}</td>
+                  <td>{item._id}</td>
+                  <td>
+                    <button
+                      style={{
+                        background: item.role == "admin" ? "orange" : "green",
+                      }}
+                      onClick={() => {
+                        changeRole(item);
+                      }}
+                      className="btn"
+                    >
+                      {item.role}
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      onClick={() => {
+                        deleteUser(item._id);
+                      }}
+                      className="btn"
+                    >
+                      DEL
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      onClick={() => {
+                        if (item._id != "64c27124871892c1bd068dc6") {
+                          nav("/admin/users/edit/" + item._id);
+                        }
+                      }}
+                      className="btn"
+                    >
+                      Edit
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </Card>
     </div>
   );
 };

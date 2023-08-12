@@ -17,6 +17,7 @@ import Page404 from "../pages/Page404";
 import Profile from "../pages/Profile";
 import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
+import { Table } from "../components/Table";
 
 
 const Router = () => {
@@ -36,6 +37,8 @@ const Router = () => {
         <Route path="/:user_name" element={<Profile />} />
         <Route path="chatbot" element={<Chatbot />} />
         <Route path="addpost" element={<Uploader />} />
+        <Route path="table" element={<Table />} />
+
         {/* <Route path="groups" element={<Groups />} /> */}
 
         <Route path="/admin" element={<LoginAdmin />} />

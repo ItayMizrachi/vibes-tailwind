@@ -1,81 +1,119 @@
+import React, { useEffect, useState } from "react";
+import { URL, doApiGet, doApiMethod } from "../services/apiService";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Card, Typography } from "@material-tailwind/react";
-
-const TABLE_HEAD = ["Name", "Job", "Employed", ""];
-
-const TABLE_ROWS = [
-    {
-        name: "John Michael",
-        job: "Manager",
-        date: "23/04/18",
-    },
-    {
-        name: "Alexa Liras",
-        job: "Developer",
-        date: "23/04/18",
-    },
-    {
-        name: "Laurent Perrier",
-        job: "Executive",
-        date: "19/09/17",
-    },
-    {
-        name: "Michael Levi",
-        job: "Developer",
-        date: "24/12/08",
-    },
-    {
-        name: "Richard Gran",
-        job: "Manager",
-        date: "04/10/21",
-    },
-];
+import PagesBtns from "../admin/PagesBtns";
 
 export function Table() {
+
+    const [query] = useSearchParams();
+
+    const HEAD = ["#", "User_name", "Name", "email", "_id"];
+    const [ar, setAr] = useState([]);
+    useEffect(() => {
+        doApi();
+    }, [query]);
+    
+
+    const doApi = async () => {
+        const page = query.get("page") || 1;
+        const url = URL + "/users/usersList?page=" + page;
+        try {
+            const data = await doApiGet(url);
+            console.log(data);
+            setAr(data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const changeRole = async (userInfo) => {
+        const newRole = userInfo.role == "admin" ? "user" : "admin";
+        try {
+            const url = `${URL}/users/changeRole/${userInfo._id}/${newRole}`;
+            const data = await doApiMethod(url, "PATCH");
+            if (data.modifiedCount) {
+                doApi();
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const deleteUser = async (_id) => {
+        if (window.confirm("Are you sure you want to delete?")) {
+            try {
+                const url = `${URL}/users/${_id}`;
+                const data = await doApiMethod(url, "DELETE");
+
+                if (data.deletedCount) {
+                    doApi();
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    };
+
     return (
-        <Card className="h-full w-full overflow-scroll">
-            <table className="w-full min-w-max table-auto text-left">
-                <thead>
-                    <tr>
-                        {TABLE_HEAD.map((head) => (
-                            <th key={head} className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
-                                <Typography
-                                    variant="small"
-                                    color="blue-gray"
-                                    className="font-normal leading-none opacity-70"
-                                >
-                                    {head}
-                                </Typography>
-                            </th>
-                        ))}
-                    </tr>
-                </thead>
-                <tbody>
-                    {TABLE_ROWS.map(({ name, job, date }, index) => (
-                        <tr key={name} className="even:bg-blue-gray-50/50">
-                            <td className="p-4">
-                                <Typography variant="small" color="blue-gray" className="font-normal">
-                                    {name}
-                                </Typography>
-                            </td>
-                            <td className="p-4">
-                                <Typography variant="small" color="blue-gray" className="font-normal">
-                                    {job}
-                                </Typography>
-                            </td>
-                            <td className="p-4">
-                                <Typography variant="small" color="blue-gray" className="font-normal">
-                                    {date}
-                                </Typography>
-                            </td>
-                            <td className="p-4">
-                                <Typography as="a" href="#" variant="small" color="blue-gray" className="font-medium">
-                                    Edit
-                                </Typography>
-                            </td>
+        <div className="container">
+            <PagesBtns
+                apiUrl={URL + "/users/count"}
+                linkTo={"/admin/users?page="} />
+
+            <Card className="h-full w-full overflow-scroll">
+                <table className="w-full min-w-max table-auto text-left">
+                    <thead>
+                        <tr>
+                            {HEAD.map((head) => (
+                                <th key={head} className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+                                    <Typography
+                                        variant="small"
+                                        color="blue-gray"
+                                        className="font-normal leading-none opacity-70"
+                                    >
+                                        {head}
+                                    </Typography>
+                                </th>
+                            ))}
                         </tr>
-                    ))}
-                </tbody>
-            </table>
-        </Card>
+                    </thead>
+                    <tbody>
+                        {
+                            ar.map((item, i) => (
+                                <tr key={i + 1} className="even:bg-blue-gray-50/50">
+                                    <td className="p-4">
+                                        <Typography variant="small" color="blue-gray" className="font-normal">
+                                            {i + 1}
+                                        </Typography>
+                                    </td>
+                                    <td className="p-4">
+                                        <Typography variant="small" color="blue-gray" className="font-normal">
+                                            {item.user_name}
+                                        </Typography>
+                                    </td>
+                                    <td className="p-4">
+                                        <Typography variant="small" color="blue-gray" className="font-normal">
+                                            {item.name}
+                                        </Typography>
+                                    </td>
+                                    <td className="p-4">
+                                        <Typography variant="small" color="blue-gray" className="font-normal">
+                                            {item.email}
+                                        </Typography>
+                                    </td>
+                                    <td className="p-4">
+                                        <Typography variant="small" color="blue-gray" className="font-normal">
+                                            {item._id}
+                                        </Typography>
+                                    </td>
+
+                                </tr>
+                            ))}
+                    </tbody>
+                </table>
+            </Card>
+        </div>
     );
 }
+
