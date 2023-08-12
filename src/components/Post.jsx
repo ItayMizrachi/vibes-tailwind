@@ -113,22 +113,22 @@ const Post = ({
             {isLiked ? (
               <FullHeart
                 onClick={() => likePost2(_id)}
-                className="btn text-red-500"
+                className="post-btn text-red-500"
               />
             ) : (
-              <HeartIcon onClick={() => likePost2(_id)} className="btn" />
+              <HeartIcon onClick={() => likePost2(_id)} className="post-btn" />
             )}
 
-            <ChatIcon className="btn" />
+            <ChatIcon className="post-btn" />
           </div>
 
           {user_name === userData.user_name ? (
             <TrashIcon
               onClick={() => deletePost(_id)}
-              className="btn hover:text-red-500"
+              className="post-btn hover:text-red-500"
             />
           ) : (
-            <BookmarkIcon className="btn" />
+            <BookmarkIcon className="post-btn" />
           )}
         </div>
       )}
