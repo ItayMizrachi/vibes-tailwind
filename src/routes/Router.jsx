@@ -50,16 +50,17 @@ const Router = () => {
               <HeaderAdmin />
               <Routes>
                 <Route index element={<LoginAdmin />} />
-                <Route path="/admin/users" element={<UsersList />} />
-                <Route path="/admin/groups" element={<GroupsList />} />
-                <Route path="/admin/users/edit/:id" element={<EditUser />} />
-                <Route path="/admin/posts" element={<PostsAdmin />} />
-                <Route path="/admin/:dir/*" element={<AuthAdminComp />} />
+                <Route path="/users" element={<UsersList />} />
+                <Route path="/groups" element={<GroupsList />} />
+                <Route path="/users/edit/:id" element={<EditUser />} />
+                <Route path="/posts" element={<PostsAdmin />} />
+                <Route path="/:dir/*" element={<AuthAdminComp />} />
                 <Route path="/*" element={<Page404 />} />
               </Routes>
             </>
           }
         />
+        
       </Routes>
     </BrowserRouter>
   );
