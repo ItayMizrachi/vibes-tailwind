@@ -19,10 +19,10 @@ const PagesBtns = (props) => {
   };
   return (
     <div>
-      <span>Page: </span>
+      <strong> <span>Page: </span></strong>
       {[...Array(pages)].map((item, i) => {
         return (
-          <Link key={i} to={props.linkTo + (i + 1)} className="btn ms-2">
+          <Link key={i} to={props.linkTo + (i + 1)} className="bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-1.5 px-3 rounded-full mr-2">
             {i + 1}
           </Link>
         );

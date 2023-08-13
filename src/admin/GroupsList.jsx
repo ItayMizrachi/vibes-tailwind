@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { URL, doApiGet, doApiMethod } from "../services/apiService";
 import PagesBtns from "./PagesBtns";
+import { Card, Typography } from "@material-tailwind/react";
+
 
 const GroupsList = () => {
   const [query] = useSearchParams();
-  const nav = useNavigate();
   const [ar, setAr] = useState([]);
+  const HEAD = ["#", "Domain user_name", "Name of Group", "Desc", "members", "_id", "Delete"];
+
 
   useEffect(() => {
     doApi();
@@ -38,60 +41,89 @@ const GroupsList = () => {
       }
     }
   };
-  const navi = () => {
-    nav("/createGroup");
-  };
+
 
   return (
     <div className="container">
-      <h1 className="display-4 ">Groups List</h1>
-      <button className="btn btn-success my-2" onClick={navi}>
-        Create new group
-      </button>
+      <h1 className="text-center  text-4xl font-bold text-blue-500 m-3">Groups List</h1>
+      <div className="m-2 my-6">
+        <PagesBtns
+          apiUrl={URL + "/groups/count"}
+          linkTo={"/admin/groups?page="}
+        />
+      </div>
       <hr></hr>
-      <PagesBtns
-        apiUrl={URL + "/groups/count"}
-        linkTo={"/admin/groups?page="}
-      />
-      <table className="table table-striped my-3">
-        <thead>
-          <tr>
-            <td>#</td>
-            <td>name</td>
-            <td>desc</td>
-            <td>_id</td>
-            <td>admin</td>
-            <td>delete</td>
-          </tr>
-        </thead>
-        <tbody>
-          {ar.map((item, i) => {
-            return (
-              <tr key={i + 1}>
-                <td>{i + 1}</td>
-                <td>{item.group_name}</td>
-                <td title={item.description}>
-                  {" "}
-                  {item.description && item.description.substring(0, 15)}...
-                </td>
-                <td>{item.group_admin}</td>
-                <td>{item._id}</td>
-                <td>
-                  <button
-                    onClick={() => {
-                      deleteGroup(item._id);
-                    }}
-                    className="btn btn-danger"
+      <Card className="h-full w-full overflow-scroll">
+        <table className="w-full min-w-max table-auto text-left">
+          <thead>
+            <tr>
+              {HEAD.map((head) => (
+                <th key={head} className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+                  <Typography
+                    variant="small"
+                    color="blue-gray"
+                    className="font-normal leading-none opacity-70"
                   >
-                    DEL
-                  </button>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
+                    {head}
+                  </Typography>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {ar.map((item, i) => {
+              const page = query.get("page") || 1;
+
+              return (
+                <tr key={i + 1} className="even:bg-blue-gray-50/50">
+                  <td className="p-4">
+                    <Typography variant="small" color="blue-gray" className="font-normal">
+                      {(page - 1) * 8 + i + 1}
+                    </Typography>
+                  </td>
+                  <td className="p-4">
+                    <Typography variant="small" color="blue-gray" className="font-normal">
+                      {item.group_admin}
+                    </Typography>
+                  </td>
+                  <td className="p-4">
+                    <Typography variant="small" color="blue-gray" className="font-normal">
+                      {item.group_name}
+                    </Typography>
+                  </td>
+                  <td title={item.description} className="p-4"><Typography variant="small" color="blue-gray" className="font-normal">
+                    {" "}
+                    {item.description && item.description.substring(0, 15)}...
+                  </Typography>
+                  </td>
+                  <td className="p-4">
+                    <Typography variant="small" color="blue-gray" className="font-normal">
+                      {item.members.length}
+                    </Typography>
+                  </td>
+                  <td className="p-4">
+                    <Typography variant="small" color="blue-gray" className="font-normal">
+                      {item._id}
+                    </Typography>
+                  </td>
+                  <td className="p-4">
+                    <button
+                      onClick={() => {
+                        deleteGroup(item._id);
+                      }}
+                      className="hover:scale-125 transition-all duration-150 ease-out cursor-pointer bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4"
+                    >
+                      DEL
+                    </button>
+                  </td>
+
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </Card>
+    </div >
   );
 };
 

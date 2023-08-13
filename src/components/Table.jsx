@@ -4,7 +4,7 @@ import { useSearchParams } from "react-router-dom";
 import PagesBtns from "../admin/PagesBtns";
 import { URL, doApiGet, doApiMethod } from "../services/apiService";
 
-export function Table() {
+const Table = () => {
 
     const [query] = useSearchParams();
 
@@ -13,7 +13,7 @@ export function Table() {
     useEffect(() => {
         doApi();
     }, [query]);
-    
+
 
     const doApi = async () => {
         const page = query.get("page") || 1;
@@ -84,7 +84,7 @@ export function Table() {
                                 <tr key={i + 1} className="even:bg-blue-gray-50/50">
                                     <td className="p-4">
                                         <Typography variant="small" color="blue-gray" className="font-normal">
-                                            {i + 1}
+                                            {(page - 1) * 5 + i + 1}
                                         </Typography>
                                     </td>
                                     <td className="p-4">
@@ -117,3 +117,4 @@ export function Table() {
     );
 }
 
+export default Table;
