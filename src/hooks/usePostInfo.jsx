@@ -1,23 +1,44 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { URL, doApiGet, doApiMethod } from "../services/apiService";
+import { useLazyLoading } from "mg-js";
 
 export const usePostInfo = () => {
   const [postsInfo, setPostsInfo] = useState([]);
 
-  useEffect(() => {
-    doApiPosts();
-  }, []);
+  // useEffect(() => {
+  //   doApiPosts();
+  // }, []);
 
-  const doApiPosts = async () => {
-    try {
-      const url = URL + "/userPosts/allposts";
-      const data = await doApiGet(url);
-      setPostsInfo(data);
-    } catch (err) {
-      console.log(err);
+  // const doApiPosts = async () => {
+  //   try {
+  //     const url = URL + "/userPosts/allposts";
+  //     const data = await doApiGet(url);
+  //     setPostsInfo(data);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
+  // TODO: lazyloading after the bug  in the library is fixed
+  // lazyloading
+
+  const [Intersector, data, setData] = useLazyLoading(
+    { initPage: 0, distance: "50px", targetPercent: 0.5 },
+    async (page) => {
+      try {
+        const url = URL + `/userPosts/allposts?page=${page}`;
+        const d = await doApiGet(url);
+        setData(d);
+      } catch (err) {
+        console.log(err);
+      }
     }
-  };
+  );
+
+  useEffect(() => {
+    setPostsInfo(data);
+  }, [data]);
 
   const deletePost = async (_id) => {
     try {
@@ -31,32 +52,6 @@ export const usePostInfo = () => {
       console.log(error);
     }
   };
- 
-  return { deletePost, postsInfo};
+
+  return { deletePost, postsInfo, Intersector };
 };
-
-
-//TODO: lazyloading after the bug  in the library is fixed
-  //lazyloading
-
-  // const [Intersector, data, setData] = useLazyLoading(
-  //   { initPage: 0, distance: "50px", targetPercent: 0.5 },
-  //   async (page) => {
-  //     try {
-  //       const url = URL + `/userPosts/allposts?page=${page}`;
-  //       const d = await doApiGet(url);
-  //       setData(d);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   }
-  // );
-
-
-  // useEffect(() => {
-  //   setPostsInfo(data);
-  // }, [data]);
-
-
-  //   {/* <Intersector /> */}
-

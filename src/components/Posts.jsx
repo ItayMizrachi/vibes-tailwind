@@ -3,7 +3,7 @@ import { MyContext } from "../context/myContext";
 import Post from "./Post";
 
 const Posts = () => {
-  const { postsInfo } = useContext(MyContext);
+  const { postsInfo, Intersector } = useContext(MyContext);
 
   return (
     <div>
@@ -19,7 +19,7 @@ const Posts = () => {
           desc={post.description}
         />
       ))}
-      {/* <Intersector /> */}
+      <Intersector />
     </div>
   );
 };

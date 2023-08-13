@@ -5,6 +5,7 @@ import Post from "../components/Post";
 import UserNotFound from "../components/UserNotFound";
 import { MyContext } from "../context/myContext";
 import { URL, doApiGet } from "../services/apiService";
+import { useLazyLoading } from "mg-js";
 
 const Profile = () => {
   const [postsInfo, setPostsInfo] = useState([]);
@@ -36,6 +37,29 @@ const Profile = () => {
       setUserNotFound(true);
     }
   };
+
+  // const [Intersector, data, setData] = useLazyLoading(
+  //   { initPage: 0, distance: "50px", targetPercent: 0.5 },
+  //   async (page) => {
+  //     try {
+  //       // const url = URL + `/userPosts/userInfo/Apple?page=${page}}`;
+  //       // const url = "http://localhost:3002/userPosts/userInfo/Apple?page=1";
+  //       const url = `/userPosts/allposts?page=${page}`;
+  //       const d = await doApiGet(url);
+  //       setData(d);
+  //       console.log(data);
+  //       console.log("noy");
+  //     } catch (err) {
+  //       console.log(err);
+  //       setUserNotFound(true);
+  //       console.log("blabla");
+  //     }
+  //   }
+  // );
+
+  // useEffect(() => {
+  //   setPostsInfo(data);
+  // }, [data]);
 
   const doApiUserInfo = async (user_name) => {
     try {
@@ -163,6 +187,7 @@ const Profile = () => {
                   desc={post.description}
                 />
               ))}
+              {/* <Intersector /> */}
             </>
           )}
         </>

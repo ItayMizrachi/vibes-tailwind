@@ -2,7 +2,7 @@ import moment from "moment";
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Comments = ({ commentsInfo }) => {
+const Comments = ({ commentsInfo, Intersector }) => {
   return (
     <div>
       {commentsInfo.length > 0 && (
@@ -27,6 +27,7 @@ const Comments = ({ commentsInfo }) => {
               </p>
             </div>
           ))}
+          <Intersector />
         </div>
       )}
     </div>

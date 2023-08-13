@@ -13,6 +13,7 @@ import { MyContext } from "../context/myContext";
 import { TOKEN_KEY, URL, doApiGet, doApiMethod } from "../services/apiService";
 import AddComment from "./AddComment";
 import Comments from "./Comments";
+import { useLazyLoading } from "mg-js";
 
 const Post = ({
   likes,
@@ -30,7 +31,7 @@ const Post = ({
   const [isLiked, setIsLiked] = useState(false);
   const { deletePost, userData } = useContext(MyContext);
 
-  const likePost2 = async (_id) => {
+  const likePost = async (_id) => {
     try {
       const url = URL + "/userPosts/like/" + _id;
       const urlSinglePost = URL + "/userPosts/single/" + _id;
@@ -44,16 +45,33 @@ const Post = ({
     }
   };
 
-  const doApiComments = async () => {
-    try {
-      const url = URL + "/comments/" + _id;
-      const data = await doApiGet(url);
-      setCommentsInfo(data);
-      //  console.log(data);
-    } catch (err) {
-      console.log(err);
+  const [Intersector, data, setData] = useLazyLoading(
+    { initPage: 0, distance: "50px", targetPercent: 0.5 },
+    async (page) => {
+      try {
+        const url = URL + `/comments/${_id}?page=${page}`;
+        const d = await doApiGet(url);
+        setData(d);
+      } catch (err) {
+        console.log(err);
+      }
     }
-  };
+  );
+
+  // useEffect(() => {
+  //   setCommentsInfo(data);
+  // }, [data]);
+
+  // const doApiComments = async () => {
+  //   try {
+  //     const url = URL + "/comments/" + _id;
+  //     const data = await doApiGet(url);
+  //     setCommentsInfo(data);
+  //     //  console.log(data);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   const doApiPostComment = async (_bodyData) => {
     try {
@@ -68,11 +86,12 @@ const Post = ({
   };
 
   useEffect(() => {
-    doApiComments();
+    setCommentsInfo(data);
+    // doApiComments();
     if (likes?.includes(userData.user_name)) {
       setIsLiked(true);
     }
-  }, [refresh]);
+  }, [refresh, data]);
 
   const {
     register,
@@ -112,11 +131,11 @@ const Post = ({
           <div className="flex space-x-4">
             {isLiked ? (
               <FullHeart
-                onClick={() => likePost2(_id)}
+                onClick={() => likePost(_id)}
                 className="post-btn text-red-500"
               />
             ) : (
-              <HeartIcon onClick={() => likePost2(_id)} className="post-btn" />
+              <HeartIcon onClick={() => likePost(_id)} className="post-btn" />
             )}
 
             <ChatIcon className="post-btn" />
@@ -145,7 +164,7 @@ const Post = ({
       </div>
 
       {/* Comments */}
-      <Comments commentsInfo={commentsInfo} />
+      <Comments Intersector={Intersector} commentsInfo={commentsInfo} />
 
       {/* input box */}
       <AddComment
