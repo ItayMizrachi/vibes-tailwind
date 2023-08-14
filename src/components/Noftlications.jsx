@@ -6,7 +6,7 @@ import { MyContext } from "../context/myContext";
 import { URL, doApiGet } from "../services/apiService";
 
 const Noftlications = () => {
-  const { userData, setShowNoftlications, showNoftlications } =
+  const { userData, setShowNoftlications, showNoftlications, followUser, followFlag } =
     useContext(MyContext);
   const [notifications, setNotifications] = useState([]);
   const [flag, setFlag] = useState(false);
@@ -26,7 +26,7 @@ const Noftlications = () => {
     if (userData._id) {
       doApiNotifications();
     }
-  }, [userData._id]);
+  }, [userData._id, followFlag]);
 
   // useEffect(() => {
   //   if (notifications.length > 0) {
@@ -81,18 +81,35 @@ const Noftlications = () => {
                         </h3>
                       </Link>
                       {item.eventType === "follow" && (
-                        <p>Started following you!</p>
+                        <div>
+                          <p>Started following you!
+                          </p>
+                            <button
+                            className="p-2 my-2 text-white font-semibold bg-blue-500 rounded hover:bg-blue-600"
+                            onClick={() => followUser(item.sender._id)}
+                          >
+                            {item.sender.followers.find((follower_id) => {
+                              return follower_id === userData._id;
+                            })
+                              ? "Unfollow"
+                              : "Follow Back"}
+                          </button>
+                        </div>
                       )}
                       {item.eventType === "like" && (
                         <p>
                           Liked your{" "}
-                          <span className="hover:underline">post!</span>
+                          <Link to={"singlepost/" + item.postId._id}>
+                            <span className="hover:underline">post!</span>
+                          </Link>
                         </p>
                       )}
                       {item.eventType === "comment" && (
                         <p>
                           Commented on your{" "}
-                          <span className="hover:underline">post!</span>
+                          <Link to={"singlepost/" + item.postId._id}>
+                            <span className="hover:underline">post!</span>
+                          </Link>
                         </p>
                       )}
                       <p className="text-gray-400">
@@ -100,13 +117,15 @@ const Noftlications = () => {
                       </p>
                     </div>
                     {item.eventType === "comment" && (
-                      <div>
-                        <img
-                          className="w-10 h-10 rounded-md"
-                          src={item.postId?.img_url}
-                          alt="post"
-                        />
-                      </div>
+                      <Link to={"singlepost/" + item.postId._id}>
+                        <div>
+                          <img
+                            className="w-10 h-10 rounded-md"
+                            src={item.postId?.img_url}
+                            alt="post"
+                          />
+                        </div>
+                      </Link>
                     )}
                     {item.eventType === "like" && (
                       <Link to={"singlepost/" + item.postId._id}>

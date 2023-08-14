@@ -38,28 +38,12 @@ export const usePostInfo = () => {
   //   }
   //   );
 
-    const doApiSinglePost = async () => {
-      try {
-        const url = URL + "/userposts/single/" + post_id;
-        const data = await doApiGet(url);
-        setSinglePostInfo(data);
-        console.log(post_id)
-        console.log(data);
-      } catch (err) {
-        console.log(err);
-        console.log(URL + post_id);
-      }
-    };
+ 
 
   // useEffect(() => {
   //   setPostsInfo(data);
   //   console.log(postsInfo)
   // }, [data]);
-
-  useEffect(() => {
-    doApiSinglePost();
-  }, []);
-
 
   const deletePost = async (_id) => {
     try {
@@ -74,5 +58,5 @@ export const usePostInfo = () => {
     }
   };
 
-  return { deletePost, postsInfo,  singlePostInfo };
+  return { deletePost, postsInfo};
 };
