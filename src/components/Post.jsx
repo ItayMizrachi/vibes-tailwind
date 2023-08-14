@@ -45,33 +45,34 @@ const Post = ({
     }
   };
 
-  const [Intersector, data, setData] = useLazyLoading(
-    { initPage: 0, distance: "50px", targetPercent: 0.5 },
-    async (page) => {
-      try {
-        const url = URL + `/comments/${_id}?page=${page}`;
-        const d = await doApiGet(url);
-        setData(d);
-      } catch (err) {
-        console.log(err);
-      }
-    }
-  );
+  // const [Intersector, data, setData] = useLazyLoading(
+  //   { initPage: 0, distance: "50px", targetPercent: 0.5 },
+  //   async (page) => {
+  //     try {
+  //       //  const url = URL + `/comments/${_id}?page=2`;
+  //       const url = URL + `/comments/${_id}?page=${page}`;
+  //       const d = await doApiGet(url);
+  //       setData(d);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
+  // );
 
   // useEffect(() => {
   //   setCommentsInfo(data);
   // }, [data]);
 
-  // const doApiComments = async () => {
-  //   try {
-  //     const url = URL + "/comments/" + _id;
-  //     const data = await doApiGet(url);
-  //     setCommentsInfo(data);
-  //     //  console.log(data);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+  const doApiComments = async () => {
+    try {
+      const url = URL + "/comments/" + _id;
+      const data = await doApiGet(url);
+      setCommentsInfo(data);
+      //  console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const doApiPostComment = async (_bodyData) => {
     try {
@@ -86,12 +87,11 @@ const Post = ({
   };
 
   useEffect(() => {
-    setCommentsInfo(data);
-    // doApiComments();
+    doApiComments();
     if (likes?.includes(userData.user_name)) {
       setIsLiked(true);
     }
-  }, [refresh, data]);
+  }, [refresh]);
 
   const {
     register,
@@ -164,7 +164,7 @@ const Post = ({
       </div>
 
       {/* Comments */}
-      <Comments Intersector={Intersector} commentsInfo={commentsInfo} />
+      <Comments commentsInfo={commentsInfo} />
 
       {/* input box */}
       <AddComment

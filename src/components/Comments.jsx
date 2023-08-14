@@ -27,7 +27,7 @@ const Comments = ({ commentsInfo, Intersector }) => {
               </p>
             </div>
           ))}
-          <Intersector />
+          {/* <Intersector /> */}
         </div>
       )}
     </div>
