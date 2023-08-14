@@ -52,12 +52,12 @@ const PostsAdmin = () => {
       <hr></hr>
       <Card className="h-full w-full overflow-y-auto scrollbar-thin scrollbar-thumb-black">
         <table className="w-full min-w-max table-auto text-left">
-          <thead>
+          <thead className="shadow-md">
             <tr>
               {HEAD.map((head) => (
                 <th key={head} className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
                   <Typography
-                    variant="small"
+                    variant="large"
                     color="blue-gray"
                     className="font-normal leading-none opacity-70"
                   >
@@ -73,27 +73,27 @@ const PostsAdmin = () => {
               return (
                 <tr key={i + 1} className="even:bg-blue-gray-50/50 hover:bg-gray-100">
                   <td className="p-6">
-                    <Typography variant="small" color="blue-gray" className="font-normal">
+                    <Typography variant="large" color="blue-gray" className="font-normal">
                       {(page - 1) * 15 + i + 1}
                     </Typography>
                   </td>
                   <td className="p-6">
-                    <Typography variant="small" color="blue-gray" className="font-normal">
+                    <Typography variant="large" color="blue-gray" className="font-normal">
                       {item.user?.user_name}
                     </Typography>
                   </td>
                   <td className="p-6">
-                    <Typography variant="small" color="blue-gray" className="font-normal">
+                    <Typography variant="large" color="blue-gray" className="font-normal">
                       {item.user?.name}
                     </Typography>
                   </td>
                   <td className="p-6">
-                    <Typography variant="small" color="blue-gray" className="font-normal">
+                    <Typography variant="large" color="blue-gray" className="font-normal">
                       {item.description}
                     </Typography>
                   </td>
                   <td className="p-6">
-                    <Typography variant="small" color="blue-gray" className="font-normal">
+                    <Typography variant="large" color="blue-gray" className="font-normal">
                       {item._id}
                     </Typography>
                   </td>

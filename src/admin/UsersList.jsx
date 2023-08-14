@@ -67,12 +67,12 @@ const UsersList = () => {
       <hr></hr>
       <Card className="h-full w-full overflow-y-auto scrollbar-thin scrollbar-thumb-black">
         <table className="w-full min-w-max table-auto text-left  ">
-          <thead className="shadow-lg">
+          <thead className="shadow-md">
             <tr>
               {HEAD.map((head) => (
                 <th key={head} className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
                   <Typography
-                    variant="small"
+                    variant="large"
                     color="blue-gray"
                     className="font-normal leading-none opacity-70 "
                   >
@@ -88,38 +88,38 @@ const UsersList = () => {
               return (
                 <tr key={i + 1} className="even:bg-blue-gray-50/50 hover:bg-gray-100">
                   <td className="p-6">
-                    <Typography variant="small" color="blue-gray" className="font-normal">
+                    <Typography variant="large" color="blue-gray" className="font-normal">
                       {(page - 1) * 8 + i + 1}
                     </Typography>
                   </td>
                   <td className="p-6">
-                    <Typography variant="small" color="blue-gray" className="font-normal">
+                    <Typography variant="large" color="blue-gray" className="font-normal">
                       {item.user_name}
                     </Typography>
                   </td>
                   <td className="p-6">
-                    <Typography variant="small" color="blue-gray" className="font-normal">
+                    <Typography variant="large" color="blue-gray" className="font-normal">
                       {item.name}
                     </Typography>
                   </td>
                   <td className="p-6">
-                    <Typography variant="small" color="blue-gray" className="font-normal">
+                    <Typography variant="large" color="blue-gray" className="font-normal">
                       {item.email}
                     </Typography>
                   </td>
                   <td className="p-6">
-                    <Typography variant="small" color="blue-gray" className="font-normal">
+                    <Typography variant="large" color="blue-gray" className="font-normal">
                       {item._id}
                     </Typography>
                   </td>
                   <td className="p-6">
-                    <Typography variant="small" className="font-normal">
+                    <Typography>
                       <button
                      
                         onClick={() => {
                           changeRole(item);
                         }}
-                        className={`transition-all  duration-150 ease-out cursor-pointer
+                        className={`transition-all duration-150 ease-out cursor-pointer
                                        text-white font-bold py-2 px-4 rounded
                                        ${item.role == "user" && "bg-green-600 hover:bg-green-800 "} 
                                         ${item.role == "admin" && "bg-orange-400 hover:bg-orange-500 "} `}
