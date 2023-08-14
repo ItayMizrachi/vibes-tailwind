@@ -5,30 +5,20 @@ import {
   PlusCircleIcon,
 } from "@heroicons/react/outline";
 import { HomeIcon } from "@heroicons/react/solid";
-import React, { useContext, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import { MyContext } from "../context/myContext";
 import { TOKEN_KEY } from "../services/apiService";
 import Noftlications from "./Noftlications";
 
-const Header = () => {
-  const {
-    userData,
-    showNoftlications,
-    setShowNoftlications,
-    toggleNoftlications,
-  } = useContext(MyContext);
+const BottomHeader = () => {
+  const { userData, showNoftlications, toggleNoftlications } =
+    useContext(MyContext);
 
   return (
-    <header className="sticky bottom-0 p-5 left-0 right-0 z-50 px-6 bg-white border-t shadow-s  lg:hidden md:hidden">
+    <header className="sticky bottom-0 p-5 left-0 right-0 z-50  bg-white border-t shadow-s  lg:hidden md:hidden">
       <div className="flex items-center justify-center space-x-7">
-        {showNoftlications && (
-          <Noftlications
-            show={showNoftlications}
-            setShow={setShowNoftlications}
-          />
-        )}
+        {showNoftlications && <Noftlications />}
         {localStorage[TOKEN_KEY] && userData ? (
           <>
             <div onClick={toggleNoftlications} className="relative lowNavBtn">
@@ -66,4 +56,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default BottomHeader;

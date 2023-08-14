@@ -9,6 +9,7 @@ import PostsAdmin from "../admin/PostsAdmin";
 import UsersList from "../admin/UsersList";
 import BottomHeader from "../components/BottomHeader";
 import Header from "../components/Header";
+import SinglePost2 from "../components/SinglePost2";
 import Uploader from "../components/Uploader";
 import About from "../pages/About";
 import Chatbot from "../pages/Chatbot";
@@ -17,7 +18,6 @@ import Page404 from "../pages/Page404";
 import Profile from "../pages/Profile";
 import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
-import Test from "../pages/Test";
 
 const Router = () => {
   return (
@@ -36,7 +36,8 @@ const Router = () => {
                 <Route path="/:user_name" element={<Profile />} />
                 <Route path="/chatbot" element={<Chatbot />} />
                 <Route path="/addpost" element={<Uploader />} />
-                <Route path="/test" element={<Test />} />
+                <Route path="/singlepost/:post_id" element={<SinglePost2 />} />
+                {/* <Route path="/test" element={<Test />} /> */}
                 <Route path="/*" element={<Page404 />} />
               </Routes>
               <BottomHeader />

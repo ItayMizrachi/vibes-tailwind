@@ -1,44 +1,65 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { URL, doApiGet, doApiMethod } from "../services/apiService";
-import { useLazyLoading } from "mg-js";
 
 export const usePostInfo = () => {
   const [postsInfo, setPostsInfo] = useState([]);
+  const [singlePostInfo, setSinglePostInfo] = useState({}); 
+  const { post_id } = useParams();
 
-  // useEffect(() => {
-  //   doApiPosts();
-  // }, []);
+  useEffect(() => {
+    doApiPosts();
+  }, []);
 
-  // const doApiPosts = async () => {
-  //   try {
-  //     const url = URL + "/userPosts/allposts";
-  //     const data = await doApiGet(url);
-  //     setPostsInfo(data);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+  const doApiPosts = async () => {
+    try {
+      const url = URL + "/userPosts/allposts";
+      const data = await doApiGet(url);
+      setPostsInfo(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   // TODO: lazyloading after the bug  in the library is fixed
   // lazyloading
 
-  const [Intersector, data, setData] = useLazyLoading(
-    { initPage: 0, distance: "50px", targetPercent: 0.5 },
-    async (page) => {
+  // const [Intersector, data, setData] = useLazyLoading(
+  //   { initPage: 0, distance: "50px", targetPercent: 0.5 },
+  //   async (page) => {
+  //     try {
+  //       const url = URL + `/userPosts/allposts?page=${page}`;
+  //       const d = await doApiGet(url);
+  //       setData(d);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
+  //   );
+
+    const doApiSinglePost = async () => {
       try {
-        const url = URL + `/userPosts/allposts?page=${page}`;
-        const d = await doApiGet(url);
-        setData(d);
+        const url = URL + "/userposts/single/" + post_id;
+        const data = await doApiGet(url);
+        setSinglePostInfo(data);
+        console.log(post_id)
+        console.log(data);
       } catch (err) {
         console.log(err);
+        console.log(URL + post_id);
       }
-    }
-  );
+    };
+
+  // useEffect(() => {
+  //   setPostsInfo(data);
+  //   console.log(postsInfo)
+  // }, [data]);
 
   useEffect(() => {
-    setPostsInfo(data);
-  }, [data]);
+    doApiSinglePost();
+  }, []);
+
 
   const deletePost = async (_id) => {
     try {
@@ -53,5 +74,5 @@ export const usePostInfo = () => {
     }
   };
 
-  return { deletePost, postsInfo, Intersector };
+  return { deletePost, postsInfo,  singlePostInfo };
 };

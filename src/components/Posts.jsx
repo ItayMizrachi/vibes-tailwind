@@ -17,9 +17,10 @@ const Posts = () => {
           profilePic={post.user?.profilePic}
           img_url={post.img_url}
           desc={post.description}
+          user_id={post.user._id}
         />
       ))}
-      <Intersector />
+      {/* <Intersector /> */}
     </div>
   );
 };

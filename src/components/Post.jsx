@@ -5,7 +5,10 @@ import {
   HeartIcon,
   TrashIcon,
 } from "@heroicons/react/outline";
-import { HeartIcon as FullHeart } from "@heroicons/react/solid";
+import {
+  BookmarkIcon as FullBookMarkIcon,
+  HeartIcon as FullHeart,
+} from "@heroicons/react/solid";
 import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
@@ -13,7 +16,6 @@ import { MyContext } from "../context/myContext";
 import { TOKEN_KEY, URL, doApiGet, doApiMethod } from "../services/apiService";
 import AddComment from "./AddComment";
 import Comments from "./Comments";
-import { useLazyLoading } from "mg-js";
 
 const Post = ({
   likes,
@@ -23,13 +25,36 @@ const Post = ({
   img_url,
   desc,
   profilePic,
+  user_id,
 }) => {
   const [commentsInfo, setCommentsInfo] = useState([]);
   const [refresh, setRefresh] = useState(false);
   const [isLoading, setIsLoading] = useState(false); // Add state for loading
   const [likesCount, setLikesCount] = useState(likesLength);
   const [isLiked, setIsLiked] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
   const { deletePost, userData } = useContext(MyContext);
+
+  const createLikeNotification = async (userId, postId, senderId) => {
+    try {
+      const url = URL + "/notifications/like";
+      const body = { userId, postId, senderId };
+      await doApiMethod(url, "POST", body);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // Function to create a comment notification
+  const createCommentNotification = async (userId, postId, senderId) => {
+    try {
+      const url = URL + "/notifications/comment";
+      const body = { userId, postId, senderId };
+      await doApiMethod(url, "POST", body);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const likePost = async (_id) => {
     try {
@@ -37,9 +62,21 @@ const Post = ({
       const urlSinglePost = URL + "/userPosts/single/" + _id;
       await doApiMethod(url, "PUT");
       const resp = await doApiGet(urlSinglePost);
-      // console.log(resp);
+      if (user_id != userData._id) {
+        await createLikeNotification(user_id, _id, userData._id);
+      }
       setLikesCount(resp.likes.length);
       setIsLiked(!isLiked);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const savePost = async (_id) => {
+    try {
+      const url = URL + "/userPosts/save/" + _id;
+      await doApiMethod(url, "PUT");
+      setIsSaved(!isSaved);
     } catch (error) {
       console.log(error);
     }
@@ -81,6 +118,24 @@ const Post = ({
       await doApiMethod(url, "POST", _bodyData);
       setRefresh(false);
       reset();
+      if (user_id != userData._id) {
+        await createCommentNotification(user_id, _id, userData._id); // Correct parameter names
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteComment = async (commentId) => {
+    try {
+      const url = URL + "/comments/" + commentId;
+      await doApiMethod(url, "DELETE");
+
+      // Delete the associated comment notification
+      await doApiMethod(`/notifications/comment/${commentId}`, "DELETE");
+
+      // Refresh comments
+      doApiComments();
     } catch (error) {
       console.log(error);
     }
@@ -91,14 +146,12 @@ const Post = ({
     if (likes?.includes(userData.user_name)) {
       setIsLiked(true);
     }
+    if (userData?.saved_posts?.includes(_id)) {
+      setIsSaved(true);
+    }
   }, [refresh]);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm();
+  const { register, handleSubmit, reset } = useForm();
 
   const onSubForm = (_bodyData) => {
     // console.log(_bodyData);
@@ -107,7 +160,7 @@ const Post = ({
   };
 
   return (
-    <div className="bg-white border rounded-sm my-7">
+    <div className="bg-white border rounded-2xl my-7  max-h-[100vh]">
       {/* Header */}
       <div className="flex items-center p-5">
         <Link to={user_name}>
@@ -147,7 +200,19 @@ const Post = ({
               className="post-btn hover:text-red-500"
             />
           ) : (
-            <BookmarkIcon className="post-btn" />
+            <>
+              {isSaved ? (
+                <FullBookMarkIcon
+                  onClick={() => savePost(_id)}
+                  className="post-btn"
+                />
+              ) : (
+                <BookmarkIcon
+                  onClick={() => savePost(_id)}
+                  className="post-btn"
+                />
+              )}
+            </>
           )}
         </div>
       )}

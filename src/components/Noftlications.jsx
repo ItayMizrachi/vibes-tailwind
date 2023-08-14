@@ -1,15 +1,38 @@
-import {
-  ArrowRightIcon,
-  ChatIcon,
-  PlusCircleIcon,
-  TrashIcon,
-} from "@heroicons/react/solid";
-import React, { useContext } from "react";
-import { MyContext } from "../context/myContext";
+import { ArrowRightIcon } from "@heroicons/react/solid";
 import moment from "moment";
+import React, { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { MyContext } from "../context/myContext";
+import { URL, doApiGet } from "../services/apiService";
 
-const Noftlications = ({ show, setShow }) => {
-  const { userData } = useContext(MyContext);
+const Noftlications = () => {
+  const { userData, setShowNoftlications, showNoftlications } =
+    useContext(MyContext);
+  const [notifications, setNotifications] = useState([]);
+  const [flag, setFlag] = useState(false);
+
+  const doApiNotifications = async () => {
+    try {
+      const url = URL + "/notifications/" + userData._id;
+      const data = await doApiGet(url);
+      setNotifications(data);
+      setFlag(true);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    if (userData._id) {
+      doApiNotifications();
+    }
+  }, [userData._id]);
+
+  // useEffect(() => {
+  //   if (notifications.length > 0) {
+  //     // console.log(notifications);
+  //   }
+  // }, [notifications]);
 
   return (
     <div className="flex fixed right-0 z-40">
@@ -21,7 +44,7 @@ const Noftlications = ({ show, setShow }) => {
             <div className="bg-white p-2 sticky top-0 z-50">
               <div className="bg-white ">
                 <div
-                  onClick={() => setShow(false)}
+                  onClick={() => setShowNoftlications(false)}
                   className="border-b-2 border-gray-200 chatRow flex justify-between"
                 >
                   <h3 className="text-lg font-semibold">Noftlications</h3>
@@ -31,300 +54,74 @@ const Noftlications = ({ show, setShow }) => {
             </div>
 
             <div>
-              {/* Noftlication */}
-              <div className="justify-center chatRow">
-                <div className="w-10 h-10">
-                  <img
-                    src={userData?.profilePic}
-                    alt="profile pic"
-                    className="object-cover w-full h-full rounded-full cursor-pointer"
-                  />
+              {notifications.length === 0 && flag ? (
+                <div className="justify-center chatRow">
+                  <div className="flex-1 truncate md:inline-flex flex-col">
+                    <h2 className="text-lg">
+                      You have no notifications yet ! :)
+                    </h2>
+                  </div>
                 </div>
-                <div className="flex-1 truncate md:inline-flex flex-col">
-                  <h3 className="font-semibold">{userData.user_name}</h3>
-                  <p>Liked your post!</p>
-                  <p className="text-gray-400">
-                    {moment("2023-08-12T10:25:44.869Z").fromNow()}
-                  </p>
-                </div>
-              </div>
-              {/* end of Noftlication */}
-              {/* check */}
-              {/* Noftlication */}
-              <div className="justify-center chatRow">
-                <div className="w-10 h-10">
-                  <img
-                    src={userData?.profilePic}
-                    alt="profile pic"
-                    className="object-cover w-full h-full rounded-full cursor-pointer"
-                  />
-                </div>
-                <div className="flex-1 truncate md:inline-flex flex-col">
-                  <h3 className="font-semibold">{userData.user_name}</h3>
-                  <p>Commented on your post!</p>
-                  <p className="text-gray-400">
-                    {moment("2023-08-12T10:25:44.869Z").fromNow()}
-                  </p>
-                </div>
-              </div>
-              {/* end of Noftlication */}
-              {/* Noftlication */}
-              <div className="justify-center chatRow">
-                <div className="w-10 h-10">
-                  <img
-                    src={userData?.profilePic}
-                    alt="profile pic"
-                    className="object-cover w-full h-full rounded-full cursor-pointer"
-                  />
-                </div>
-                <div className="flex-1 truncate md:inline-flex flex-col">
-                  <h3 className="font-semibold">{userData.user_name}</h3>
-                  <p>Started Following you ! </p>
-                  <p className="text-gray-400">
-                    {moment("2023-08-12T10:25:44.869Z").fromNow()}
-                  </p>
-                </div>
-              </div>
-              {/* end of Noftlication */}
-              {/* Noftlication */}
-              <div className="justify-center chatRow">
-                <div className="w-10 h-10">
-                  <img
-                    src={userData?.profilePic}
-                    alt="profile pic"
-                    className="object-cover w-full h-full rounded-full cursor-pointer"
-                  />
-                </div>
-                <div className="flex-1 truncate md:inline-flex flex-col">
-                  <h3 className="font-semibold">{userData.user_name}</h3>
-                  <p>Liked your post!</p>
-                </div>
-              </div>
-              {/* end of Noftlication */} {/* Noftlication */}
-              <div className="justify-center chatRow">
-                <div className="w-10 h-10">
-                  <img
-                    src={userData?.profilePic}
-                    alt="profile pic"
-                    className="object-cover w-full h-full rounded-full cursor-pointer"
-                  />
-                </div>
-                <div className="flex-1 truncate md:inline-flex flex-col">
-                  <h3 className="font-semibold">{userData.user_name}</h3>
-                  <p>Liked your post!</p>
-                </div>
-              </div>
-              {/* end of Noftlication */} {/* Noftlication */}
-              <div className="justify-center chatRow">
-                <div className="w-10 h-10">
-                  <img
-                    src={userData?.profilePic}
-                    alt="profile pic"
-                    className="object-cover w-full h-full rounded-full cursor-pointer"
-                  />
-                </div>
-                <div className="flex-1 truncate md:inline-flex flex-col">
-                  <h3 className="font-semibold">{userData.user_name}</h3>
-                  <p>Liked your post!</p>
-                </div>
-              </div>
-              {/* end of Noftlication */} {/* Noftlication */}
-              <div className="justify-center chatRow">
-                <div className="w-10 h-10">
-                  <img
-                    src={userData?.profilePic}
-                    alt="profile pic"
-                    className="object-cover w-full h-full rounded-full cursor-pointer"
-                  />
-                </div>
-                <div className="flex-1 truncate md:inline-flex flex-col">
-                  <h3 className="font-semibold">{userData.user_name}</h3>
-                  <p>Liked your post!</p>
-                </div>
-              </div>
-              {/* end of Noftlication */} {/* Noftlication */}
-              <div className="justify-center chatRow">
-                <div className="w-10 h-10">
-                  <img
-                    src={userData?.profilePic}
-                    alt="profile pic"
-                    className="object-cover w-full h-full rounded-full cursor-pointer"
-                  />
-                </div>
-                <div className="flex-1 truncate md:inline-flex flex-col">
-                  <h3 className="font-semibold">{userData.user_name}</h3>
-                  <p>Liked your post!</p>
-                </div>
-              </div>
-              {/* end of Noftlication */} {/* Noftlication */}
-              <div className="justify-center chatRow">
-                <div className="w-10 h-10">
-                  <img
-                    src={userData?.profilePic}
-                    alt="profile pic"
-                    className="object-cover w-full h-full rounded-full cursor-pointer"
-                  />
-                </div>
-                <div className="flex-1 truncate md:inline-flex flex-col">
-                  <h3 className="font-semibold">{userData.user_name}</h3>
-                  <p>Liked your post!</p>
-                </div>
-              </div>
-              {/* end of Noftlication */} {/* Noftlication */}
-              <div className="justify-center chatRow">
-                <div className="w-10 h-10">
-                  <img
-                    src={userData?.profilePic}
-                    alt="profile pic"
-                    className="object-cover w-full h-full rounded-full cursor-pointer"
-                  />
-                </div>
-                <div className="flex-1 truncate md:inline-flex flex-col">
-                  <h3 className="font-semibold">{userData.user_name}</h3>
-                  <p>Liked your post!</p>
-                </div>
-              </div>
-              {/* end of Noftlication */} {/* Noftlication */}
-              <div className="justify-center chatRow">
-                <div className="w-10 h-10">
-                  <img
-                    src={userData?.profilePic}
-                    alt="profile pic"
-                    className="object-cover w-full h-full rounded-full cursor-pointer"
-                  />
-                </div>
-                <div className="flex-1 truncate md:inline-flex flex-col">
-                  <h3 className="font-semibold">{userData.user_name}</h3>
-                  <p>Liked your post!</p>
-                </div>
-              </div>
-              {/* end of Noftlication */} {/* Noftlication */}
-              <div className="justify-center chatRow">
-                <div className="w-10 h-10">
-                  <img
-                    src={userData?.profilePic}
-                    alt="profile pic"
-                    className="object-cover w-full h-full rounded-full cursor-pointer"
-                  />
-                </div>
-                <div className="flex-1 truncate md:inline-flex flex-col">
-                  <h3 className="font-semibold">{userData.user_name}</h3>
-                  <p>Liked your post!</p>
-                </div>
-              </div>
-              {/* end of Noftlication */} {/* Noftlication */}
-              <div className="justify-center chatRow">
-                <div className="w-10 h-10">
-                  <img
-                    src={userData?.profilePic}
-                    alt="profile pic"
-                    className="object-cover w-full h-full rounded-full cursor-pointer"
-                  />
-                </div>
-                <div className="flex-1 truncate md:inline-flex flex-col">
-                  <h3 className="font-semibold">{userData.user_name}</h3>
-                  <p>Liked your post!</p>
-                </div>
-              </div>
-              {/* end of Noftlication */} {/* Noftlication */}
-              <div className="justify-center chatRow">
-                <div className="w-10 h-10">
-                  <img
-                    src={userData?.profilePic}
-                    alt="profile pic"
-                    className="object-cover w-full h-full rounded-full cursor-pointer"
-                  />
-                </div>
-                <div className="flex-1 truncate md:inline-flex flex-col">
-                  <h3 className="font-semibold">{userData.user_name}</h3>
-                  <p>Liked your post!</p>
-                </div>
-              </div>
-              {/* end of Noftlication */} {/* Noftlication */}
-              <div className="justify-center chatRow">
-                <div className="w-10 h-10">
-                  <img
-                    src={userData?.profilePic}
-                    alt="profile pic"
-                    className="object-cover w-full h-full rounded-full cursor-pointer"
-                  />
-                </div>
-                <div className="flex-1 truncate md:inline-flex flex-col">
-                  <h3 className="font-semibold">{userData.user_name}</h3>
-                  <p>Liked your post!</p>
-                </div>
-              </div>
-              {/* end of Noftlication */} {/* Noftlication */}
-              <div className="justify-center chatRow">
-                <div className="w-10 h-10">
-                  <img
-                    src={userData?.profilePic}
-                    alt="profile pic"
-                    className="object-cover w-full h-full rounded-full cursor-pointer"
-                  />
-                </div>
-                <div className="flex-1 truncate md:inline-flex flex-col">
-                  <h3 className="font-semibold">{userData.user_name}</h3>
-                  <p>Liked your post!</p>
-                </div>
-              </div>
-              {/* end of Noftlication */} {/* Noftlication */}
-              <div className="justify-center chatRow">
-                <div className="w-10 h-10">
-                  <img
-                    src={userData?.profilePic}
-                    alt="profile pic"
-                    className="object-cover w-full h-full rounded-full cursor-pointer"
-                  />
-                </div>
-                <div className="flex-1 truncate md:inline-flex flex-col">
-                  <h3 className="font-semibold">{userData.user_name}</h3>
-                  <p>Liked your post!</p>
-                </div>
-              </div>
-              {/* end of Noftlication */} {/* Noftlication */}
-              <div className="justify-center chatRow">
-                <div className="w-10 h-10">
-                  <img
-                    src={userData?.profilePic}
-                    alt="profile pic"
-                    className="object-cover w-full h-full rounded-full cursor-pointer"
-                  />
-                </div>
-                <div className="flex-1 truncate md:inline-flex flex-col">
-                  <h3 className="font-semibold">{userData.user_name}</h3>
-                  <p>Liked your post!</p>
-                </div>
-              </div>
-              {/* end of Noftlication */} {/* Noftlication */}
-              <div className="justify-center chatRow">
-                <div className="w-10 h-10">
-                  <img
-                    src={userData?.profilePic}
-                    alt="profile pic"
-                    className="object-cover w-full h-full rounded-full cursor-pointer"
-                  />
-                </div>
-                <div className="flex-1 truncate md:inline-flex flex-col">
-                  <h3 className="font-semibold">{userData.user_name}</h3>
-                  <p>Liked your post!</p>
-                </div>
-              </div>
-              {/* end of Noftlication */} {/* Noftlication */}
-              <div className="justify-center chatRow">
-                <div className="w-10 h-10">
-                  <img
-                    src={userData?.profilePic}
-                    alt="profile pic"
-                    className="object-cover w-full h-full rounded-full cursor-pointer"
-                  />
-                </div>
-                <div className="flex-1 truncate md:inline-flex flex-col">
-                  <h3 className="font-semibold">{userData.user_name}</h3>
-                  <p>Liked your post!</p>
-                </div>
-              </div>
-              {/* end of Noftlication */}
+              ) : (
+                notifications.map((item, index) => (
+                  <div key={index} className="justify-center chatRow">
+                    <div className="w-10 h-10">
+                      <Link to={item.sender.user_name}>
+                        <img
+                          src={item.sender.profilePic}
+                          alt="profile pic"
+                          className="object-cover w-full h-full rounded-full cursor-pointer"
+                        />
+                      </Link>
+                    </div>
+                    <div className="flex-1 truncate md:inline-flex flex-col">
+                      <Link to={item.sender.user_name}>
+                        <h3 className="font-semibold hover:underline">
+                          {item.sender.user_name}
+                        </h3>
+                      </Link>
+                      {item.eventType === "follow" && (
+                        <p>Started following you!</p>
+                      )}
+                      {item.eventType === "like" && (
+                        <p>
+                          Liked your{" "}
+                          <span className="hover:underline">post!</span>
+                        </p>
+                      )}
+                      {item.eventType === "comment" && (
+                        <p>
+                          Commented on your{" "}
+                          <span className="hover:underline">post!</span>
+                        </p>
+                      )}
+                      <p className="text-gray-400">
+                        {moment(item.date_created).fromNow()}
+                      </p>
+                    </div>
+                    {item.eventType === "comment" && (
+                      <div>
+                        <img
+                          className="w-10 h-10 rounded-md"
+                          src={item.postId?.img_url}
+                          alt="post"
+                        />
+                      </div>
+                    )}
+                    {item.eventType === "like" && (
+                      <Link to={"singlepost/" + item.postId._id}>
+                        <div>
+                          <img
+                            className="w-10 h-10 rounded-md"
+                            src={item.postId?.img_url}
+                            alt="post"
+                          />
+                        </div>
+                      </Link>
+                    )}
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </div>

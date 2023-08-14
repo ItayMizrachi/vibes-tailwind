@@ -6,34 +6,21 @@ import {
   SearchIcon,
 } from "@heroicons/react/outline";
 import { HomeIcon, LogoutIcon } from "@heroicons/react/solid";
-import React, { useContext, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import { MyContext } from "../context/myContext";
 import { TOKEN_KEY } from "../services/apiService";
-import Search from "./Search";
 import Noftlications from "./Noftlications";
-import { useState } from "react";
+import Search from "./Search";
 
 const Header = () => {
-  const {
-    userSignOut,
-    userData,
-    showNoftlications,
-    setShowNoftlications,
-    toggleNoftlications,
-  } = useContext(MyContext);
-  const nav = useNavigate();
-  const inputRef = useRef();
+  const { userSignOut, userData, showNoftlications, toggleNoftlications } =
+    useContext(MyContext);
 
   return (
     <header className="sticky top-0 z-50 px-6 bg-white border-b shadow-s">
       <div className="flex justify-between max-w-6xl mx-5 lg:mx-auto">
-        {showNoftlications && (
-          <Noftlications
-            show={showNoftlications}
-            setShow={setShowNoftlications}
-          />
-        )}
+        {showNoftlications && <Noftlications />}
         {/* left */}
         <div className="relative hidden w-24 h-24 cursor-pointer lg:inline-grid">
           <Link to="/">
