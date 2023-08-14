@@ -44,17 +44,17 @@ const HeaderAdmin = () => {
         {localStorage[TOKEN_KEY] && (
           <ul className="flex space-x-4">
             <li>
-              <Link className="hover:underline" to="/admin/users">
+              <Link className="hover:underline font-semibold text-lg" to="/admin/users">
                 Users List
               </Link>
             </li>
             <li>
-              <Link className="hover:underline" to="/admin/groups">
+              <Link className="hover:underline font-semibold text-lg" to="/admin/groups">
                 Groups List
               </Link>
             </li>
             <li>
-              <Link className="hover:underline" to="/admin/posts">
+              <Link className="hover:underline font-semibold text-lg" to="/admin/posts">
                 Posts List
               </Link>
             </li>
