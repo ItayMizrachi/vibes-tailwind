@@ -5,7 +5,7 @@ import { URL, doApiGet, doApiMethod } from "../services/apiService";
 
 export const usePostInfo = () => {
   const [postsInfo, setPostsInfo] = useState([]);
-  const [singlePostInfo, setSinglePostInfo] = useState({}); 
+  const [singlePostInfo, setSinglePostInfo] = useState({});
   const { post_id } = useParams();
 
   useEffect(() => {
@@ -38,8 +38,6 @@ export const usePostInfo = () => {
   //   }
   //   );
 
- 
-
   // useEffect(() => {
   //   setPostsInfo(data);
   //   console.log(postsInfo)
@@ -58,5 +56,5 @@ export const usePostInfo = () => {
     }
   };
 
-  return { deletePost, postsInfo};
+  return { deletePost, postsInfo };
 };

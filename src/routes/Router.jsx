@@ -10,6 +10,7 @@ import UsersList from "../admin/UsersList";
 import BottomHeader from "../components/BottomHeader";
 import Header from "../components/Header";
 import SinglePost2 from "../components/SinglePost2";
+import Table from "../components/Table";
 import Uploader from "../components/Uploader";
 import About from "../pages/About";
 import Chatbot from "../pages/Chatbot";
@@ -37,7 +38,7 @@ const Router = () => {
                 <Route path="/chatbot" element={<Chatbot />} />
                 <Route path="/addpost" element={<Uploader />} />
                 <Route path="/singlepost/:post_id" element={<SinglePost2 />} />
-                {/* <Route path="/test" element={<Test />} /> */}
+                <Route path="/table" element={<Table />} />
                 <Route path="/*" element={<Page404 />} />
               </Routes>
               <BottomHeader />
