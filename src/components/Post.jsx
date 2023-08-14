@@ -160,7 +160,7 @@ const Post = ({
   };
 
   return (
-    <div className="bg-white border rounded-2xl my-7  max-h-[100vh]">
+    <div className="bg-white border rounded-2xl my-7">
       {/* Header */}
       <div className="flex items-center p-5">
         <Link to={user_name}>
