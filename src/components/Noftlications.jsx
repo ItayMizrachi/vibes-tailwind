@@ -30,7 +30,7 @@ const Noftlications = ({ show, setShow }) => {
               </div>
             </div>
 
-            <div className="mt-3">
+            <div>
               {/* Noftlication */}
               <div className="justify-center chatRow">
                 <div className="w-10 h-10">
