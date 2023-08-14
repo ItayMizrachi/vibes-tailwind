@@ -86,7 +86,7 @@ const Noftlications = () => {
                           </p>
                             <button
                             className="p-2 my-2 text-white font-semibold bg-blue-500 rounded hover:bg-blue-600"
-                            onClick={() => followUser(item.sender._id)}
+                            onClick={() => followUser(item.sender?._id)}
                           >
                             {item.sender.followers.find((follower_id) => {
                               return follower_id === userData._id;
@@ -99,7 +99,7 @@ const Noftlications = () => {
                       {item.eventType === "like" && (
                         <p>
                           Liked your{" "}
-                          <Link to={"singlepost/" + item.postId._id}>
+                          <Link to={"singlepost/" + item.postId?._id}>
                             <span className="hover:underline">post!</span>
                           </Link>
                         </p>
@@ -107,7 +107,7 @@ const Noftlications = () => {
                       {item.eventType === "comment" && (
                         <p>
                           Commented on your{" "}
-                          <Link to={"singlepost/" + item.postId._id}>
+                          <Link to={"singlepost/" + item.postId?._id}>
                             <span className="hover:underline">post!</span>
                           </Link>
                         </p>
@@ -117,7 +117,7 @@ const Noftlications = () => {
                       </p>
                     </div>
                     {item.eventType === "comment" && (
-                      <Link to={"singlepost/" + item.postId._id}>
+                      <Link to={"singlepost/" + item.postId?._id}>
                         <div>
                           <img
                             className="w-10 h-10 rounded-md"
@@ -128,7 +128,7 @@ const Noftlications = () => {
                       </Link>
                     )}
                     {item.eventType === "like" && (
-                      <Link to={"singlepost/" + item.postId._id}>
+                      <Link to={"singlepost/" + item.postId?._id}>
                         <div>
                           <img
                             className="w-10 h-10 rounded-md"
