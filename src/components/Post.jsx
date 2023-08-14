@@ -44,6 +44,7 @@ const Post = ({
     }
   };
 
+
   const doApiComments = async () => {
     try {
       const url = URL + "/comments/" + _id;
@@ -128,7 +129,9 @@ const Post = ({
               className="btn hover:text-red-500"
             />
           ) : (
-            <BookmarkIcon className="btn" />
+            <BookmarkIcon
+
+              className="btn" />
           )}
         </div>
       )}

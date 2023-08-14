@@ -8,7 +8,7 @@ const UsersList = () => {
   const nav = useNavigate();
   const [query] = useSearchParams();
   const [ar, setAr] = useState([]);
-  const HEAD = ["#", "User_name", "Name", "Email", "_id", "Role", "Delete", "Edit"];
+  const HEAD = ["#", "User_name", "Name", "Email", "_id", "Role", "Edit", "Delete"];
 
   useEffect(() => {
     doApi();
@@ -66,8 +66,8 @@ const UsersList = () => {
       </div>
       <hr></hr>
       <Card className="h-full w-full overflow-scroll">
-        <table className="w-full min-w-max table-auto text-left">
-          <thead>
+        <table className="w-full min-w-max table-auto text-left ">
+          <thead className="shadow-lg">
             <tr>
               {HEAD.map((head) => (
                 <th key={head} className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
@@ -130,16 +130,6 @@ const UsersList = () => {
                   <td className="p-4">
                     <button
                       onClick={() => {
-                        deleteUser(item._id);
-                      }}
-                      className="hover:scale-125 transition-all duration-150 ease-out cursor-pointer bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4"
-                    >
-                      DEL
-                    </button>
-                  </td>
-                  <td className="p-4">
-                    <button
-                      onClick={() => {
                         if (item._id != "64c27124871892c1bd068dc6") {
                           nav("/admin/users/edit/" + item._id);
                         }
@@ -147,6 +137,16 @@ const UsersList = () => {
                       className="hover:scale-125 transition-all duration-150 ease-out cursor-pointer bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
                     >
                       Edit
+                    </button>
+                  </td>
+                  <td className="p-4">
+                    <button
+                      onClick={() => {
+                        deleteUser(item._id);
+                      }}
+                      className="hover:scale-125 transition-all duration-150 ease-out cursor-pointer bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4"
+                    >
+                      DEL
                     </button>
                   </td>
                 </tr>
