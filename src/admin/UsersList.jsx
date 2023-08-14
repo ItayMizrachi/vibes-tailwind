@@ -55,9 +55,9 @@ const UsersList = () => {
   };
 
   return (
-    <div className="container ">
+    <div className="container  mx-auto mt-20">
 
-      <h1 className="text-center text-4xl font-bold text-blue-500 m-3" >Users List</h1>
+      <h1 className="text-center  text-4xl font-bold text-blue-500 m-3" >Users List</h1>
 
       <div className="m-2 my-6 ">
         <PagesBtns
@@ -65,8 +65,8 @@ const UsersList = () => {
           linkTo={"/admin/users?page="} />
       </div>
       <hr></hr>
-      <Card className="h-full w-full overflow-scroll">
-        <table className="w-full min-w-max table-auto text-left ">
+      <Card className="h-full w-full overflow-y-auto scrollbar-thin scrollbar-thumb-black">
+        <table className="w-full min-w-max table-auto text-left  ">
           <thead className="shadow-lg">
             <tr>
               {HEAD.map((head) => (
@@ -74,7 +74,7 @@ const UsersList = () => {
                   <Typography
                     variant="small"
                     color="blue-gray"
-                    className="font-normal leading-none opacity-70"
+                    className="font-normal leading-none opacity-70 "
                   >
                     {head}
                   </Typography>
@@ -86,65 +86,66 @@ const UsersList = () => {
             {ar.map((item, i) => {
               const page = query.get("page") || 1;
               return (
-                <tr key={i + 1} className="even:bg-blue-gray-50/50">
-                  <td className="p-4">
+                <tr key={i + 1} className="even:bg-blue-gray-50/50 hover:bg-gray-100">
+                  <td className="p-6">
                     <Typography variant="small" color="blue-gray" className="font-normal">
                       {(page - 1) * 8 + i + 1}
                     </Typography>
                   </td>
-                  <td className="p-4">
+                  <td className="p-6">
                     <Typography variant="small" color="blue-gray" className="font-normal">
                       {item.user_name}
                     </Typography>
                   </td>
-                  <td className="p-4">
+                  <td className="p-6">
                     <Typography variant="small" color="blue-gray" className="font-normal">
                       {item.name}
                     </Typography>
                   </td>
-                  <td className="p-4">
+                  <td className="p-6">
                     <Typography variant="small" color="blue-gray" className="font-normal">
                       {item.email}
                     </Typography>
                   </td>
-                  <td className="p-4">
+                  <td className="p-6">
                     <Typography variant="small" color="blue-gray" className="font-normal">
                       {item._id}
                     </Typography>
                   </td>
-                  <td className="p-4">
+                  <td className="p-6">
                     <Typography variant="small" className="font-normal">
                       <button
-                        style={{
-                          background: item.role == "admin" ? "orange" : "green",
-                        }}
+                     
                         onClick={() => {
                           changeRole(item);
                         }}
-                        className="hover:scale-125 transition-all duration-150 ease-out cursor-pointer text-white font-bold py-2 px-4 rounded mt-4"
+                        className={`transition-all  duration-150 ease-out cursor-pointer
+                                       text-white font-bold py-2 px-4 rounded
+                                       ${item.role == "user" && "bg-green-600 hover:bg-green-800 "} 
+                                        ${item.role == "admin" && "bg-orange-400 hover:bg-orange-500 "} `}
                       >
                         {item.role}
                       </button>
                     </Typography>
                   </td>
-                  <td className="p-4">
+                  <td className="p-6">
                     <button
                       onClick={() => {
                         if (item._id != "64c27124871892c1bd068dc6") {
                           nav("/admin/users/edit/" + item._id);
                         }
                       }}
-                      className="hover:scale-125 transition-all duration-150 ease-out cursor-pointer bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+                      className="transition-all duration-150 ease-out cursor-pointer bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded "
                     >
                       Edit
                     </button>
                   </td>
-                  <td className="p-4">
+                  <td className="p-6">
                     <button
                       onClick={() => {
                         deleteUser(item._id);
                       }}
-                      className="hover:scale-125 transition-all duration-150 ease-out cursor-pointer bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4"
+                      className="transition-all duration-150 ease-out cursor-pointer s bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded "
                     >
                       DEL
                     </button>

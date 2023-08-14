@@ -44,7 +44,7 @@ const GroupsList = () => {
 
 
   return (
-    <div className="container">
+    <div className="container mx-auto mt-20">
       <h1 className="text-center  text-4xl font-bold text-blue-500 m-3">Groups List</h1>
       <div className="m-2 my-6">
         <PagesBtns
@@ -53,7 +53,7 @@ const GroupsList = () => {
         />
       </div>
       <hr></hr>
-      <Card className="h-full w-full overflow-scroll">
+      <Card className="h-full w-full overflow-y-auto scrollbar-thin scrollbar-thumb-black">
         <table className="w-full min-w-max table-auto text-left">
           <thead>
             <tr>
@@ -111,7 +111,7 @@ const GroupsList = () => {
                       onClick={() => {
                         deleteGroup(item._id);
                       }}
-                      className="hover:scale-125 transition-all duration-150 ease-out cursor-pointer bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4"
+                      className="transition-all duration-150 ease-out cursor-pointer bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4"
                     >
                       DEL
                     </button>

@@ -1,46 +1,74 @@
+import { LogoutIcon } from "@heroicons/react/solid";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { TOKEN_KEY } from "../services/apiService";
 
 const HeaderAdmin = () => {
-    const nav = useNavigate();
+  const nav = useNavigate();
 
-    const onLogOut = () => {
-        localStorage.removeItem(TOKEN_KEY);
-        nav("/admin");
-        toast.info("You logged out, see ya");
+  const onLogOut = () => {
+    if (
+      window.confirm("Are you sure you want to log out from admin session?")
+    ) {
+      localStorage.removeItem(TOKEN_KEY);
+      nav("/admin");
+      toast.info("You logged out, see ya");
     }
+  };
 
-    return (
-        <header className="bg-blue-400 shadow-lg mb-4">
-            <div className="container mx-auto py-4">
-                <div className="flex items-center">
+  return (
+    <header className="sticky top-0 z-50 px-6 bg-white border-b shadow-sm p-10 sm:p-10 md:p-10 lg:p-2">
+    <div className="flex justify-between max-w-6xl mx-5 lg:mx-auto">
+      {/* left */}
+      <div className="relative hidden w-24 h-24 lg:inline-grid">
+        <img
+          src="/images/vibes-logo.png"
+          className="object-contain w-full h-full"
+          alt="logo"
+        />
+      </div>
+      <div className="relative flex-shrink-0 w-10 lg:hidden">
+        <img
+          src="/images/vibes-logo-responsive.png"
+          className="object-contain w-full h-full"
+          alt="responsive logo"
+        />
+      </div>
 
-                    <div className="mx-3">
-                        <h2 className="text-xl font-bold">Admin</h2>
-                    </div>
-                    <nav className="flex justify-between items-center flex-grow">
-                        <ul className="flex space-x-4">
-                            {localStorage[TOKEN_KEY] && (
-                                <>
-                                    <li><Link to="/admin/users">Users</Link></li>
-                                    <li><Link to="/admin/groups">Groups</Link></li>
-                                    <li><Link to="/admin/posts">Posts</Link></li>
-                                </>
-                            )}
-                        </ul>
-                        <div>
-                            {localStorage[TOKEN_KEY] && (
-                                <button onClick={onLogOut} className="p-2 rounded-lg mx-3 bg-red-500 hover:bg-red-700 ">Log out</button>
-                            )}
-                        </div>
-                    </nav>
-                </div>
-            </div>
-        </header>
+      <nav className="flex justify-start items-center flex-grow">
+        <div className="text-xl font-bold">- Admin</div>
+      </nav>
 
-    )
-}
+      <nav className="flex justify-end items-center flex-grow">
+        {localStorage[TOKEN_KEY] && (
+          <ul className="flex space-x-4">
+            <li>
+              <Link className="hover:underline" to="/admin/users">
+                Users List
+              </Link>
+            </li>
+            <li>
+              <Link className="hover:underline" to="/admin/groups">
+                Groups List
+              </Link>
+            </li>
+            <li>
+              <Link className="hover:underline" to="/admin/posts">
+                Posts List
+              </Link>
+            </li>
+          </ul>
+        )}
+        <div>
+          {localStorage[TOKEN_KEY] && (
+            <LogoutIcon onClick={onLogOut} className="btn ml-4" />
+          )}
+        </div>
+      </nav>
+    </div>
+  </header>
+  );
+};
 
-export default HeaderAdmin
+export default HeaderAdmin;

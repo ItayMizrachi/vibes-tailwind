@@ -42,7 +42,7 @@ const PostsAdmin = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container mx-auto mt-20">
       <h1 className="text-center  text-4xl font-bold text-blue-500 m-3">Posts List</h1>
       <div className="m-2 my-6">
         <PagesBtns
@@ -50,7 +50,7 @@ const PostsAdmin = () => {
           linkTo={"/admin/posts?page="} />
       </div>
       <hr></hr>
-      <Card className="h-full w-full overflow-scroll">
+      <Card className="h-full w-full overflow-y-auto scrollbar-thin scrollbar-thumb-black">
         <table className="w-full min-w-max table-auto text-left">
           <thead>
             <tr>
@@ -71,38 +71,38 @@ const PostsAdmin = () => {
             {ar.map((item, i) => {
               const page = query.get("page") || 1;
               return (
-                <tr key={i + 1} className="even:bg-blue-gray-50/50">
-                  <td className="p-4">
+                <tr key={i + 1} className="even:bg-blue-gray-50/50 hover:bg-gray-100">
+                  <td className="p-6">
                     <Typography variant="small" color="blue-gray" className="font-normal">
                       {(page - 1) * 15 + i + 1}
                     </Typography>
                   </td>
-                  <td className="p-4">
+                  <td className="p-6">
                     <Typography variant="small" color="blue-gray" className="font-normal">
                       {item.user?.user_name}
                     </Typography>
                   </td>
-                  <td className="p-4">
+                  <td className="p-6">
                     <Typography variant="small" color="blue-gray" className="font-normal">
                       {item.user?.name}
                     </Typography>
                   </td>
-                  <td className="p-4">
+                  <td className="p-6">
                     <Typography variant="small" color="blue-gray" className="font-normal">
                       {item.description}
                     </Typography>
                   </td>
-                  <td className="p-4">
+                  <td className="p-6">
                     <Typography variant="small" color="blue-gray" className="font-normal">
                       {item._id}
                     </Typography>
                   </td>
-                  <td className="p-4">
+                  <td className="p-6">
                     <button
                       onClick={() => {
                         deletePost(item._id);
                       }}
-                      className="hover:scale-125 transition-all duration-150 ease-out cursor-pointer bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4"
+                      className=" transition-all duration-150 ease-out cursor-pointer bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                     >
                       DEL
                     </button>
