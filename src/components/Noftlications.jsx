@@ -66,7 +66,7 @@ const Noftlications = () => {
                 notifications.map((item, index) => (
                   <div key={index} className="justify-center chatRow">
                     <div className="w-10 h-10">
-                      <Link to={item.sender.user_name}>
+                      <Link onClick={() => setShowNoftlications(false)} to={item.sender.user_name}>
                         <img
                           src={item.sender.profilePic}
                           alt="profile pic"
@@ -75,7 +75,7 @@ const Noftlications = () => {
                       </Link>
                     </div>
                     <div className="flex-1 truncate md:inline-flex flex-col">
-                      <Link to={item.sender.user_name}>
+                      <Link onClick={() => setShowNoftlications(false)} to={item.sender.user_name}>
                         <h3 className="font-semibold hover:underline">
                           {item.sender.user_name}
                         </h3>
@@ -99,7 +99,7 @@ const Noftlications = () => {
                       {item.eventType === "like" && (
                         <p>
                           Liked your{" "}
-                          <Link to={"singlepost/" + item.postId?._id}>
+                          <Link onClick={() => setShowNoftlications(false)} to={"singlepost/" + item.postId?._id}>
                             <span className="hover:underline">post!</span>
                           </Link>
                         </p>
@@ -107,7 +107,7 @@ const Noftlications = () => {
                       {item.eventType === "comment" && (
                         <p>
                           Commented on your{" "}
-                          <Link to={"singlepost/" + item.postId?._id}>
+                          <Link onClick={() => setShowNoftlications(false)} to={"singlepost/" + item.postId?._id}>
                             <span className="hover:underline">post!</span>
                           </Link>
                         </p>
@@ -117,7 +117,7 @@ const Noftlications = () => {
                       </p>
                     </div>
                     {item.eventType === "comment" && (
-                      <Link to={"singlepost/" + item.postId?._id}>
+                      <Link onClick={() => setShowNoftlications(false)} to={"singlepost/" + item.postId?._id}>
                         <div>
                           <img
                             className="w-10 h-10 rounded-md"
@@ -128,7 +128,7 @@ const Noftlications = () => {
                       </Link>
                     )}
                     {item.eventType === "like" && (
-                      <Link to={"singlepost/" + item.postId?._id}>
+                      <Link onClick={() => setShowNoftlications(false)} to={"singlepost/" + item.postId?._id}>
                         <div>
                           <img
                             className="w-10 h-10 rounded-md"
