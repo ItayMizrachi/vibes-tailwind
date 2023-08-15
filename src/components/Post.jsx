@@ -177,7 +177,9 @@ const Post = ({
         <DotsHorizontalIcon className="h-5 cursor-pointer" />
       </div>
       {/* img */}
-      <img src={img_url} alt="post" className="object-cover w-full" />
+      <Link to={"/singlepost/"+ _id}>
+        <img src={img_url} alt="post" className="object-cover w-full" />
+      </Link>
 
       {/* Buttons */}
       {localStorage[TOKEN_KEY] && (
