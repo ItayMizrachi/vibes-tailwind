@@ -33,7 +33,7 @@ const App = () => {
         singlePostInfo
       }}
     >
-      <Router />
+      <Router/>
       <ToastContainer theme="colored" />
     </MyContext.Provider>
   );

@@ -62,11 +62,48 @@ const Post = ({
       const urlSinglePost = URL + "/userPosts/single/" + _id;
       await doApiMethod(url, "PUT");
       const resp = await doApiGet(urlSinglePost);
-      if (user_id != userData._id) {
-        await createLikeNotification(user_id, _id, userData._id);
-      }
+      if (!isLiked) {
+        if (user_id != userData._id) {
+          await createLikeNotification(user_id, _id, userData._id);
+        }
+      } else deleteLikeNotification(userData._id, _id);
+
       setLikesCount(resp.likes.length);
       setIsLiked(!isLiked);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const likePost3 = async (_id) => {
+    try {
+      const url = URL + "/userPosts/like/" + _id;
+      const urlSinglePost = URL + "/userPosts/single/" + _id;
+      await doApiMethod(url, "PUT");
+      const resp = await doApiGet(urlSinglePost);
+
+      // Check if user_id is defined and not null
+      if (user_id !== undefined && !isLiked) {
+        if (user_id !== userData._id) {
+          await createLikeNotification(user_id, _id, userData._id);
+          console.log("good");
+        }
+      } else {
+        deleteLikeNotification(userData._id, _id);
+      }
+
+      setLikesCount(resp.likes.length);
+      setIsLiked(!isLiked);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteLikeNotification = async (senderId, post_id) => {
+    try {
+      const url = URL + "/notifications/unlike/" + senderId + "/" + post_id;
+      await doApiMethod(url, "DELETE");
+      console.log("Success");
     } catch (error) {
       console.log(error);
     }
@@ -113,10 +150,10 @@ const Post = ({
 
   const doApiPostComment = async (_bodyData) => {
     try {
-      setRefresh(true);
       const url = URL + "/comments/" + _id;
       await doApiMethod(url, "POST", _bodyData);
-      setRefresh(false);
+      // setRefresh(!refresh);
+      doApiComments();
       reset();
       if (user_id != userData._id) {
         await createCommentNotification(user_id, _id, userData._id); // Correct parameter names
@@ -149,7 +186,8 @@ const Post = ({
     if (userData?.saved_posts?.includes(_id)) {
       setIsSaved(true);
     }
-  }, [refresh]);
+  }, []);
+  // }, [refresh]);
 
   const { register, handleSubmit, reset } = useForm();
 
@@ -163,20 +201,22 @@ const Post = ({
     <div className="bg-white border rounded-2xl my-7">
       {/* Header */}
       <div className="flex items-center p-5">
-        <Link to={user_name}>
+        <Link to={"/" + user_name}>
           <img
             src={profilePic}
             alt=""
             className="object-contain w-12 h-12 p-1 mr-3 rounded-full"
           />
         </Link>
-        <Link to={user_name} className="flex-1 font-bold">
+        <Link to={"/" + user_name} className="flex-1 font-bold">
           {user_name}
         </Link>
         <DotsHorizontalIcon className="h-5 cursor-pointer" />
       </div>
       {/* img */}
-      <img src={img_url} alt="" className="object-cover w-full" />
+      <Link to={"/singlepost/" + _id}>
+        <img src={img_url} alt="post" className="object-cover w-full" />
+      </Link>
 
       {/* Buttons */}
       {localStorage[TOKEN_KEY] && (
@@ -221,7 +261,7 @@ const Post = ({
       <div>
         <div className="p-5 truncate">
           <p className="mb-1 font-bold">{likesCount} likes</p>
-          <Link to={user_name} className="mr-1 font-bold">
+          <Link to={"/" + user_name} className="mr-1 font-bold">
             {user_name}
           </Link>
           {desc}
