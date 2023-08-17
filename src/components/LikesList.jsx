@@ -27,7 +27,7 @@ const LikesList = ({ likes, setShowLikes }) => {
             <li
               key={index}
               className={`p-3 hover:bg-gray-200 ${
-                index === likes.length - 1 ? "rounded-b-md" : ""
+                index === likes.length - 1 ? "rounded-b-lg" : ""
               }`}
             >
               <Link to={"/" + like}>{like}</Link>
