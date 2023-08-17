@@ -173,7 +173,8 @@ const Profile = () => {
               Gallery
             </button>
           </div>
-
+          {postsInfo.length == 0 && <h1 className="text-center mt-5 font-semibold">no posts yet 😕 </h1> }
+         
           {/* Gallery */}
           {showGallery && <Gallery postsInfo={postsInfo} />}
           {showUserPosts && (
