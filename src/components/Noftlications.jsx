@@ -1,18 +1,13 @@
 import { ArrowRightIcon } from "@heroicons/react/solid";
+import axios from "axios";
 import moment from "moment";
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { MyContext } from "../context/myContext";
 import { URL, doApiGet } from "../services/apiService";
 
-const Noftlications = () => {
-  const {
-    userData,
-    setShowNoftlications,
-    showNoftlications,
-    followUser,
-    followFlag,
-  } = useContext(MyContext);
+const Noftlications = ({ setShowNoftlications, showNoftlications, setIsRead,updateIsRead }) => {
+  const { userData, followUser, followFlag } = useContext(MyContext);
   const [notifications, setNotifications] = useState([]);
   const [flag, setFlag] = useState(false);
 
@@ -21,7 +16,9 @@ const Noftlications = () => {
       const url = URL + "/notifications/" + userData._id;
       const data = await doApiGet(url);
       setNotifications(data);
+      const read = await axios.put(URL + "/notifications/mark-as-read/" + userData._id);
       // console.log(data);
+      setIsRead(read);
       setFlag(true);
     } catch (err) {
       console.log(err);
