@@ -6,8 +6,13 @@ import { MyContext } from "../context/myContext";
 import { URL, doApiGet } from "../services/apiService";
 
 const Noftlications = () => {
-  const { userData, setShowNoftlications, showNoftlications, followUser, followFlag } =
-    useContext(MyContext);
+  const {
+    userData,
+    setShowNoftlications,
+    showNoftlications,
+    followUser,
+    followFlag,
+  } = useContext(MyContext);
   const [notifications, setNotifications] = useState([]);
   const [flag, setFlag] = useState(false);
 
@@ -66,7 +71,10 @@ const Noftlications = () => {
                 notifications.map((item, index) => (
                   <div key={index} className="justify-center chatRow">
                     <div className="w-10 h-10">
-                      <Link onClick={() => setShowNoftlications(false)} to={item.sender.user_name}>
+                      <Link
+                        onClick={() => setShowNoftlications(false)}
+                        to={item.sender.user_name}
+                      >
                         <img
                           src={item.sender.profilePic}
                           alt="profile pic"
@@ -75,16 +83,19 @@ const Noftlications = () => {
                       </Link>
                     </div>
                     <div className="flex-1 truncate md:inline-flex flex-col">
-                      <Link onClick={() => setShowNoftlications(false)} to={item.sender.user_name}>
+                      <Link
+                        onClick={() => setShowNoftlications(false)}
+                        to={item.sender.user_name}
+                      >
                         <h3 className="font-semibold hover:underline">
                           {item.sender.user_name}
                         </h3>
                       </Link>
+
                       {item.eventType === "follow" && (
                         <div>
-                          <p>Started following you!
-                          </p>
-                            <button
+                          <p>Started following you!</p>
+                          <button
                             className="p-2 my-2 text-white font-semibold bg-blue-500 rounded hover:bg-blue-600"
                             onClick={() => followUser(item.sender?._id)}
                           >
@@ -99,7 +110,10 @@ const Noftlications = () => {
                       {item.eventType === "like" && (
                         <p>
                           Liked your{" "}
-                          <Link onClick={() => setShowNoftlications(false)} to={"singlepost/" + item.postId?._id}>
+                          <Link
+                            onClick={() => setShowNoftlications(false)}
+                            to={"singlepost/" + item.postId?._id}
+                          >
                             <span className="hover:underline">post!</span>
                           </Link>
                         </p>
@@ -107,7 +121,10 @@ const Noftlications = () => {
                       {item.eventType === "comment" && (
                         <p>
                           Commented on your{" "}
-                          <Link onClick={() => setShowNoftlications(false)} to={"singlepost/" + item.postId?._id}>
+                          <Link
+                            onClick={() => setShowNoftlications(false)}
+                            to={"singlepost/" + item.postId?._id}
+                          >
                             <span className="hover:underline">post!</span>
                           </Link>
                         </p>
@@ -117,7 +134,10 @@ const Noftlications = () => {
                       </p>
                     </div>
                     {item.eventType === "comment" && (
-                      <Link onClick={() => setShowNoftlications(false)} to={"singlepost/" + item.postId?._id}>
+                      <Link
+                        onClick={() => setShowNoftlications(false)}
+                        to={"singlepost/" + item.postId?._id}
+                      >
                         <div>
                           <img
                             className="w-10 h-10 rounded-md"
@@ -128,7 +148,10 @@ const Noftlications = () => {
                       </Link>
                     )}
                     {item.eventType === "like" && (
-                      <Link onClick={() => setShowNoftlications(false)} to={"singlepost/" + item.postId?._id}>
+                      <Link
+                        onClick={() => setShowNoftlications(false)}
+                        to={"singlepost/" + item.postId?._id}
+                      >
                         <div>
                           <img
                             className="w-10 h-10 rounded-md"
