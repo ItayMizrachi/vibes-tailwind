@@ -6,8 +6,8 @@ import { Link } from "react-router-dom";
 import { MyContext } from "../context/myContext";
 import { URL, doApiGet } from "../services/apiService";
 
-const Noftlications = () => {
-  const { userData, followUser, followFlag,setShowNoftlications, setIsRead } = useContext(MyContext);
+const Noftlications = ({ setShowNoftlications,  setIsRead, }) => {
+  const { userData, followUser, followFlag } = useContext(MyContext);
   const [notifications, setNotifications] = useState([]);
   const [flag, setFlag] = useState(false);
 
@@ -16,9 +16,7 @@ const Noftlications = () => {
       const url = URL + "/notifications/" + userData._id;
       const data = await doApiGet(url);
       setNotifications(data);
-      const read = await axios.put(
-        URL + "/notifications/mark-as-read/" + userData._id
-      );
+      const read = await axios.put(URL + "/notifications/mark-as-read/" + userData._id);
       // console.log(data);
       setIsRead(read);
       setFlag(true);
@@ -40,7 +38,7 @@ const Noftlications = () => {
   // }, [notifications]);
 
   return (
-    <div className="flex fixed right-0 z-40">
+    <div className="flex fixed right-0 top-0 z-40">
       {/* sidebar */}
       <div className={`  transition-all transform duration-300 ease-in-out`}>
         <div className="max-2-xs h-[100vh] border-l-2 overflow-x-hidden min-w-[20rem] bg-white custom-scrollbar">
