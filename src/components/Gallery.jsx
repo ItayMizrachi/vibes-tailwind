@@ -1,4 +1,3 @@
-import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/outline";
 import { ChatIcon, HeartIcon } from "@heroicons/react/solid";
 import React, { useState } from "react";
 import Lightbox from "react-spring-lightbox";
@@ -68,12 +67,12 @@ const Gallery = ({ postsInfo, Intersector }) => {
           alt: "post",
         }))}
         currentIndex={currentImageIndex}
-        renderPrevButton={() => (
-          <ArrowLeftIcon onClick={gotoPrevious} className="btn" />
-        )}
-        renderNextButton={() => (
-          <ArrowRightIcon onClick={gotoNext} className="btn" />
-        )}
+        // renderPrevButton={() => (
+        //   <ArrowLeftIcon onClick={gotoPrevious} className="btn" />
+        // )}
+        // renderNextButton={() => (
+        //   <ArrowRightIcon onClick={gotoNext} className="btn" />
+        // )}
         //  renderImageOverlay={() => (<ImageOverlayComponent >)}
 
         /* Add styling */

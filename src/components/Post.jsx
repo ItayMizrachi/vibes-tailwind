@@ -16,6 +16,7 @@ import { MyContext } from "../context/myContext";
 import { TOKEN_KEY, URL, doApiGet, doApiMethod } from "../services/apiService";
 import AddComment from "./AddComment";
 import Comments from "./Comments";
+import LikesList from "./LikesList";
 
 const Post = ({
   likes,
@@ -31,6 +32,7 @@ const Post = ({
   const [refresh, setRefresh] = useState(false);
   const [isLoading, setIsLoading] = useState(false); // Add state for loading
   const [likesCount, setLikesCount] = useState(likesLength);
+  const [showLikes, setShowLikes] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const { deletePost, userData } = useContext(MyContext);
@@ -173,10 +175,20 @@ const Post = ({
 
         // Delete the associated comment notification
         // await doApiMethod(`/notifications/comment/${commentId}`, "DELETE");
-
+        deleteCommentNotification(commentId);
         // Refresh comments
         doApiComments();
       }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteCommentNotification = async (commentId) => {
+    try {
+      const url = URL + "/notifications/uncomment/" + commentId;
+      await doApiMethod(url, "DELETE");
+      console.log("Success");
     } catch (error) {
       console.log(error);
     }
@@ -264,7 +276,8 @@ const Post = ({
       {/* Caption */}
       <div>
         <div className="p-5 truncate">
-          <p className="mb-1 font-bold">{likesCount} likes</p>
+          <p onClick={() => setShowLikes(true)} className="mb-1 font-bold cursor-pointer">{likesCount} likes</p>
+         {showLikes && <LikesList setShowLikes={setShowLikes} likes={likes}/>} 
           <Link to={"/" + user_name} className="mr-1 font-bold">
             {user_name}
           </Link>
@@ -273,7 +286,11 @@ const Post = ({
       </div>
 
       {/* Comments */}
-      <Comments user_id={user_id} deleteComment={deleteComment} commentsInfo={commentsInfo} />
+      <Comments
+        user_id={user_id}
+        deleteComment={deleteComment}
+        commentsInfo={commentsInfo}
+      />
 
       {/* input box */}
       <AddComment

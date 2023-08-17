@@ -5,7 +5,6 @@ import Post from "../components/Post";
 import UserNotFound from "../components/UserNotFound";
 import { MyContext } from "../context/myContext";
 import { URL, doApiGet } from "../services/apiService";
-import { useLazyLoading } from "mg-js";
 
 const Profile = () => {
   const [postsInfo, setPostsInfo] = useState([]);
@@ -157,12 +156,16 @@ const Profile = () => {
             >
               Posts
             </button>
-            <button className="flex gap-2 py-4 text-sm font-semibold text-gray-400 border-gray-300 focus:border-t focus:text-gray-600">
-              Liked
-            </button>
-            <button className="flex gap-2 py-4 text-sm font-semibold text-gray-400 border-gray-300 focus:border-t focus:text-gray-600">
-              Saved
-            </button>
+            {userData._id === userInfo._id && (
+              <>
+                <button className="flex gap-2 py-4 text-sm font-semibold text-gray-400 border-gray-300 focus:border-t focus:text-gray-600">
+                  Liked
+                </button>
+                <button className="flex gap-2 py-4 text-sm font-semibold text-gray-400 border-gray-300 focus:border-t focus:text-gray-600">
+                  Saved
+                </button>
+              </>
+            )}
             <button
               onClick={() => show("gallery")}
               className="flex gap-2 py-4 text-sm font-semibold text-gray-400 border-gray-300 focus:border-t focus:text-gray-600"
