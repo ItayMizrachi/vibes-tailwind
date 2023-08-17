@@ -211,7 +211,7 @@ const Post = ({
         <Link to={"/" + user_name} className="flex-1 font-bold">
           {user_name}
         </Link>
-        <DotsHorizontalIcon className="h-5 cursor-pointer" />
+        <Link to={"/editPost/" + _id}>   <DotsHorizontalIcon className="h-5 cursor-pointer" />  </Link>
       </div>
       {/* img */}
       <Link to={"/singlepost/" + _id}>
