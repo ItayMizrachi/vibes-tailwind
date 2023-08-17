@@ -46,10 +46,15 @@ const Post = ({
   };
 
   // Function to create a comment notification
-  const createCommentNotification = async (userId, postId, senderId) => {
+  const createCommentNotification = async (
+    userId,
+    postId,
+    senderId,
+    commentId
+  ) => {
     try {
       const url = URL + "/notifications/comment";
-      const body = { userId, postId, senderId };
+      const body = { userId, postId, senderId, commentId };
       await doApiMethod(url, "POST", body);
     } catch (error) {
       console.log(error);
@@ -67,30 +72,6 @@ const Post = ({
           await createLikeNotification(user_id, _id, userData._id);
         }
       } else deleteLikeNotification(userData._id, _id);
-
-      setLikesCount(resp.likes.length);
-      setIsLiked(!isLiked);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const likePost3 = async (_id) => {
-    try {
-      const url = URL + "/userPosts/like/" + _id;
-      const urlSinglePost = URL + "/userPosts/single/" + _id;
-      await doApiMethod(url, "PUT");
-      const resp = await doApiGet(urlSinglePost);
-
-      // Check if user_id is defined and not null
-      if (user_id !== undefined && !isLiked) {
-        if (user_id !== userData._id) {
-          await createLikeNotification(user_id, _id, userData._id);
-          console.log("good");
-        }
-      } else {
-        deleteLikeNotification(userData._id, _id);
-      }
 
       setLikesCount(resp.likes.length);
       setIsLiked(!isLiked);
@@ -148,15 +129,36 @@ const Post = ({
     }
   };
 
-  const doApiPostComment = async (_bodyData) => {
+  const doApiPostComment2 = async (_bodyData) => {
     try {
       const url = URL + "/comments/" + _id;
       await doApiMethod(url, "POST", _bodyData);
-      // setRefresh(!refresh);
+      // Extract the commentId from the response data
+      const commentId = response.commentId; // Adjust this according to your API response structure
       doApiComments();
       reset();
       if (user_id != userData._id) {
-        await createCommentNotification(user_id, _id, userData._id); // Correct parameter names
+        await createCommentNotification(user_id, _id, userData._id, commentId); // Correct parameter names
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const doApiPostComment = async (_bodyData) => {
+    try {
+      const url = URL + "/comments/" + _id;
+      const response = await doApiMethod(url, "POST", _bodyData);
+
+      // Extract the commentId from the response data
+      const commentId = response._id; // Adjust this according to your API response structure
+      console.log;
+      // Call your other functions
+      doApiComments();
+      reset();
+
+      if (user_id !== userData._id) {
+        await createCommentNotification(user_id, _id, userData._id, commentId);
       }
     } catch (error) {
       console.log(error);
@@ -165,14 +167,16 @@ const Post = ({
 
   const deleteComment = async (commentId) => {
     try {
-      const url = URL + "/comments/" + commentId;
-      await doApiMethod(url, "DELETE");
+      if (window.confirm("Are you sure you want to delete this comment")) {
+        const url = URL + "/comments/" + commentId;
+        await doApiMethod(url, "DELETE");
 
-      // Delete the associated comment notification
-      await doApiMethod(`/notifications/comment/${commentId}`, "DELETE");
+        // Delete the associated comment notification
+        // await doApiMethod(`/notifications/comment/${commentId}`, "DELETE");
 
-      // Refresh comments
-      doApiComments();
+        // Refresh comments
+        doApiComments();
+      }
     } catch (error) {
       console.log(error);
     }
@@ -269,7 +273,7 @@ const Post = ({
       </div>
 
       {/* Comments */}
-      <Comments commentsInfo={commentsInfo} />
+      <Comments user_id={user_id} deleteComment={deleteComment} commentsInfo={commentsInfo} />
 
       {/* input box */}
       <AddComment

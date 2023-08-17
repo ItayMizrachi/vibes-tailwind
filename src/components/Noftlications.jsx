@@ -21,6 +21,7 @@ const Noftlications = () => {
       const url = URL + "/notifications/" + userData._id;
       const data = await doApiGet(url);
       setNotifications(data);
+      // console.log(data);
       setFlag(true);
     } catch (err) {
       console.log(err);
@@ -120,13 +121,10 @@ const Noftlications = () => {
                       )}
                       {item.eventType === "comment" && (
                         <p>
-                          Commented on your{" "}
-                          <Link
-                            onClick={() => setShowNoftlications(false)}
-                            to={"singlepost/" + item.postId?._id}
-                          >
-                            <span className="hover:underline">post!</span>
-                          </Link>
+                          Commented:{" "}
+                          {item.commentId?.text.length > 7
+                            ? item.commentId?.text.substring(0, 7) + ".."
+                            : item.commentId?.text}
                         </p>
                       )}
                       <p className="text-gray-400">
