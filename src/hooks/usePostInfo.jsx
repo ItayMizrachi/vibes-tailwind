@@ -42,7 +42,6 @@ export const usePostInfo = () => {
   //   setPostsInfo(data);
   //   console.log(postsInfo)
   // }, [data]);
-
   const deletePost = async (_id) => {
     try {
       if (window.confirm("Are you sure you want to delete post?")) {
@@ -50,7 +49,34 @@ export const usePostInfo = () => {
         await doApiMethod(url, "DELETE");
         setPostsInfo((prevData) => prevData.filter((p) => p._id !== _id));
         toast.info(`Post deleted`);
+        deletePostNotification(_id);
       }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deletePost2 = async (_id) => {
+    try {
+      if (window.confirm("Are you sure you want to delete post?")) {
+        const url = URL + "/userPosts/" + _id;
+        await doApiMethod(url, "DELETE");
+        // if (data.deletedCount) {
+        setPostsInfo((prevData) => prevData.filter((p) => p._id !== _id));
+        toast.info(`Post deleted`);
+        // deletePostNotification(_id);
+        // }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deletePostNotification = async (post_id) => {
+    try {
+      const url = URL + `/notifications/post/${post_id}`;
+      await doApiMethod(url, "DELETE");
+      // console.log("Success");
     } catch (error) {
       console.log(error);
     }

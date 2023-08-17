@@ -3,10 +3,10 @@ import { URL, doApiMethod } from "../services/apiService";
 import { useUserData } from "./useUserData";
 
 export const useFollow = () => {
-  const [  followFlag, setFollowFlag ] = useState(false);
+  const [followFlag, setFollowFlag] = useState(false);
   const { userData } = useUserData();
 
-  const createFollowNotification = async (userId,  senderId) => {
+  const createFollowNotification = async (userId, senderId) => {
     try {
       const url = URL + "/notifications/follow";
       const body = { userId, senderId };
@@ -16,10 +16,11 @@ export const useFollow = () => {
     }
   };
 
-  const deleteFollowNotification = async (relatedId) => {
+  const deleteFollowNotification = async (recieverId, senderId) => {
     try {
-      const url = URL + `/notifications/follow/${relatedId}`;
+      const url = URL + `/notifications/follow/${recieverId}/${senderId}`;
       await doApiMethod(url, "DELETE");
+      // console.log("Success");
     } catch (error) {
       console.log(error);
     }
@@ -35,23 +36,19 @@ export const useFollow = () => {
         // Create or delete follow notification based on follow/unfollow action
         if (!followFlag) {
           await createFollowNotification(otherUser_id, userData._id);
-        }
+        } else deleteFollowNotification(otherUser_id, userData._id);
       }
     } catch (error) {
       console.log(error);
     }
   };
 
-  
-
- 
-
   // const followUser = async (otherUser_id) => {
   //   try {
   //     if (otherUser_id._id !== userData?._id) {
   //       const url = URL + "/users/follow/" + otherUser_id;
   //       await doApiMethod(url, "PUT");
-  //       setFollowFlag(!followFlag); 
+  //       setFollowFlag(!followFlag);
   //       //console.log(flag);
   //       await createFollowNotification(otherUser_id, userData._id);
   //     }
@@ -59,6 +56,6 @@ export const useFollow = () => {
   //     console.log(error);
   //   }
   // };
- 
-  return { followUser,  followFlag };
+
+  return { followUser, followFlag };
 };

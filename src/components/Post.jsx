@@ -62,11 +62,48 @@ const Post = ({
       const urlSinglePost = URL + "/userPosts/single/" + _id;
       await doApiMethod(url, "PUT");
       const resp = await doApiGet(urlSinglePost);
-      if (user_id != userData._id) {
-        await createLikeNotification(user_id, _id, userData._id);
-      }
+      if (!isLiked) {
+        if (user_id != userData._id) {
+          await createLikeNotification(user_id, _id, userData._id);
+        }
+      } else deleteLikeNotification(userData._id, _id);
+
       setLikesCount(resp.likes.length);
       setIsLiked(!isLiked);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const likePost3 = async (_id) => {
+    try {
+      const url = URL + "/userPosts/like/" + _id;
+      const urlSinglePost = URL + "/userPosts/single/" + _id;
+      await doApiMethod(url, "PUT");
+      const resp = await doApiGet(urlSinglePost);
+
+      // Check if user_id is defined and not null
+      if (user_id !== undefined && !isLiked) {
+        if (user_id !== userData._id) {
+          await createLikeNotification(user_id, _id, userData._id);
+          console.log("good");
+        }
+      } else {
+        deleteLikeNotification(userData._id, _id);
+      }
+
+      setLikesCount(resp.likes.length);
+      setIsLiked(!isLiked);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteLikeNotification = async (senderId, post_id) => {
+    try {
+      const url = URL + "/notifications/unlike/" + senderId + "/" + post_id;
+      await doApiMethod(url, "DELETE");
+      console.log("Success");
     } catch (error) {
       console.log(error);
     }
@@ -177,7 +214,7 @@ const Post = ({
         <DotsHorizontalIcon className="h-5 cursor-pointer" />
       </div>
       {/* img */}
-      <Link to={"/singlepost/"+ _id}>
+      <Link to={"/singlepost/" + _id}>
         <img src={img_url} alt="post" className="object-cover w-full" />
       </Link>
 
