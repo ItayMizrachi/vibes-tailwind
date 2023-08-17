@@ -6,8 +6,8 @@ import { Link } from "react-router-dom";
 import { MyContext } from "../context/myContext";
 import { URL, doApiGet } from "../services/apiService";
 
-const Noftlications = ({ setShowNoftlications, showNoftlications, setIsRead,updateIsRead }) => {
-  const { userData, followUser, followFlag } = useContext(MyContext);
+const Noftlications = () => {
+  const { userData, followUser, followFlag,setShowNoftlications, setIsRead } = useContext(MyContext);
   const [notifications, setNotifications] = useState([]);
   const [flag, setFlag] = useState(false);
 
@@ -16,7 +16,9 @@ const Noftlications = ({ setShowNoftlications, showNoftlications, setIsRead,upda
       const url = URL + "/notifications/" + userData._id;
       const data = await doApiGet(url);
       setNotifications(data);
-      const read = await axios.put(URL + "/notifications/mark-as-read/" + userData._id);
+      const read = await axios.put(
+        URL + "/notifications/mark-as-read/" + userData._id
+      );
       // console.log(data);
       setIsRead(read);
       setFlag(true);

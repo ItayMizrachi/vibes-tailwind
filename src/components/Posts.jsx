@@ -1,9 +1,10 @@
-import React, { useContext } from "react";
-import { MyContext } from "../context/myContext";
+import React from "react";
+import { usePostInfo } from "../hooks/usePostInfo";
 import Post from "./Post";
 
 const Posts = () => {
-  const { postsInfo, Intersector } = useContext(MyContext);
+  // const { postsInfo, Intersector } = useContext(MyContext);
+  const { postsInfo, Intersector } = usePostInfo();
 
   return (
     <div>

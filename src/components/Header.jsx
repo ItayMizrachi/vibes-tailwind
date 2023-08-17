@@ -6,44 +6,43 @@ import {
   SearchIcon
 } from "@heroicons/react/outline";
 import { HomeIcon, LogoutIcon } from "@heroicons/react/solid";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { MyContext } from "../context/myContext";
-import { TOKEN_KEY, URL, doApiGet } from "../services/apiService";
+import { TOKEN_KEY } from "../services/apiService";
 import Noftlications from "./Noftlications";
 import Search from "./Search";
 
 const Header = () => {
-  const { userSignOut, userData } =
+  const { userSignOut, userData, showNoftlications, toggleNoftlications, isRead } =
     useContext(MyContext);
-    const [showNoftlications, setShowNoftlications] = useState(false);
-
-    const toggleNoftlications = () => {
-      setShowNoftlications(!showNoftlications);
-    };
-  const [isRead, setIsRead] = useState({ unreadCount: 0 });
+    // const [showNoftlications, setShowNoftlications] = useState(false);
+    //   const toggleNoftlications = () => {
+  //     setShowNoftlications(!showNoftlications);
+  //   };
+  // const [isRead, setIsRead] = useState({ unreadCount: 0 });
   
-  const doApiUnreadCount = async () => {
-    try {
-      const url = URL + "/notifications/unread-count/" + userData?._id;
-      const data = await doApiGet(url);
-      setIsRead(data);
-      // console.log(data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const doApiUnreadCount = async () => {
+  //   try {
+  //     const url = URL + "/notifications/unread-count/" + userData?._id;
+  //     const data = await doApiGet(url);
+  //     setIsRead(data);
+  //     // console.log(data);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
-  useEffect(() => {
-    if (userData._id) {
-      doApiUnreadCount();
-    }
-  }, [userData]);
+  // useEffect(() => {
+  //   if (userData._id) {
+  //     doApiUnreadCount();
+  //   }
+  // }, [userData]);
 
   return (
     <header className="sticky top-0 z-50 px-6 bg-white border-b shadow-s">
       <div className="flex justify-between max-w-6xl mx-5 lg:mx-auto">
-        {showNoftlications && <Noftlications setIsRead={setIsRead} setShowNoftlications={setShowNoftlications} />}
+        {showNoftlications && <Noftlications />}
         {/* left */}
         <div className="relative hidden w-24 h-24 cursor-pointer lg:inline-grid">
           <Link to="/">

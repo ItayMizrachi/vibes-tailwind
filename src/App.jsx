@@ -5,13 +5,15 @@ import "./App.css";
 import { MyContext } from "./context/myContext";
 import { useFollow } from "./hooks/useFollow";
 import { usePostInfo } from "./hooks/usePostInfo";
+import { useShowNoftlications } from "./hooks/useShowNoftlications";
 import { useUserData } from "./hooks/useUserData";
 import Router from "./routes/Router";
 
 const App = () => {
   const { userData, doApiUser, userSignOut } = useUserData();
-  const { deletePost, postsInfo, Intersector, singlePostInfo } = usePostInfo();
+  const { deletePost, postsInfo, Intersector } = usePostInfo();
   const { followUser, followFlag } = useFollow();
+  const {  showNoftlications, setShowNoftlications, toggleNoftlications, isRead, setIsRead } = useShowNoftlications();
 
   return (
     <MyContext.Provider
@@ -20,11 +22,14 @@ const App = () => {
         doApiUser,
         userSignOut,
         deletePost,
-        postsInfo,
         followUser,
         followFlag,
         Intersector,
-        singlePostInfo,
+        showNoftlications, 
+        setShowNoftlications, 
+        toggleNoftlications, 
+        isRead, 
+        setIsRead
       }}
     >
       <Router />

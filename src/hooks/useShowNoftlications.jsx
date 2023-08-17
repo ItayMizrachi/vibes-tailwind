@@ -1,30 +1,33 @@
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+import { URL, doApiGet } from "../services/apiService";
+import { useUserData } from "./useUserData";
 
 export const useShowNoftlications = () => {
   const [showNoftlications, setShowNoftlications] = useState(false);
+  const { userData } = useUserData();
 
   const toggleNoftlications = () => {
     setShowNoftlications(!showNoftlications);
   };
 
-  // const [notifications, setNotifications] = useState([]);
+  const [isRead, setIsRead] = useState({ unreadCount: 0 });
 
-  // const doApiNotifications = async () => {
-  //   try {
-  //     const url = URL + "/notifications/" + userData._id;
-  //     const data = await doApiGet(url);
-  //     setNotifications(data);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+  useEffect(() => {
+    if (userData && userData._id) {
+      const doApiUnreadCount = async () => {
+        try {
+          const url = URL + "/notifications/unread-count/" + userData._id;
+          const data = await doApiGet(url);
+          setIsRead(data);
+          // console.log(data);
+        } catch (err) {
+          console.log(err);
+        }
+      };
 
-  // useEffect(() => {
-  //   doApiNotifications();
-  //   console.log(notifications);
-  // }, [showNoftlications]);
+      doApiUnreadCount();
+    }
+  }, [userData]);
 
-
-  return { showNoftlications, setShowNoftlications, toggleNoftlications };
+  return { showNoftlications, setShowNoftlications, toggleNoftlications, isRead, setIsRead };
 };
