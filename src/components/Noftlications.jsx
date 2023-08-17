@@ -31,12 +31,6 @@ const Noftlications = ({ setShowNoftlications,  setIsRead, }) => {
     }
   }, [userData._id, followFlag]);
 
-  // useEffect(() => {
-  //   if (notifications.length > 0) {
-  //     // console.log(notifications);
-  //   }
-  // }, [notifications]);
-
   return (
     <div className="flex fixed right-0 top-0 z-40">
       {/* sidebar */}
@@ -50,7 +44,7 @@ const Noftlications = ({ setShowNoftlications,  setIsRead, }) => {
                   onClick={() => setShowNoftlications(false)}
                   className="border-b-2 border-gray-200 chatRow flex justify-between"
                 >
-                  <h3 className="text-lg font-semibold">Noftlications</h3>
+                  <h3 className="text-lg font-semibold">Notifications</h3>
                   <ArrowRightIcon className="w-5 h-5" />
                 </div>
               </div>
