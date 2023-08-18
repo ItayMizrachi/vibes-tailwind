@@ -35,8 +35,6 @@ const EditPost2 = ({ post_id, description, setShowEdit }) => {
   };
 
   const onSub = (_bodyData) => {
-    console.log(_bodyData);
-    console.log(post_id);
     doApiEdit(_bodyData);
   };
 
