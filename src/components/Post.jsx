@@ -170,7 +170,7 @@ const Post = ({
   const deleteComment = async (commentId) => {
     try {
       if (window.confirm("Are you sure you want to delete this comment")) {
-        const url = URL + "/comments/" + commentId;
+        const url = URL + "/comments/" + commentId + "/" + user_id;
         await doApiMethod(url, "DELETE");
 
         // Delete the associated comment notification
