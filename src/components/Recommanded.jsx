@@ -23,7 +23,7 @@ const Recommanded = () => {
   };
 
   return (
-    <div className="mt-4 ml-10">
+    <div className="mt-4 ml-10 min-w-[300px]">
       <div className="flex justify-between mb-5 text-sm">
         <h3 className="text-sm font-bold text-gray-400">Suggestions For You</h3>
         {/* <button className="font-semibold text-gray-600">See All</button> */}
