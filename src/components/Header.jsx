@@ -10,12 +10,14 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { MyContext } from "../context/myContext";
 import { TOKEN_KEY, URL, doApiGet } from "../services/apiService";
+import AddPost from "./AddPost";
 import Noftlications from "./Noftlications";
 import Search from "./Search";
 
 const Header = () => {
   const { userSignOut, userData } =
     useContext(MyContext);
+    const [showAddPost, setShowAddPost] = useState(false);
     const [showNoftlications, setShowNoftlications] = useState(false);
 
     const toggleNoftlications = () => {
@@ -94,9 +96,11 @@ const Header = () => {
                   </div>
                 )}
               </div>
-              <Link to="addpost">
+              {/* <Link to="addpost">
                 <PlusCircleIcon className="navBtn" />
-              </Link>
+              </Link> */}
+                <PlusCircleIcon onClick={() => setShowAddPost(true)} className="navBtn" />
+                {showAddPost && <AddPost setShowAddPost={setShowAddPost}/>}
               {/* <Link to="groups">
                 <UserGroupIcon className="navBtn" />
               </Link> */}
