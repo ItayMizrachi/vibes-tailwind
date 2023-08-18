@@ -17,7 +17,7 @@ const Search = () => {
       const url = URL + "/users/usersNamesList";
       const data = await doApiGet(url);
       setUserNames(data);
-      console.log(data);
+      // console.log(data);
     } catch (err) {
       console.log(err);
     }

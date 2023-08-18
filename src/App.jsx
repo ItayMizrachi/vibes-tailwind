@@ -6,11 +6,11 @@ import { MyContext } from "./context/myContext";
 import { useFollow } from "./hooks/useFollow";
 import { usePostInfo } from "./hooks/usePostInfo";
 import { useUserData } from "./hooks/useUserData";
-import Router from "./routes/router";
+import Router from "./routes/Router";
 
 const App = () => {
   const { userData, doApiUser, userSignOut } = useUserData();
-  const { deletePost, postsInfo} = usePostInfo();
+  const { deletePost, postsInfo, Intersector, singlePostInfo } = usePostInfo();
   const { followUser, followFlag } = useFollow();
 
   return (
@@ -22,7 +22,9 @@ const App = () => {
         deletePost,
         postsInfo,
         followUser,
-        followFlag
+        followFlag,
+        Intersector,
+        singlePostInfo,
       }}
     >
       <Router />

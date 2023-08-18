@@ -30,19 +30,42 @@ const Profile = () => {
       const url = URL + "/userPosts/userInfo/" + user_name;
       const data = await doApiGet(url);
       setPostsInfo(data);
-      console.log(data);
+      // console.log(data);
     } catch (err) {
       console.log(err);
       setUserNotFound(true);
     }
   };
 
+  // const [Intersector, data, setData] = useLazyLoading(
+  //   { initPage: 0, distance: "50px", targetPercent: 0.5 },
+  //   async (page) => {
+  //     try {
+  //       // const url = URL + `/userPosts/userInfo/Apple?page=${page}}`;
+  //       // const url = "http://localhost:3002/userPosts/userInfo/Apple?page=1";
+  //       const url = `/userPosts/allposts?page=${page}`;
+  //       const d = await doApiGet(url);
+  //       setData(d);
+  //       console.log(data);
+  //       console.log("noy");
+  //     } catch (err) {
+  //       console.log(err);
+  //       setUserNotFound(true);
+  //       console.log("blabla");
+  //     }
+  //   }
+  // );
+
+  // useEffect(() => {
+  //   setPostsInfo(data);
+  // }, [data]);
+
   const doApiUserInfo = async (user_name) => {
     try {
       const url = URL + "/users/userInfo/" + user_name;
       const data = await doApiGet(url);
       setUserInfo(data);
-      console.log(data);
+      // console.log(data);
     } catch (err) {
       console.log(err);
       setUserNotFound(true);
@@ -133,12 +156,16 @@ const Profile = () => {
             >
               Posts
             </button>
-            <button className="flex gap-2 py-4 text-sm font-semibold text-gray-400 border-gray-300 focus:border-t focus:text-gray-600">
-              Liked
-            </button>
-            <button className="flex gap-2 py-4 text-sm font-semibold text-gray-400 border-gray-300 focus:border-t focus:text-gray-600">
-              Saved
-            </button>
+            {userData._id === userInfo._id && (
+              <>
+                <button className="flex gap-2 py-4 text-sm font-semibold text-gray-400 border-gray-300 focus:border-t focus:text-gray-600">
+                  Liked
+                </button>
+                <button className="flex gap-2 py-4 text-sm font-semibold text-gray-400 border-gray-300 focus:border-t focus:text-gray-600">
+                  Saved
+                </button>
+              </>
+            )}
             <button
               onClick={() => show("gallery")}
               className="flex gap-2 py-4 text-sm font-semibold text-gray-400 border-gray-300 focus:border-t focus:text-gray-600"
@@ -146,7 +173,8 @@ const Profile = () => {
               Gallery
             </button>
           </div>
-
+          {postsInfo.length == 0 && <h1 className="text-center mt-5 font-semibold">no posts yet 😕 </h1> }
+         
           {/* Gallery */}
           {showGallery && <Gallery postsInfo={postsInfo} />}
           {showUserPosts && (
@@ -163,6 +191,7 @@ const Profile = () => {
                   desc={post.description}
                 />
               ))}
+              {/* <Intersector /> */}
             </>
           )}
         </>

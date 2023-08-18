@@ -1,45 +1,77 @@
-import { faker } from "@faker-js/faker";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { MyContext } from "../context/myContext";
+import { URL, doApiGet } from "../services/apiService";
 
 const Recommanded = () => {
-    const [suggestions, setSuggestions] = useState([]);
-    
-    useEffect(() => {
-        const suggestions = [...Array(5)].map((_, i) => ({
-            userId: faker.string.uuid(),
-            username: faker.internet.userName(),
-            email: faker.internet.email(),
-            avatar: faker.image.avatar(),
-            password: faker.internet.password(),
-            birthdate: faker.date.birthdate(),
-            registeredAt: faker.date.past(),
-        }));
-        setSuggestions(suggestions);
-    }, []);
+  const [suggestions, setSuggestions] = useState([]);
+  const { userData, followUser, followFlag } = useContext(MyContext);
 
-    return (
-        <div className="mt-4 ml-10">
-            <div className="flex justify-between mb-5 text-sm">
-                <h3 className="text-sm font-bold text-gray-400">Suggestions For You</h3>
-                <button className="font-semibold text-gray-600">See All</button>
-            </div>
+  useEffect(() => {
+    doApiRandom5();
+  }, [followFlag]);
 
-            {
-                suggestions.map(profile => (
-                    <div key={profile.userId} className="flex items-center justify-between mt-3">
-                        <img src={profile.avatar} alt="" className="w-10 h-10 rounded-full border p-[2px]" />
+  const doApiRandom5 = async () => {
+    try {
+      const url = URL + "/users/random5";
+      const data = await doApiGet(url);
+      setSuggestions(data);
+      // console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-                        <div className="flex-1 ml-4">
-                            <h2 className="text-sm font-semibold">{profile.username}</h2>
-                            <h3 className="text-xs text-gray-400">Works at {profile.username}</h3>
-                        </div>
+  return (
+    <div className="mt-4 ml-10">
+      <div className="flex justify-between mb-5 text-sm">
+        <h3 className="text-sm font-bold text-gray-400">Suggestions For You</h3>
+        {/* <button className="font-semibold text-gray-600">See All</button> */}
+      </div>
 
-                      <button className="text-sm font-semibold text-blue-400">Follow</button>
-                    </div>
-                ))
-            }
+      {suggestions.map((profile) => (
+        <div
+          key={profile._id}
+          className="flex items-center justify-between mt-3"
+        >
+          <Link to={"/" + profile.user_name}>
+            <img
+              src={profile?.profilePic}
+              alt="profilepic"
+              className="w-10 h-10 rounded-full border p-[2px]"
+            />{" "}
+          </Link>
+
+          <div className="flex-1 ml-4">
+            <Link
+              to={"/" + profile.user_name}
+              className="text-sm font-semibold"
+            >
+              {profile.user_name}
+            </Link>
+            <p className="text-gray-400 text-sm">{profile.name}</p>
+            <p className="text-xs text-gray-400 whitespace-normal">
+              {" "}
+              {profile.desc.length > 27
+                ? profile.desc.substring(0, 27) + ".."
+                : profile.desc}
+            </p>
+          </div>
+
+          <button
+            onClick={() => followUser(profile?._id)}
+            className="text-sm font-semibold text-blue-400"
+          >
+            {profile.followers.find((follower_id) => {
+              return follower_id === userData._id;
+            })
+              ? "Unfollow"
+              : "Follow"}
+          </button>
         </div>
-    )
-}
+      ))}
+    </div>
+  );
+};
 
-export default Recommanded
+export default Recommanded;

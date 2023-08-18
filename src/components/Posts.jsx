@@ -3,7 +3,7 @@ import { MyContext } from "../context/myContext";
 import Post from "./Post";
 
 const Posts = () => {
-  const { postsInfo } = useContext(MyContext);
+  const { postsInfo, Intersector } = useContext(MyContext);
 
   return (
     <div>
@@ -17,6 +17,7 @@ const Posts = () => {
           profilePic={post.user?.profilePic}
           img_url={post.img_url}
           desc={post.description}
+          user_id={post.user?._id}
         />
       ))}
       {/* <Intersector /> */}

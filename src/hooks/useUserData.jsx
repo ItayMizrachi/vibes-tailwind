@@ -23,8 +23,8 @@ export const useUserData = () => {
       if (tokenExpiration) {
         const currentTime = new Date().getTime();
         const expirationTime = parseInt(tokenExpiration);
-        // console.log(currentTime + " current time");
-        // console.log(expirationTime + " expiration");
+        //console.log(currentTime + " current time");
+        //console.log(expirationTime + " expiration");
         if (currentTime > expirationTime) {
           alert("You have been logged out, please login again");
           deleteToken();

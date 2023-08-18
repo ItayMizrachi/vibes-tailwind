@@ -8,7 +8,7 @@ import { PaperAirplaneIcon } from "@heroicons/react/solid";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { MyContext } from "../context/myContext";
-import { TOKEN_KEY, URL } from "../services/apiService";
+import { TOKEN_KEY } from "../services/apiService";
 
 const Chatbot = () => {
   const { userData } = useContext(MyContext);
@@ -54,7 +54,7 @@ const Chatbot = () => {
         { headers: options.headers }
       );
       const data = response.data;
-      console.log(data);
+      // console.log(data);
       setMessage(data.choices[0].message);
       setLoading(false);
     } catch (error) {
@@ -64,7 +64,7 @@ const Chatbot = () => {
   };
 
   useEffect(() => {
-    console.log(currentTitle, value, message);
+    // console.log(currentTitle, value, message);
     if (!currentTitle && value && message) {
       setCurrentTitle(value);
     }
@@ -98,8 +98,8 @@ const Chatbot = () => {
   return (
     <div className="flex">
       {/* sidebar */}
-      <div className=" max-2-xs h-[92vh] border-r-2 overflow-y-auto md:min-w-[20rem]">
-        <div className="flex flex-col  h-[92vh] p-2">
+      <div className=" max-2-xs h-[90vh] md:h-[93vh] border-r-2 overflow-y-auto md:min-w-[20rem]">
+        <div className="flex flex-col  h-[90vh] md:h-[93vh] p-2">
           <div className="flex-1">
             <div>
               {/* new chat */}
@@ -133,7 +133,7 @@ const Chatbot = () => {
 
       <div className="flex-1">
         {/* chatbot messages */}
-        <div className="flex flex-col h-[92vh] overflow-clip">
+        <div className="flex flex-col h-[90vh] md:h-[93vh] overflow-clip">
           {/* messages */}
           <div className="flex-1 overflow-x-hidden overflow-y-auto scrollbar-thin scrollbar-thumb-black">
             {/* if theres no messages  */}

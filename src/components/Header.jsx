@@ -1,40 +1,49 @@
 import {
+  BellIcon,
   ChatIcon,
-  HeartIcon,
   InformationCircleIcon,
   PlusCircleIcon,
-  SearchIcon,
+  SearchIcon
 } from "@heroicons/react/outline";
 import { HomeIcon, LogoutIcon } from "@heroicons/react/solid";
-import React, { useContext, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { MyContext } from "../context/myContext";
-import { TOKEN_KEY } from "../services/apiService";
+import { TOKEN_KEY, URL, doApiGet } from "../services/apiService";
+import Noftlications from "./Noftlications";
 import Search from "./Search";
 
 const Header = () => {
-  const { userSignOut, userData } = useContext(MyContext);
-  const nav = useNavigate();
-  const inputRef = useRef();
+  const { userSignOut, userData } =
+    useContext(MyContext);
+    const [showNoftlications, setShowNoftlications] = useState(false);
 
-  // useEffect(() => {
-  //   onSearchClick();
-  // },[inputRef])
-
-  const onKeyboardClick = (e) => {
-    if (e.key === "Enter") {
-      onSearchClick();
+    const toggleNoftlications = () => {
+      setShowNoftlications(!showNoftlications);
+    };
+  const [isRead, setIsRead] = useState({ unreadCount: 0 });
+  
+  const doApiUnreadCount = async () => {
+    try {
+      const url = URL + "/notifications/unread-count/" + userData?._id;
+      const data = await doApiGet(url);
+      setIsRead(data);
+      // console.log(data);
+    } catch (err) {
+      console.log(err);
     }
   };
 
-  const onSearchClick = () => {
-    let input_val = inputRef.current.value;
-    nav(`/${input_val}`);
-  };
+  useEffect(() => {
+    if (userData._id) {
+      doApiUnreadCount();
+    }
+  }, [userData]);
 
   return (
     <header className="sticky top-0 z-50 px-6 bg-white border-b shadow-s">
       <div className="flex justify-between max-w-6xl mx-5 lg:mx-auto">
+        {showNoftlications && <Noftlications setIsRead={setIsRead} setShowNoftlications={setShowNoftlications} />}
         {/* left */}
         <div className="relative hidden w-24 h-24 cursor-pointer lg:inline-grid">
           <Link to="/">
@@ -77,11 +86,13 @@ const Header = () => {
 
           {localStorage[TOKEN_KEY] && userData ? (
             <>
-              <div className="relative navBtn">
-                <HeartIcon className="navBtn" />
-                <div className="absolute flex items-center justify-center w-5 h-5 text-xs text-white bg-red-500 rounded-full -top-1 -right-2 animate-pulse">
-                  3
-                </div>
+              <div onClick={toggleNoftlications} className="relative navBtn">
+                <BellIcon className="navBtn" />
+                {isRead.unreadCount > 0 && (
+                  <div className="absolute flex items-center justify-center w-5 h-5 text-xs text-white bg-red-500 rounded-full -top-1 -right-2 animate-pulse">
+                    {isRead.unreadCount}
+                  </div>
+                )}
               </div>
               <Link to="addpost">
                 <PlusCircleIcon className="navBtn" />

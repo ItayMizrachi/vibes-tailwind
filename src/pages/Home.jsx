@@ -13,7 +13,7 @@ const Home = () => {
     >
       <section className="col-span-2">
         {localStorage[TOKEN_KEY] && <Stories />}
-        <Posts/>
+        <Posts />
       </section>
 
       {localStorage[TOKEN_KEY] && (
