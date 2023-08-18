@@ -79,5 +79,7 @@ body::-webkit-scrollbar {
     outline: none;
   }
 
-  
-  
+input .upload #file-upload-button{
+    padding:8px;
+    background: red ;
+}

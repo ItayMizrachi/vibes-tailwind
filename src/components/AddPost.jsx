@@ -1,4 +1,5 @@
 import { XIcon } from "@heroicons/react/outline";
+import { PencilIcon } from "@heroicons/react/solid";
 import React, { useContext, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -8,6 +9,21 @@ import { URL, doApiMethod, imgToString } from "../services/apiService";
 const AddPost = ({ setShowAddPost }) => {
   const [isLoading, setIsLoading] = useState(false); // Add state for loading
   const { setPostsInfo } = useContext(MyContext);
+
+  const [imagePreview, setImagePreview] = useState(null);
+
+  const handleImageChange = (event) => {
+    const selectedFile = event.target.files[0];
+    if (selectedFile) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setImagePreview(e.target.result);
+      };
+      reader.readAsDataURL(selectedFile);
+    } else {
+      setImagePreview(null);
+    }
+  };
 
   const uploadRef = useRef();
   const {
@@ -80,28 +96,43 @@ const AddPost = ({ setShowAddPost }) => {
           </div>
 
           <form onSubmit={handleSubmit(onSubForm)}>
-            <div className="mb-4">
-              <label className="block">Description</label>
-              <input
-                {...register("description", { required: true, minLength: 2 })}
-                className="w-full p-2 mt-1 border rounded-md focus:ring-blue-500 focus:border-blue-500"
-                type="text"
-                placeholder="green apple tree"
-              />
+            <div className="mb-4 mt-4">
+              <label className="font-semibold">Description</label>
+              <div className="relative p-1 mt-1 rounded-md lg:mt-4">
+                <div className="absolute inset-y-0 flex items-center pl-3 pointer-events-none">
+                  <PencilIcon className="w-5 h-5 text-gray-500" />
+                </div>
+                <input
+                  {...register("description", { required: true, minLength: 2 })}
+                  className="block w-full pl-10 border-gray-300 rounded-md focus:ring-black focus:border-black sm:text-sm bg-gray-50"
+                  type="text"
+                  placeholder="description"
+                  required
+                />{" "}
+              </div>
               {errors.description && (
                 <div className="mt-1 text-red-500">
                   * Enter a valid description
                 </div>
               )}
+
+              {imagePreview && (
+                <img
+                  src={imagePreview}
+                  alt="Image Preview"
+                  className="my-2 rounded-md"
+                />
+              )}
             </div>
 
             <div className="mb-4">
-              <label className="block">Image</label>
+              <label className="font-semibold">Image</label>
               <input
                 required
                 ref={uploadRef}
+                onChange={handleImageChange}
                 type="file"
-                className="w-full p-2 mt-1 border rounded-md focus:ring-blue-500 focus:border-blue-500"
+                className="w-full p-2 mt-1 border rounded-md focus:ring-blue-500 focus:border-blue-500 upload"
               />
             </div>
 

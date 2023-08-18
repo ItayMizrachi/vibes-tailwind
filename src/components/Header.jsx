@@ -1,5 +1,6 @@
 import {
   BellIcon,
+  CameraIcon,
   ChatIcon,
   InformationCircleIcon,
   PlusCircleIcon,
@@ -11,6 +12,7 @@ import { Link } from "react-router-dom";
 import { MyContext } from "../context/myContext";
 import { TOKEN_KEY, URL, doApiGet } from "../services/apiService";
 import AddPost from "./AddPost";
+import ImageAi from "./ImageAi";
 import Noftlications from "./Noftlications";
 import Search from "./Search";
 
@@ -19,6 +21,7 @@ const Header = () => {
     useContext(MyContext);
     const [showAddPost, setShowAddPost] = useState(false);
     const [showNoftlications, setShowNoftlications] = useState(false);
+    const [showImgAi, setShowImgAi] = useState(false);
 
     const toggleNoftlications = () => {
       setShowNoftlications(!showNoftlications);
@@ -107,6 +110,10 @@ const Header = () => {
               <Link to="chatbot">
                 <ChatIcon className="navBtn" />
               </Link>
+            
+                <CameraIcon onClick={() => setShowImgAi(true)} className="navBtn" />
+                {showImgAi &&  <ImageAi setShowImgAi={setShowImgAi}/>}
+             
               <LogoutIcon onClick={userSignOut} className="lowNavBtn" />
               <Link to={userData.user_name}>
                 <div className="w-10 h-10">
