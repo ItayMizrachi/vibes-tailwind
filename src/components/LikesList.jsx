@@ -11,7 +11,7 @@ const LikesList = ({ likes, setShowLikes }) => {
 
   return (
     <div
-      className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-80"
+      className="fixed z-50 inset-0 flex justify-center items-center bg-black bg-opacity-80"
       onClick={handleOverlayClick}
     >
       <div className="bg-white rounded-lg w-[250px]">

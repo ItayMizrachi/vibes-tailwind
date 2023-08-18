@@ -17,7 +17,7 @@ const DeleteComment = ({ setShowDelete, comment, deleteComment, user_id }) => {
 
   return (
     <div
-      className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-80 "
+      className="fixed inset-0 flex z-50 justify-center items-center bg-black bg-opacity-80 "
       onClick={handleOverlayClick}
     >
       <div className="bg-white rounded-lg">

@@ -1,4 +1,3 @@
-import { EmojiHappyIcon } from "@heroicons/react/outline";
 import React, { useRef, useState } from "react";
 import InputEmoji from "react-input-emoji";
 import { TOKEN_KEY } from "../services/apiService";
@@ -30,7 +29,7 @@ const AddComment2 = ({ onSubForm }) => {
           onSubmit={(e) => e.preventDefault()}
           className="flex items-center p-4"
         >
-          <EmojiHappyIcon ref={emojiButton} className="h-7 block " />
+          {/* <EmojiHappyIcon ref={emojiButton} className="h-7 block " /> */}
           <InputEmoji
             value={text}
             onChange={setText}
