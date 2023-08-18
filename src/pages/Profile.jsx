@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Gallery from "../components/Gallery";
+import PopWindow from "../components/PopWindow";
 import Post from "../components/Post";
 import UserNotFound from "../components/UserNotFound";
 import { MyContext } from "../context/myContext";
@@ -14,6 +15,7 @@ const Profile = () => {
   const [showUserPosts, setShowUserPosts] = useState(false);
   const [userNotFound, setUserNotFound] = useState(false);
   const { userData, followUser, followFlag } = useContext(MyContext);
+  const [isPop, setIsPop] = useState(false);
 
   const show = (type) => {
     if (type === "userPosts") {
@@ -79,6 +81,13 @@ const Profile = () => {
     }
   }, [user_name, followFlag]);
 
+  const closeWindow = () => {
+    setIsPop(false);
+  };
+  const openWindow = () => {
+    setIsPop(true);
+  };
+
   return (
     <div className=" p-4 sm:p-10 mx-0 lg:max-w-6xl md:mx-5 xl:mx-auto">
       {/* Profile Info */}
@@ -91,7 +100,9 @@ const Profile = () => {
                   className="mx-auto rounded-full w-36 h-36 md:mx-0"
                   src={userInfo.profilePic}
                   alt="profile pic"
+                  onClick={openWindow}
                 />
+                {isPop && <PopWindow onClose={closeWindow} />}
               </div>
             </div>
             <div className="md:col-span-3">
@@ -173,8 +184,10 @@ const Profile = () => {
               Gallery
             </button>
           </div>
-          {postsInfo.length == 0 && <h1 className="text-center mt-5 font-semibold">no posts yet 😕 </h1> }
-         
+          {postsInfo.length == 0 && (
+            <h1 className="text-center mt-5 font-semibold">no posts yet 😕 </h1>
+          )}
+
           {/* Gallery */}
           {showGallery && <Gallery postsInfo={postsInfo} />}
           {showUserPosts && (

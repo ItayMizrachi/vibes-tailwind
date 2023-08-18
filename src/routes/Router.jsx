@@ -40,6 +40,7 @@ const Router = () => {
                 <Route path="/addpost" element={<Uploader />} />
                 <Route path="/singlepost/:post_id" element={<SinglePost2 />} />
                 <Route path="/table" element={<Table />} />
+
                 <Route path="/emoji" element={<Emoji />} />
                 <Route path="/*" element={<Page404 />} />
               </Routes>
@@ -64,7 +65,6 @@ const Router = () => {
             </>
           }
         />
-        
       </Routes>
     </BrowserRouter>
   );
