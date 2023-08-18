@@ -6,6 +6,7 @@ import UserNotFound from "../components/UserNotFound";
 import { MyContext } from "../context/myContext";
 import { URL, doApiGet } from "../services/apiService";
 import { useLazyLoading } from "mg-js";
+import PopWindow from "../components/PopWindow";
 
 const Profile = () => {
   const [postsInfo, setPostsInfo] = useState([]);
@@ -15,6 +16,7 @@ const Profile = () => {
   const [showUserPosts, setShowUserPosts] = useState(false);
   const [userNotFound, setUserNotFound] = useState(false);
   const { userData, followUser, followFlag } = useContext(MyContext);
+  const [isPop, setIsPop] = useState(false)
 
   const show = (type) => {
     if (type === "userPosts") {
@@ -80,6 +82,14 @@ const Profile = () => {
     }
   }, [user_name, followFlag]);
 
+
+  const closeWindow = () => {
+    setIsPop(false)
+  }
+  const openWindow = () => {
+    setIsPop(true)
+  }
+
   return (
     <div className=" p-4 sm:p-10 mx-0 lg:max-w-6xl md:mx-5 xl:mx-auto">
       {/* Profile Info */}
@@ -92,7 +102,9 @@ const Profile = () => {
                   className="mx-auto rounded-full w-36 h-36 md:mx-0"
                   src={userInfo.profilePic}
                   alt="profile pic"
+                  onClick={openWindow}
                 />
+                {isPop && <PopWindow onClose={closeWindow} />}
               </div>
             </div>
             <div className="md:col-span-3">

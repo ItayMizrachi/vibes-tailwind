@@ -37,7 +37,7 @@ const EditPost = () => {
 
             if (data.modifiedCount) {
                 toast.success("post updated");
-                // nav("/");
+                nav("/");
             }
         } catch (error) {
             alert("there problem2222");
@@ -49,31 +49,35 @@ const EditPost = () => {
         doApiEdit(_bodyData);
     };
     return (
-        <div className="container">
-            <h2 className="text-center p-3">Edit user! </h2>
-            {item.description ? (
-                <form onSubmit={handleSubmit(onSub)} className="col-md-6 mx-auto p-2">
-                    <label>Description:</label>
-                    <input
-                        defaultValue={item.description}
-                        {...register("description", { required: true, minLength: 2 })}
-                        type="text"
-                        className="form-control"
-                    />
-                    {errors.description && (
-                        <div className="text-danger">*Enter valid Description(min 2 chars)</div>
+        <div className="mt-5 bg-grey-lighter lg:mt-20">
+            <div className="container flex flex-col items-center justify-center flex-1 max-w-sm px-2 mx-auto">
+                <div className="w-full px-6 py-8 text-black bg-white rounded shadow-md border border-black border-solid">
+                    <h2 className="text-center p-3">Edit Post! </h2>
+                    {item.description ? (
+                        <form onSubmit={handleSubmit(onSub)}>
+                            <div className="relative p-1 mt-1 rounded-md lg:mt-4">
+                                <label className="mr-2">Description:</label>
+
+                                <input
+                                    defaultValue={item.description}
+                                    {...register("description", { required: true, minLength: 2 })}
+                                    type="text"
+                                    className="block w-full pl-10 border-gray-300 rounded-md focus:ring-black focus:border-black sm:text-sm bg-gray-50"
+                                />
+                                {errors.description && (
+                                    <div className="text-danger">*Enter valid Description(min 2 chars)</div>
+                                )}
+
+
+                                <button className="w-full py-3 my-1 mt-2 font-semibold text-center text-white bg-blue-500 rounded hover:bg-blue-600">Edit</button>
+                            </div>
+                        </form>
+                    ) : (
+                        <h2>Loading..</h2>
                     )}
-
-
-
-                    <button className="btn  mt-3">Edit</button>
-                    <br></br>
-
-                </form>
-            ) : (
-                <h2>Loading..</h2>
-            )}
-        </div>
+                </div>
+            </div>
+        </div >
     );
 };
 
