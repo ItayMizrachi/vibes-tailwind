@@ -38,7 +38,7 @@ const BottomHeader = () => {
   }, [userData]);
 
   return (
-    <header className="sticky bottom-0 p-5 left-0 right-0 z-50  bg-white border-t shadow-s  lg:hidden md:hidden">
+    <header className="sticky bottom-0 p-5 left-0 right-0 z-40  bg-white border-t shadow-s  lg:hidden md:hidden">
         {showNoftlications && (
           <Noftlications
             setIsRead={setIsRead}

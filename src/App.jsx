@@ -10,7 +10,7 @@ import Router from "./routes/Router";
 
 const App = () => {
   const { userData, doApiUser, userSignOut } = useUserData();
-  const { deletePost, postsInfo, Intersector, singlePostInfo } = usePostInfo();
+  const { deletePost, postsInfo, Intersector, singlePostInfo, setPostsInfo } = usePostInfo();
   const { followUser, followFlag } = useFollow();
 
   return (
@@ -21,6 +21,7 @@ const App = () => {
         userSignOut,
         deletePost,
         postsInfo,
+        setPostsInfo,
         followUser,
         followFlag,
         Intersector,

@@ -56,21 +56,6 @@ export const usePostInfo = () => {
     }
   };
 
-  const deletePost2 = async (_id) => {
-    try {
-      if (window.confirm("Are you sure you want to delete post?")) {
-        const url = URL + "/userPosts/" + _id;
-        await doApiMethod(url, "DELETE");
-        // if (data.deletedCount) {
-        setPostsInfo((prevData) => prevData.filter((p) => p._id !== _id));
-        toast.info(`Post deleted`);
-        // deletePostNotification(_id);
-        // }
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const deletePostNotification = async (post_id) => {
     try {
@@ -82,5 +67,5 @@ export const usePostInfo = () => {
     }
   };
 
-  return { deletePost, postsInfo };
+  return { deletePost, postsInfo , setPostsInfo};
 };

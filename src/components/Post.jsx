@@ -16,6 +16,7 @@ import { MyContext } from "../context/myContext";
 import { TOKEN_KEY, URL, doApiGet, doApiMethod } from "../services/apiService";
 import AddComment2 from "./AddComment2";
 import Comments from "./Comments";
+import EditPost2 from "./EditPost2";
 import LikesList from "./LikesList";
 
 const Post = ({
@@ -24,7 +25,7 @@ const Post = ({
   _id,
   user_name,
   img_url,
-  desc,
+  description,
   profilePic,
   user_id,
 }) => {
@@ -196,6 +197,8 @@ const Post = ({
     doApiPostComment(_bodyData);
   };
 
+  const [showEdit, setShowEdit] = useState(false);
+
   return (
     <div className="bg-white border rounded-2xl my-7">
       {/* Header */}
@@ -207,13 +210,19 @@ const Post = ({
             className="object-contain w-12 h-12 p-1 mr-3 rounded-full"
           />
         </Link>
-        <Link to={"/" + user_name} className="flex-1 font-bold">
+        <div className="flex-1 font-bold">
+
+        <Link to={"/" + user_name} >
           {user_name}
         </Link>
-        <Link to={"/editPost/" + _id}>
+        </div>
+        {/* <Link to={"/editPost/" + _id}>
           <DotsHorizontalIcon className="h-5 cursor-pointer" />
-        </Link>
+        </Link> */}
+          <DotsHorizontalIcon onClick={() => setShowEdit(true)} className="h-5 cursor-pointer" />
+          {showEdit && <EditPost2 setShowEdit={setShowEdit} post_id={_id} description={description} />}
       </div>
+      
       {/* img */}
       <Link to={"/singlepost/" + _id}>
         <img src={img_url} alt="post" className="object-cover w-full" />
@@ -271,7 +280,7 @@ const Post = ({
           <Link to={"/" + user_name} className="mr-1 font-bold">
             {user_name}
           </Link>
-          {desc}
+          {description}
         </div>
       </div>
 
