@@ -16,6 +16,7 @@ const Comments = ({ commentsInfo, deleteComment, Intersector ,user_id}) => {
     newShowDeleteList[index] = !newShowDeleteList[index];
     setShowDeleteList(newShowDeleteList);
   };
+   
   return (
     <div>
       {commentsInfo.length > 0 && (

@@ -16,7 +16,7 @@ import { MyContext } from "../context/myContext";
 import { TOKEN_KEY, URL, doApiGet, doApiMethod } from "../services/apiService";
 import AddComment2 from "./AddComment2";
 import Comments from "./Comments";
-import EditPost2 from "./EditPost2";
+import EditPost3 from "./EditPost3";
 import LikesList from "./LikesList";
 
 const Post = ({
@@ -211,18 +211,28 @@ const Post = ({
           />
         </Link>
         <div className="flex-1 font-bold">
-
-        <Link to={"/" + user_name} >
-          {user_name}
-        </Link>
+          <Link to={"/" + user_name}>{user_name}</Link>
         </div>
         {/* <Link to={"/editPost/" + _id}>
           <DotsHorizontalIcon className="h-5 cursor-pointer" />
         </Link> */}
-          <DotsHorizontalIcon onClick={() => setShowEdit(true)} className="h-5 cursor-pointer" />
-          {showEdit && <EditPost2 setShowEdit={setShowEdit} post_id={_id} description={description} />}
+        {user_id === userData._id && (
+          <>
+            <DotsHorizontalIcon
+              onClick={() => setShowEdit(true)}
+              className="h-5 cursor-pointer"
+            />
+            {showEdit && (
+              <EditPost3
+                setShowEdit={setShowEdit}
+                post_id={_id}
+                description={description}
+              />
+            )}
+          </>
+        )}
       </div>
-      
+
       {/* img */}
       <Link to={"/singlepost/" + _id}>
         <img src={img_url} alt="post" className="object-cover w-full" />
