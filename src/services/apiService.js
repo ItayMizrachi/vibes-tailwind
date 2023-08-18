@@ -66,11 +66,3 @@ export const imgToString = async (_file) => {
     })
 }
 
-export const checkValidToken = () => {
-    const token = localStorage[TOKEN_KEY];
-    const expDate = localStorage[EXP_DATE_KEY];
-    return token && Date.now() < expDate;
-
-
-
-}
