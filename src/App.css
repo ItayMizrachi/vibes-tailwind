@@ -74,5 +74,10 @@ body::-webkit-scrollbar {
     background-color: transparent;
   }
 
+  .emoj .react-input-emoji--input{
+    border: none;
+    outline: none;
+  }
+
   
   

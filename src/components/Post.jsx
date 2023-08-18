@@ -14,7 +14,7 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { MyContext } from "../context/myContext";
 import { TOKEN_KEY, URL, doApiGet, doApiMethod } from "../services/apiService";
-import AddComment from "./AddComment";
+import AddComment2 from "./AddComment2";
 import Comments from "./Comments";
 import LikesList from "./LikesList";
 
@@ -131,22 +131,6 @@ const Post = ({
     }
   };
 
-  const doApiPostComment2 = async (_bodyData) => {
-    try {
-      const url = URL + "/comments/" + _id;
-      await doApiMethod(url, "POST", _bodyData);
-      // Extract the commentId from the response data
-      const commentId = response.commentId; // Adjust this according to your API response structure
-      doApiComments();
-      reset();
-      if (user_id != userData._id) {
-        await createCommentNotification(user_id, _id, userData._id, commentId); // Correct parameter names
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const doApiPostComment = async (_bodyData) => {
     try {
       const url = URL + "/comments/" + _id;
@@ -203,7 +187,6 @@ const Post = ({
       setIsSaved(true);
     }
   }, []);
-  // }, [refresh]);
 
   const { register, handleSubmit, reset } = useForm();
 
@@ -276,8 +259,13 @@ const Post = ({
       {/* Caption */}
       <div>
         <div className="p-5 truncate">
-          <p onClick={() => setShowLikes(true)} className="mb-1 font-bold cursor-pointer">{likesCount} likes</p>
-         {showLikes && <LikesList setShowLikes={setShowLikes} likes={likes}/>} 
+          <p
+            onClick={() => setShowLikes(true)}
+            className="mb-1 font-bold cursor-pointer"
+          >
+            {likesCount} likes
+          </p>
+          {showLikes && <LikesList setShowLikes={setShowLikes} likes={likes} />}
           <Link to={"/" + user_name} className="mr-1 font-bold">
             {user_name}
           </Link>
@@ -293,7 +281,7 @@ const Post = ({
       />
 
       {/* input box */}
-      <AddComment
+      <AddComment2
         handleSubmit={handleSubmit}
         register={register}
         onSubForm={onSubForm}

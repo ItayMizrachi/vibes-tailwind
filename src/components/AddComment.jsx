@@ -1,6 +1,6 @@
-import { EmojiHappyIcon } from '@heroicons/react/outline';
-import React, { useState } from 'react';
-import { TOKEN_KEY } from '../services/apiService';
+import { EmojiHappyIcon } from "@heroicons/react/outline";
+import React, { useState } from "react";
+import { TOKEN_KEY } from "../services/apiService";
 
 const AddComment = ({ handleSubmit, register, onSubForm }) => {
   const [isInputFocused, setInputFocused] = useState(false);
@@ -22,7 +22,7 @@ const AddComment = ({ handleSubmit, register, onSubForm }) => {
         >
           <EmojiHappyIcon className="h-7" />
           <input
-            {...register('text', { required: true, minLength: 1 })}
+            {...register("text", { required: true, minLength: 1 })}
             type="text"
             placeholder="add a comment.."
             className="flex-1 border-none outline-none focus:ring-0"
@@ -32,7 +32,7 @@ const AddComment = ({ handleSubmit, register, onSubForm }) => {
           <button
             type="submit"
             className={`font-semibold ${
-              isInputFocused ? 'text-blue-500' : 'text-blue-400'
+              isInputFocused ? "text-blue-500" : "text-blue-400"
             }`}
           >
             Post
