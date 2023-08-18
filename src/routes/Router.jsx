@@ -8,10 +8,10 @@ import LoginAdmin from "../admin/LoginAdmin";
 import PostsAdmin from "../admin/PostsAdmin";
 import UsersList from "../admin/UsersList";
 import BottomHeader from "../components/BottomHeader";
+import EditPost from "../components/EditPost";
 import Emoji from "../components/Emoji";
 import Header from "../components/Header";
 import SinglePost2 from "../components/SinglePost2";
-import Table from "../components/Table";
 import Uploader from "../components/Uploader";
 import About from "../pages/About";
 import Chatbot from "../pages/Chatbot";
@@ -39,8 +39,7 @@ const Router = () => {
                 <Route path="/chatbot" element={<Chatbot />} />
                 <Route path="/addpost" element={<Uploader />} />
                 <Route path="/singlepost/:post_id" element={<SinglePost2 />} />
-                <Route path="/table" element={<Table />} />
-
+                <Route path="/editPost/:id" element={<EditPost />} />
                 <Route path="/emoji" element={<Emoji />} />
                 <Route path="/*" element={<Page404 />} />
               </Routes>
