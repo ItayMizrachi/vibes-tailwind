@@ -201,7 +201,7 @@ const Profile = () => {
                   user_name={post.user?.user_name}
                   profilePic={post.user?.profilePic}
                   img_url={post.img_url}
-                  desc={post.description}
+                  description={post.description}
                 />
               ))}
               {/* <Intersector /> */}

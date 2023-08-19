@@ -1,7 +1,6 @@
 import { CameraIcon } from "@heroicons/react/solid";
 import React, { useState } from "react";
-
-const API_TOKEN = "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";
+// const API_TOKEN = "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";
 
 const ImageAi = ({setShowImgAi}) => {
 
@@ -11,16 +10,16 @@ const ImageAi = ({setShowImgAi}) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
-
+    // console.log(process.env.IMAGE_AI_KEY);
     const input = event.target.elements.input.value;
     const response = await fetch(
       "https://api-inference.huggingface.co/models/prompthero/openjourney",
       {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${API_TOKEN}`,
-        },
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${import.meta.env.VITE_IMAGE_AI_KEY}`,
+          },
         body: JSON.stringify({ inputs: input }),
       }
     );
